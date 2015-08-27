@@ -18,8 +18,11 @@
     "txt"
   ],
   "dependencies": {
-    "jquery": ">1.2.1",
-    "bootstrap": ">3"
+    "Blob": "*",
+    "bootstrap": "~3.3.5",
+    "file-saver.js": "1.20150507.2",
+    "jquery": "~1.11.3",
+    "js-xlsx": "0.8.0"
   },
   "license": "MIT",
   "homepage": "http://www.clarketravis.com",
