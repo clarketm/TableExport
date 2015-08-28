@@ -9,7 +9,7 @@ To use this plugin, include the [jQuery](https://jquery.com) library and the [Ta
 
 ```html
 <script src="jquery.js"></script>
-<script src="jquery.tableexport.js"></script>
+<script src="tableexport.js"></script>
 ```
 
 ### Install with Bower
@@ -40,7 +40,7 @@ In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, 
 <script src="filesaver.js"></script>
 <script src="blob.js"></script>
  ...
-<script src="jquery.tableexport.js"></script>
+<script src="tableexport.js"></script>
 ```
 
 ## Usage
