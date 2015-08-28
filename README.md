@@ -84,7 +84,7 @@ $("table").tableExport({
 ### Properties
 
 A table of available properties and their usage can be found here:
-##### [www.clarketravis.com#properties](http://www.clarketravis.com)
+##### [www.clarketravis.com](http://www.clarketravis.com/#properties)
 
 
 
@@ -144,7 +144,7 @@ $.fn.tableExport.rowDel = "\r\n";
 
 ### Live Demo 
 A live, interactive demo can be found here:
-##### [www.clarketravis.com](http://www.clarketravis.com)
+##### [www.clarketravis.com](http://www.clarketravis.com/#live-demo)
 
 ### License
 [TableExport.js](http://www.clarketravis.com) is licensed under the terms of the [MIT](http://opensource.org/licenses/mit-license.php) License
