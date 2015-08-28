@@ -1,0 +1,47 @@
+body {
+    margin: 20px 8px;
+    background: #f1f1f1;
+}
+
+table, th, td {
+    border: 1px inset rgb(102, 137, 158);
+}
+
+table {
+    margin: 40px auto;
+}
+
+caption {
+    padding: 10px;
+}
+
+td {
+    line-height: 1.2;
+    padding: 8px;
+}
+
+th {
+    font-size: 1.1em;
+    background: #8dbdd8;
+    padding: 8px;
+}
+
+tr:nth-of-type(even) {
+    background: #d9eaf0;
+}
+
+tr:nth-of-type(odd) {
+    background: #fff;
+}
+
+/* helper functions */
+.txt-center {
+    text-align: center;
+}
+
+/* plugin specific styling */
+.export {
+    display: inline-block;
+    white-space: nowrap;
+    margin: 2px;
+}

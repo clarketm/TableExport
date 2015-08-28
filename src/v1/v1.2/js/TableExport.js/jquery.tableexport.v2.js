@@ -10,15 +10,14 @@
             bootstrapTheme = $.fn.tableExport.bootstrap[1] + " ";
             bootstrapSpacing = $.fn.tableExport.bootstrap[2] + " ";
         } else {
-            bootstrapClass = $.fn.tableExport.defaultButton + " ";
-            bootstrapTheme = bootstrapSpacing = "";
+            bootstrapClass = bootstrapTheme = bootstrapSpacing = "";
         }
 
 
         return this.each(function () {
             var $el = $(this),
                 $rows = settings.headings ? $el.find('tr') : $el.find('tr:has(td)'),
-                fileName = settings.fileName === "id" ? ($el.attr('id') ? $el.attr('id') : $.fn.tableExport.defaultFileName) : settings.fileName,
+                fileName = settings.fileName === "id" ? $el.attr('id') : settings.fileName,
                 exporters = {
                     xls: function (rdel, name) {
                         var colD = $.fn.tableExport.xls.separator,
@@ -85,11 +84,11 @@
 
     // Define the plugin default properties.
     $.fn.tableExport.defaults = {
-        headings: true,                         // (Boolean), display table headings (th elements) in the first row, (default: true)
-        formats: ["xls", "csv", "txt"],         // (String[]), filetype for the export, (default: ["xls", "csv", "txt"])
-        fileName: "id",                         // (id, String), filename for the downloaded file, (default: "id")
-        bootstrap: true,                        // (Boolean), style buttons using bootstrap, (default: true)
-        position: "bottom"                      // (top, bottom), position of the caption element relative to table, (default: "bottom")
+        headings: true,                         // [Boolean], display table headings (th elements) in the first row, [default: true]
+        formats: ["xls", "csv", "txt"],
+        fileName: "id",                     // [id, name, String], filename for the downloaded file, [default: "export"]
+        bootstrap: true,                           // [String], additional button classes to add, [default: ""]
+        position: "bottom"                     // [top, bottom], position of the caption element relative to table, [default: "bottom"]
     };
 
     $.fn.tableExport.xls = {
@@ -109,10 +108,6 @@
         buttonContent: "Export to txt",
         separator: "  "
     };
-
-    $.fn.tableExport.defaultFileName = "myDownload";
-
-    $.fn.tableExport.defaultButton = "button-default";
 
     $.fn.tableExport.bootstrap = ["btn", "btn-default", "btn-toolbar"];
 

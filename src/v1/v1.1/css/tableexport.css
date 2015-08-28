@@ -1,0 +1,131 @@
+/*-----------------------------------/
+/* FONTS
+/*----------------------------------*/
+@import url("http://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Open+Sans:300,400,600,700");
+
+/*-----------------------------------/
+/* BOOTSTRAP OVERRIDES/ADDITIONS
+/*----------------------------------*/
+
+body {
+    position: relative;
+    padding-top: 50px;
+    /*background: url("../img/background.png") repeat;*/
+}
+
+pre, pre.prettyprint {
+    word-wrap: normal;
+}
+
+/*-----------------------------------/
+/* BUTTON CUSTOM CLASSES
+/*----------------------------------*/
+
+.top {
+    caption-side: top;
+}
+
+.bottom {
+    caption-side: bottom;
+}
+
+
+.xls:before {
+    margin-right: 10px;
+    background-color: green;
+    padding: 12px;
+    content: url("../img/ixls.png");
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+
+}
+
+.csv:before {
+    margin-right: 10px;
+    background-color: blue;
+    padding: 12px;
+    content: url("../img/icsv.png");
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.txt:before {
+    margin-right: 10px;
+    background-color: purple;
+    padding: 12px;
+    content: url("../img/itxt.png");
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+/*-----------------------------------/
+/* ZERO CLIPBOARD
+/*----------------------------------*/
+
+.code-block {
+    position: relative;
+}
+
+.tooltip {
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.btn-clipboard {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    display: block;
+    padding: 5px 8px;
+    font-size: 12px;
+    color: #767676;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #e1e1e8;
+    border-radius: 0 4px 0 4px;
+}
+
+.zeroclipboard-is-hover {
+    color: #fff;
+    background-color: #cd403c;
+    border-color: #cd403c;
+}
+
+/*-----------------------------------/
+/* SIDENAV
+/*----------------------------------*/
+
+#side-nav-ul {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+@media (min-width: 768px) {
+    #side-nav {
+        padding-left: 50px;
+    }
+}
+
+@media (min-width: 992px) {
+    #side-nav.affix {
+        top: 40px;
+        position: fixed;
+    }
+
+    #side-nav.affix, #side-nav.affix-top, #side-nav.affix-bottom {
+        width: 213px;
+    }
+
+    #side-nav.affix #side-nav-ul, #side-nav.affix-bottom #side-nav-ul {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    #side-nav.affix-bottom {
+        position: absolute;
+    }
+}
+
+
+
+
+
+

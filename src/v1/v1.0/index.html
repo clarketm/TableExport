@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table2csv Plugin</title>
+    <link href="css/table2csv.css" rel="stylesheet">
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body>
+
+<div>
+    <h4>Download</h4>
+    <a href="table2csv.zip" download="table2csv.zip"><button>table2csv.zip</button></a>
+</div>
+<table id="Population-list">
+    <caption><h2>Countries by population</h2></caption>
+    <thead>
+    <tr>
+        <th>Rank</th>
+        <th>Country</th>
+        <th>Population</th>
+        <th>% of world population</th>
+        <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>1</td>
+        <td>China</td>
+        <td>1,370,570,000</td>
+        <td>18.9%</td>
+        <td>June 24, 2015</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>India</td>
+        <td>1,273,140,000</td>
+        <td>17.6%</td>
+        <td>June 24, 2015</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>United States</td>
+        <td>321,268,000</td>
+        <td>4.43%</td>
+        <td>June 24, 2015</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Indonesia</td>
+        <td>255,461,700</td>
+        <td>3.52%</td>
+        <td>July 1, 2015</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Brazil</td>
+        <td>204,503,000</td>
+        <td>2.82%</td>
+        <td>June 24, 2015</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Pakistan</td>
+        <td>190,156,000</td>
+        <td>2.62%</td>
+        <td>June 24, 2015</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>Nigeria</td>
+        <td>183,523,000</td>
+        <td>2.53%</td>
+        <td>July 1, 2015</td>
+    </tr>
+    <tr>
+        <td>8</td>
+        <td>Bangladesh</td>
+        <td>126,880,000</td>
+        <td>2.19%</td>
+        <td>June 24, 2015</td>
+    </tr>
+    <tbody>
+</table>
+
+<table id="Country-list">
+    <thead>
+    <tr>
+        <th>Country</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>China</td>
+    </tr>
+    <tr>
+        <td>India</td>
+    </tr>
+    <tr>
+        <td>United States</td>
+    </tr>
+    <tr>
+        <td>Indonesia</td>
+    </tr>
+    <tr>
+        <td>Brazil</td>
+    </tr>
+    <tr>
+        <td>Pakistan</td>
+    </tr>
+    <tr>
+        <td>Nigeria</td>
+    </tr>
+    <tr>
+        <td>Bangladesh</td>
+    </tr>
+    <tbody>
+</table>
+
+<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.table2csv.js"></script>
+
+<script>
+    $(function () {
+        $('table').table2CSV({
+            type: "csv",
+            buttonContent: "Export to csv",
+            fileName: "id"
+        });
+        $('table').table2CSV({
+            type: "txt",
+            buttonContent: "Export to txt",
+            fileName: "id"
+        });
+    });
+</script>
+
+</body>
+</html>
+
+
