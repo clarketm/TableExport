@@ -121,7 +121,7 @@ $.tableExport.txt = {
 Below are additional defaults to support the functionality of the plugin that.
 
 ```css
-/* default filename is "id" attribute if set and undefined */
+/* default filename if "id" attribute is set and undefined */
 $.fn.tableExport.defaultFileName = "myDownload";
 
 /* bootstrap classes used to style and position the export buttons */
