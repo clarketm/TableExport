@@ -150,12 +150,12 @@ $.fn.tableExport.rowDel = "\r\n";
 
 ### Browser Support
 
-|  | Chrome | Firefox | IE  | Opera | Safari |
+|  | Chrome | Firefox | IE *  | Opera | Safari |
 | :------: | :------: | :-------: | :---: | :-----: | :------: |
 | __Android__* |    &#10003;   |    &#10003;    | - |   &#10007;   |  -   |
 | __iOS__* |    &#10003;   |  -    | - |   &#10007;   |   &#10003;    |
 | **Mac OSX**|    &#10003;   |    &#10003;    | - |   &#10003;  |   &#10003;    |
-| **Windows** |    &#10003;   |    &#10003;    | - |   &#10003;   |   &#10003;    |
+| **Windows** |    &#10003;   |    &#10003;    | &#10003; |   &#10003;   |   &#10003;    |
 
 *requires third-party dependencies
 
