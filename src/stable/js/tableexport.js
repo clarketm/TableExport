@@ -121,7 +121,7 @@
     // Define the plugin default properties.
     $.fn.tableExport.defaults = {
         headings: true,                           // (Boolean), display table headings (th elements) in the first row, (default: true)
-        formats: ["xls", "csv", "txt"],   // (String[]), filetype for the export, (default: ["xls", "csv", "txt"])
+        formats: ["xls", "csv", "txt"],           // (String[]), filetype for the export, (default: ["xls", "csv", "txt"])
         fileName: "id",                           // (id, String), filename for the downloaded file, (default: "id")
         bootstrap: true,                          // (Boolean), style buttons using bootstrap, (default: true)
         position: "bottom"                        // (top, bottom), position of the caption element relative to table, (default: "bottom")

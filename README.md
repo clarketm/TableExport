@@ -33,12 +33,20 @@ In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, 
 
 * SheetJS -> [xlsx-core.js](https://github.com/SheetJS/js-xlsx)
 * Eli Grey -> [filesaver.js](https://github.com/eligrey/FileSaver.js/)
-* Eli Grey -> [blob.js](https://github.com/eligrey/Blob.js/)
 
 ```html
 <script src="xlsx-core.js"></script>
 <script src="filesaver.js"></script>
+ ...
+<script src="tableexport.js"></script>
+```
+
+To support **.xlsx** in older browsers ( **Firefox** < 20, **Opera** < 15, **Safari** < 6 ) also include [blob.js](https://github.com/eligrey/Blob.js/) before the filesaver.js script.
+
+```html
+<script src="xlsx-core.js"></script>
 <script src="blob.js"></script>
+<script src="filesaver.js"></script>
  ...
 <script src="tableexport.js"></script>
 ```
@@ -94,24 +102,30 @@ Each button is assigned a default class and default content based on its respect
 
 
 ```css
-/* default class, content, and seperator for each export type */
+/* default class, content, and separator for each export type */
 
-/* Excel spreadsheet (.xls) */
-$.tableExport.xls = {
+/* Excel Open XML spreadsheet (.xlsx) */
+$.fn.tableExport.xlsx = {
+    defaultClass: "xlsx",
+    buttonContent: "Export to xlsx"
+};
+
+/* Excel Binary spreadsheet (.xls) */
+$.fn.tableExport.xls = {
     defaultClass: "xls",
     buttonContent: "Export to xls",
     separator: "\t"
 };
 
 /* Comma Separated Values (.csv) */
-$.tableExport.csv = {
+$.fn.tableExport.csv = {
     defaultClass: "csv",
     buttonContent: "Export to csv",
     separator: ","
 };
 
 /* Plain Text (.txt) */
-$.tableExport.txt = {
+$.fn.tableExport.txt = {
     defaultClass: "txt",
     buttonContent: "Export to txt",
     separator: "  "
@@ -123,6 +137,9 @@ Below are additional defaults to support the functionality of the plugin that.
 ```css
 /* default filename if "id" attribute is set and undefined */
 $.fn.tableExport.defaultFileName = "myDownload";
+
+/* default class to style buttons when not using bootstrap  */
+$.fn.tableExport.defaultButton = "button-default";
 
 /* bootstrap classes used to style and position the export buttons */
 $.fn.tableExport.bootstrap = ["btn", "btn-default", "btn-toolbar"];
