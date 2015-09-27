@@ -101,7 +101,7 @@ A table of available properties and their usage can be found here:
 Each button is assigned a default class and default content based on its respective filetype and corresponding css styles.
 
 
-```css
+```js
 /* default class, content, and separator for each export type */
 
 /* Excel Open XML spreadsheet (.xlsx) */
@@ -134,7 +134,7 @@ $.fn.tableExport.txt = {
 
 Below are additional defaults to support the functionality of the plugin that.
 
-```css
+```js
 /* default filename if "id" attribute is set and undefined */
 $.fn.tableExport.defaultFileName = "myDownload";
 
