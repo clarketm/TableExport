@@ -5,7 +5,7 @@ The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, an
 
 ### Download and Setup
 
-To use this plugin, include the [jQuery](https://jquery.com) library and the [TableExport.js](http://www.clarketravis.com) plugin inside the `<head>` tag of your HTML document:
+To use this plugin, include the [jQuery](https://jquery.com) library and the [TableExport.js](http://www.clarketravis.com) plugin before the closing `<body>` tag of your HTML document:
 
 ```html
 <script src="jquery.js"></script>

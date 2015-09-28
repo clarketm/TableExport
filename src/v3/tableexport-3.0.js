@@ -1,4 +1,13 @@
-(function ($) {
+/*!
+ * TableExport.js v3.0.0 (http://www.clarketravis.com)
+ * Copyright 2015 Travis Clarke
+ * Licensed under the MIT license
+ */
+
+;(function (window, undefined) {
+
+    /*--- GLOBALS ---*/
+    var $ = window.jQuery;
 
     $.fn.tableExport = function (options) {
 
@@ -121,7 +130,7 @@
     // Define the plugin default properties.
     $.fn.tableExport.defaults = {
         headings: true,                           // (Boolean), display table headings (th elements) in the first row, (default: true)
-        formats: ["xls", "csv", "txt"],   // (String[]), filetype for the export, (default: ["xlsx", "xls", "csv", "txt"])
+        formats: ["xls", "csv", "txt"],           // (String[]), filetype for the export, (default: ["xls", "csv", "txt"])
         fileName: "id",                           // (id, String), filename for the downloaded file, (default: "id")
         bootstrap: true,                          // (Boolean), style buttons using bootstrap, (default: true)
         position: "bottom"                        // (top, bottom), position of the caption element relative to table, (default: "bottom")
@@ -159,7 +168,7 @@
     $.fn.tableExport.rowDel = "\r\n";
 
 
-}(jQuery));
+}(window));
 
 function dateNum(v, date1904) {
     if (date1904) v += 1462;

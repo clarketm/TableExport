@@ -1,4 +1,13 @@
-(function ($) {
+/*!
+ * TableExport.js v3.0.0 (http://www.clarketravis.com)
+ * Copyright 2015 Travis Clarke
+ * Licensed under the MIT license
+ */
+
+;(function (window, undefined) {
+
+    /*--- GLOBALS ---*/
+    var $ = window.jQuery;
 
     $.fn.tableExport = function (options) {
 
@@ -159,7 +168,7 @@
     $.fn.tableExport.rowDel = "\r\n";
 
 
-}(jQuery));
+}(window));
 
 function dateNum(v, date1904) {
     if (date1904) v += 1462;

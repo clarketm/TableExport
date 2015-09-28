@@ -4,7 +4,10 @@
  * Licensed under the MIT license
  */
 
-(function ($) {
+;(function (window, undefined) {
+
+    /*--- GLOBALS ---*/
+    var $ = window.jQuery;
 
     $.fn.tableExport = function (options) {
 
@@ -165,7 +168,7 @@
     $.fn.tableExport.rowDel = "\r\n";
 
 
-}(jQuery));
+}(window));
 
 function dateNum(v, date1904) {
     if (date1904) v += 1462;
