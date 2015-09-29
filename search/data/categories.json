@@ -1,0 +1,47 @@
+{
+  "api": {
+    "color": "label-1",
+    "list": [
+      "methods",
+      "demo",
+      "properties",
+      "usage"
+    ]
+  },
+  "filetype": {
+    "color": "label-2",
+    "list": [
+      "xls",
+      "csv",
+      "txt",
+      "filetypes"
+    ]
+  },
+  "personal": {
+    "color": "label-3",
+    "list": [
+      "travis",
+      "clarke",
+      "license",
+      "contact"
+    ]
+  },
+  "table": {
+    "color": "label-4",
+    "list": [
+      "tableexport",
+      "table",
+      "export",
+      "plugin"
+    ]
+  },
+  "code": {
+    "color": "label-5",
+    "list": [
+      "js",
+      "jquery",
+      "css",
+      "bootstrap"
+    ]
+  }
+}
