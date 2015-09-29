@@ -5,7 +5,7 @@
     "clarketm <travis.m.clarke@gmail.com>"
   ],
   "description": "The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, and txt files",
-  "main": "dist/js/versions/v2/2.0/jquery.tableexport-2.0.min.js",
+  "main": "dist/js/tableexport.min.js",
   "keywords": [
     "table",
     "export",
