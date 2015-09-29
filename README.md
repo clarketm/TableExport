@@ -5,7 +5,7 @@ The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, an
 
 ### Download and Setup
 
-To use this plugin, include the [jQuery](https://jquery.com) library and the [TableExport.js](http://www.clarketravis.com) plugin before the closing `<body>` tag of your HTML document:
+To use this plugin, include the [jQuery](https://jquery.com) library and the [TableExport.js](http://www.clarketravis.com/tableexport) plugin before the closing `<body>` tag of your HTML document:
 
 ```html
 <script src="jquery.js"></script>
@@ -55,7 +55,7 @@ To support **.xlsx** in older browsers ( **Firefox** < 20, **Opera** < 15, **Saf
 
 ### CSS
 
-By default, [TableExport.js](http://www.clarketravis.com) utilizes the [Bootstrap] (http://getbootstrap.com/getting-started/#download) CSS framework to deliver enhanced table and button styling. For non-Bootstrap projects, initialize with the `bootstrap` property set to `false`.
+By default, [TableExport.js](http://www.clarketravis.com/tableexport) utilizes the [Bootstrap] (http://getbootstrap.com/getting-started/#download) CSS framework to deliver enhanced table and button styling. For non-Bootstrap projects, initialize with the `bootstrap` property set to `false`.
 
 ```js
 $("table").tableExport({
@@ -92,7 +92,7 @@ $("table").tableExport({
 ### Properties
 
 A table of available properties and their usage can be found here:
-##### [www.clarketravis.com](http://www.clarketravis.com/#properties)
+##### [www.clarketravis.com/tableexport](http://www.clarketravis.com/tableexport/#properties)
 
 
 
@@ -161,10 +161,10 @@ $.fn.tableExport.rowDel = "\r\n";
 
 ### Live Demo 
 A live, interactive demo can be found here:
-##### [www.clarketravis.com](http://www.clarketravis.com/#live-demo)
+##### [www.clarketravis.com/tableexport](http://www.clarketravis.com/tableexport/#live-demo)
 
 ### License
-[TableExport.js](http://www.clarketravis.com) is licensed under the terms of the [MIT](http://opensource.org/licenses/mit-license.php) License
+[TableExport.js](http://www.clarketravis.com/tableexport) is licensed under the terms of the [MIT](http://opensource.org/licenses/mit-license.php) License
 
 ### Credits
 
