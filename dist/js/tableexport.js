@@ -40,9 +40,10 @@
                                 data: dataURL,
                                 name: name
                             }),
+                            myFile = name + ".xlsx",
                             myContent = $.fn.tableExport.xlsx.buttonContent,
                             myClass = $.fn.tableExport.xlsx.defaultClass;
-                        createObjButton(dataObject, myContent, myClass);
+                        createObjButton(dataObject, myFile, myContent, myClass);
                     },
                     xls: function (rdel, name) {
                         var colD = $.fn.tableExport.xls.separator,
@@ -105,8 +106,8 @@
                 checkCaption(exportButton);
             }
 
-            function createObjButton(dataObject, myContent, myClass) {
-                var exportButton = "<a href='#' data-obj='" + dataObject + "' download='" + dataObject.name + "' role='button' class='" + bootstrapClass + bootstrapTheme + myClass + "'>" + myContent + "</a>";
+            function createObjButton(dataObject, myFile, myContent, myClass) {
+                var exportButton = "<a href='#' data-obj='" + dataObject + "' download='" + myFile + "' role='button' class='" + bootstrapClass + bootstrapTheme + myClass + "'>" + myContent + "</a>";
                 checkCaption(exportButton);
                 addListener(myClass)
             }
