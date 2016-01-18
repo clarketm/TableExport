@@ -1,0 +1,36 @@
+{
+  "name": "tableexport.js",
+  "version": "3.0.0",
+  "authors": [
+    "clarketm <travis.m.clarke@gmail.com>"
+  ],
+  "description": "The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, and txt files",
+  "main": "dist/js/tableexport.min.js",
+  "keywords": [
+    "table",
+    "export",
+    "table",
+    "export",
+    "Excel",
+    "xlsx",
+    "xls",
+    "csv",
+    "txt"
+  ],
+  "dependencies": {
+    "Blob": "*",
+    "bootstrap": "~3.3.5",
+    "file-saver.js": "1.20150507.2",
+    "jquery": "~1.11.3",
+    "js-xlsx": "0.8.0"
+  },
+  "license": "MIT",
+  "homepage": "http://www.clarketravis.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
