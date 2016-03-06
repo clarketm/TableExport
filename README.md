@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
 # TableExport
 The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, and txt files
 

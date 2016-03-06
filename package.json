@@ -17,12 +17,21 @@
     "csv",
     "txt"
   ],
+  "scripts": {
+    "test": "gulp"
+  },
   "dependencies": {
     "Blob": "*",
     "bootstrap": "~3.3.5",
-    "file-saver.js": "1.20150507.2",
+    "filesaver.js": "0.2.0",
     "jquery": "~1.11.3",
-    "js-xlsx": "0.8.0"
+    "xlsx": "0.8.0"
+  },
+  "devDependencies": {
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.3"
   },
   "license": "MIT",
   "homepage": "http://www.clarketravis.com",
