@@ -4,10 +4,7 @@ var gulp = require('gulp'),
     js = require('gulp-uglify');
 
 gulp.task('js', ['clean'], function () {
-    return gulp.src('./src/v3/tableexport-3.1.js')
-        .pipe(rename({
-            basename: "tableexport"
-        }))
+    return gulp.src('./src/stable/js/tableexport.js')
         .pipe(gulp.dest('./dist/js/'))
         .pipe(js({output: {comments: /^!|@preserve|@license|@cc_on/i}}))
         .pipe(rename({

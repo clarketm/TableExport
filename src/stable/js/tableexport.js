@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v3.0.0 (http://www.clarketravis.com)
+ * TableExport.js v3.1.0 (http://www.clarketravis.com)
  * Copyright 2015 Travis Clarke
  * Licensed under the MIT license
  */
@@ -40,13 +40,14 @@
                                 data: dataURL,
                                 name: name
                             }),
+                            myFile = name + ".xlsx",
                             myContent = $.fn.tableExport.xlsx.buttonContent,
                             myClass = $.fn.tableExport.xlsx.defaultClass;
-                        createObjButton(dataObject, myContent, myClass);
+                        createObjButton(dataObject, myFile, myContent, myClass);
                     },
                     xls: function (rdel, name) {
                         var colD = $.fn.tableExport.xls.separator,
-                            dataURL = 'data:application/vnd.ms-excel;charset=utf-8,' +
+                            dataURL = 'data:application/vnd.ms-excel;charset=utf-16,' +
                                 encodeURIComponent($rows.map(function (i, val) {
                                     var $cols = $(val).find('th, td');
                                     return $cols.map(function (i, val) {
@@ -61,7 +62,7 @@
                     csv: function (rdel, name) {
                         rdel = '"' + rdel + '"';
                         var colD = '"' + $.fn.tableExport.csv.separator + '"',
-                            dataURL = 'data:text/csv;charset=utf-8,' +
+                            dataURL = 'data:text/csv;charset=utf-16,' +
                                 encodeURIComponent('"' + $rows.map(function (i, val) {
                                         var $cols = $(val).find('th, td');
                                         return $cols.map(function (i, val) {
@@ -75,7 +76,7 @@
                     },
                     txt: function (rdel, name) {
                         var colD = $.fn.tableExport.txt.separator,
-                            dataURL = 'data:text/plain;charset=utf-8,' +
+                            dataURL = 'data:text/plain;charset=utf-16,' +
                                 encodeURIComponent($rows.map(function (i, val) {
                                     var $cols = $(val).find('th, td');
                                     return $cols.map(function (i, val) {
@@ -105,8 +106,8 @@
                 checkCaption(exportButton);
             }
 
-            function createObjButton(dataObject, myContent, myClass) {
-                var exportButton = "<a href='#' data-obj='" + dataObject + "' download='" + dataObject.name + "' role='button' class='" + bootstrapClass + bootstrapTheme + myClass + "'>" + myContent + "</a>";
+            function createObjButton(dataObject, myFile, myContent, myClass) {
+                var exportButton = "<a href='#' data-obj='" + dataObject + "' download='" + myFile + "' role='button' class='" + bootstrapClass + bootstrapTheme + myClass + "'>" + myContent + "</a>";
                 checkCaption(exportButton);
                 addListener(myClass)
             }
