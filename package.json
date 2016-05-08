@@ -15,7 +15,9 @@
     "xlsx",
     "xls",
     "csv",
-    "txt"
+    "txt",
+    "jquery-plugin",
+    "ecosystem:jquery"
   ],
   "scripts": {
     "test": "gulp"
