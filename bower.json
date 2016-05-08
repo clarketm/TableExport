@@ -1,6 +1,6 @@
 {
   "name": "tableexport.js",
-  "version": "3.1.2",
+  "version": "3.1.3",
   "authors": [
     "clarketm <travis.m.clarke@gmail.com>"
   ],
@@ -15,7 +15,9 @@
     "xlsx",
     "xls",
     "csv",
-    "txt"
+    "txt",
+    "jquery-plugin",
+    "ecosystem:jquery"
   ],
   "dependencies": {
     "Blob": "*",

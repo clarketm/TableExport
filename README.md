@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
-# TableExport
+# [TableExport](http://www.clarketravis.com/tableexport)
 The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, and txt files
 
 ## Getting Started
@@ -32,7 +32,7 @@ $ npm install tableexport
 
 ##### Optional / Theming:
 
-[Bootstrap] (http://getbootstrap.com/getting-started/#download) (3.1.0 or higher)
+[Bootstrap](http://getbootstrap.com/getting-started/#download) (3.1.0 or higher)
 
 ##### Add-Ons:
 In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, you must include the following third-party scripts to your project before TableExport.js.
@@ -61,7 +61,7 @@ To support **.xlsx** in older browsers ( **Firefox** < 20, **Opera** < 15, **Saf
 
 ### CSS
 
-By default, [TableExport.js](http://www.clarketravis.com/tableexport) utilizes the [Bootstrap] (http://getbootstrap.com/getting-started/#download) CSS framework to deliver enhanced table and button styling. For non-Bootstrap projects, initialize with the `bootstrap` property set to `false`.
+By default, [TableExport.js](http://www.clarketravis.com/tableexport) utilizes the [Bootstrap](http://getbootstrap.com/getting-started/#download) CSS framework to deliver enhanced table and button styling. For non-Bootstrap projects, initialize with the `bootstrap` property set to `false`.
 
 ```js
 $("table").tableExport({

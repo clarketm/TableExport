@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v3.1.2 (http://www.clarketravis.com)
+ * TableExport.js v3.1.3 (http://www.clarketravis.com)
  * Copyright 2015 Travis Clarke
  * Licensed under the MIT license
  */
@@ -31,15 +31,16 @@
                 exporters = {
                     xlsx: function (rDel, name) {
                         var dataURL = $rows.map(function (i, val) {
-                                var $cols = $(val).find('th, td');
-                                return $cols.map(function (i, val) {
-                                    return $(val).text()
-                                });
-                            }).get(),
-                            dataObject = JSON.stringify({
+                              var $cols = $(val).find('th, td');
+                              return [$cols.map(function (i, val) {
+                                  return $(val).text();
+                              }).get()];
+                          }).get(),
+                            dataObject = escapeHtml(
+                              JSON.stringify({
                                 data: dataURL,
                                 name: name
-                            }).replace(/'/g, "&#39;"),
+                            })),
                             myFile = name + ".xlsx",
                             myContent = $.fn.tableExport.xlsx.buttonContent,
                             myClass = $.fn.tableExport.xlsx.defaultClass;
@@ -47,11 +48,11 @@
                     },
                     xls: function (rdel, name) {
                         var colD = $.fn.tableExport.xls.separator,
-                            dataURL = 'data:application/vnd.ms-excel;charset=utf-16,' +
+                            dataURL = 'data:application/vnd.ms-excel;charset=utf-8,' +
                                 encodeURIComponent($rows.map(function (i, val) {
                                     var $cols = $(val).find('th, td');
                                     return $cols.map(function (i, val) {
-                                        return $(val).html()
+                                        return $(val).text();
                                     }).get().join(colD);
                                 }).get().join(rdel)),
                             myFile = name + ".xls",
@@ -62,11 +63,11 @@
                     csv: function (rdel, name) {
                         rdel = '"' + rdel + '"';
                         var colD = '"' + $.fn.tableExport.csv.separator + '"',
-                            dataURL = 'data:text/csv;charset=utf-16,' +
+                            dataURL = 'data:text/csv;charset=utf-8,' +
                                 encodeURIComponent('"' + $rows.map(function (i, val) {
                                         var $cols = $(val).find('th, td');
                                         return $cols.map(function (i, val) {
-                                            return $(val).text().replace(/"/g, '""')
+                                            return $(val).text().replace(/"/g, '""');
                                         }).get().join(colD);
                                     }).get().join(rdel) + '"'),
                             myFile = name + ".csv",
@@ -76,11 +77,11 @@
                     },
                     txt: function (rdel, name) {
                         var colD = $.fn.tableExport.txt.separator,
-                            dataURL = 'data:text/plain;charset=utf-16,' +
+                            dataURL = 'data:text/plain;charset=utf-8,' +
                                 encodeURIComponent($rows.map(function (i, val) {
                                     var $cols = $(val).find('th, td');
                                     return $cols.map(function (i, val) {
-                                        return $(val).text()
+                                        return $(val).text();
                                     }).get().join(colD);
                                 }).get().join(rdel)),
                             myFile = name + ".txt",
@@ -167,6 +168,14 @@
     $.fn.tableExport.bootstrap = ["btn", "btn-default", "btn-toolbar"];
 
     $.fn.tableExport.rowDel = "\r\n";
+
+    $.fn.tableExport.entityMap = {"&": "&#38;", "<": "&#60;", ">": "&#62;", "'": '&#39;', "/": '&#47'};
+
+    function escapeHtml(string) {
+        return String(string).replace(/[&<>'\/]/g, function (s) {
+            return $.fn.tableExport.entityMap[s];
+        });
+    }
 
     function dateNum(v, date1904) {
         if (date1904) v += 1462;
