@@ -115,34 +115,45 @@ Each button is assigned a default class and default content based on its respect
 /* Excel Open XML spreadsheet (.xlsx) */
 $.fn.tableExport.xlsx = {
     defaultClass: "xlsx",
-    buttonContent: "Export to xlsx"
+    buttonContent: "Export to xlsx",
+    mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    fileExtension: ".xlsx"
 };
 
 /* Excel Binary spreadsheet (.xls) */
 $.fn.tableExport.xls = {
     defaultClass: "xls",
     buttonContent: "Export to xls",
-    separator: "\t"
+    separator: "\t",
+    mimeType: "application/vnd.ms-excel",
+    fileExtension: ".xls"
 };
 
 /* Comma Separated Values (.csv) */
 $.fn.tableExport.csv = {
     defaultClass: "csv",
     buttonContent: "Export to csv",
-    separator: ","
+    separator: ",",
+    mimeType: "text/csv",
+    fileExtension: ".csv"
 };
 
 /* Plain Text (.txt) */
 $.fn.tableExport.txt = {
     defaultClass: "txt",
     buttonContent: "Export to txt",
-    separator: "  "
+    separator: "  ",
+    mimeType: "text/plain",
+    fileExtension: ".txt"
 };
 ```
 
 Below are additional defaults to support the functionality of the plugin that.
 
 ```js
+/* default charset */
+$.fn.tableExport.charset = "charset=utf-8";
+
 /* default filename if "id" attribute is set and undefined */
 $.fn.tableExport.defaultFileName = "myDownload";
 
