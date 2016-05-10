@@ -38,7 +38,7 @@ $ npm install tableexport
 * [Bootstrap](http://getbootstrap.com/getting-started/#download) (3.1.0 or higher)
 
 ##### Add-Ons:
-In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, you must include the following third-party script to your project before TableExport.js.
+In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, you must include the following third-party script to your project before [FileSaver.js](https://github.com/eligrey/FileSaver.js/) and [TableExport.js](http://www.clarketravis.com/tableexport).
 
 * SheetJS -> [xlsx-core.js](https://github.com/SheetJS/js-xlsx)
 
@@ -49,7 +49,7 @@ In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, 
 <script src="tableexport.js"></script>
 ```
 
-To support older browsers ( **Firefox** < 20, **Opera** < 15, **Safari** < 6 ) also include [blob.js](https://github.com/eligrey/Blob.js/) before the filesaver.js script.
+To support older browsers ( **Firefox** < 20, **Opera** < 15, **Safari** < 6 ) also include [Blob.js](https://github.com/eligrey/Blob.js/) before the [FileSaver.js](https://github.com/eligrey/FileSaver.js/) script.
 
 ```html
 <script src="xlsx-core.js"></script>
