@@ -6,7 +6,7 @@ The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, an
 
 ### Download and Setup
 
-To use this plugin, include the [jQuery](https://jquery.com) library, [FileSaver.js](https://github.com/eligrey/FileSaver.js/) script, and the [TableExport.js](http://www.clarketravis.com/tableexport) plugin before the closing `<body>` tag of your HTML document:
+To use this plugin, include the [jQuery](https://jquery.com) library, [FileSaver.js](https://github.com/eligrey/FileSaver.js/) script, and [TableExport.js](http://www.clarketravis.com/tableexport) plugin before the closing `<body>` tag of your HTML document:
 
 ```html
 <script src="jquery.js"></script>
@@ -153,7 +153,7 @@ $.fn.tableExport.txt = {
 Below are additional defaults to support the functionality of the plugin that.
 
 ```js
-/* default charset */
+/* default charset encoding (UTF-8) */
 $.fn.tableExport.charset = "charset=utf-8";
 
 /* default filename if "id" attribute is set and undefined */
