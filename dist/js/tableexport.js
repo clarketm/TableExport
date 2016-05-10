@@ -12,7 +12,10 @@
     $.fn.tableExport = function (options) {
 
         var settings = $.extend({}, $.fn.tableExport.defaults, options),
-            rowD = $.fn.tableExport.rowDel, bootstrapClass, bootstrapTheme, bootstrapSpacing;
+            rowD = $.fn.tableExport.rowDel,
+            ignoreRows = settings.ignoreRows instanceof Array ? settings.ignoreRows : [settings.ignoreRows],
+            ignoreCols = settings.ignoreCols instanceof Array ? settings.ignoreCols : [settings.ignoreCols],
+            bootstrapClass, bootstrapTheme, bootstrapSpacing;
 
         if (settings.bootstrap) {
             bootstrapClass = $.fn.tableExport.bootstrap[0] + " ";
@@ -23,16 +26,18 @@
             bootstrapTheme = bootstrapSpacing = "";
         }
 
-
         return this.each(function () {
             var $el = $(this),
                 $rows = settings.headings ? $el.find('tr') : $el.find('tr:has(td)'),
+                thAdj = settings.headings ? 1 : 0,
                 fileName = settings.fileName === "id" ? ($el.attr('id') ? $el.attr('id') : $.fn.tableExport.defaultFileName) : settings.fileName,
                 exporters = {
                     xlsx: function (rDel, name) {
                         var dataURL = $rows.map(function (i, val) {
+                            if (!!~ignoreRows.indexOf(i-thAdj)) { return;}
                                 var $cols = $(val).find('th, td');
                                 return [$cols.map(function (i, val) {
+                                    if (!!~ignoreCols.indexOf(i)) { return;}
                                     return $(val).text();
                                 }).get()];
                             }).get(),
@@ -50,8 +55,10 @@
                     xls: function (rdel, name) {
                         var colD = $.fn.tableExport.xls.separator,
                             dataURL = $rows.map(function (i, val) {
+                                if (!!~ignoreRows.indexOf(i-thAdj)) { return;}
                                 var $cols = $(val).find('th, td');
                                 return $cols.map(function (i, val) {
+                                    if (!!~ignoreCols.indexOf(i)) { return;}
                                     return $(val).text();
                                 }).get().join(colD);
                             }).get().join(rdel),
@@ -70,8 +77,10 @@
                         rdel = '"' + rdel + '"';
                         var colD = '"' + $.fn.tableExport.csv.separator + '"',
                             dataURL = '"' + $rows.map(function (i, val) {
+                                    if (!!~ignoreRows.indexOf(i-thAdj)) { return;}
                                     var $cols = $(val).find('th, td');
                                     return $cols.map(function (i, val) {
+                                        if (!!~ignoreCols.indexOf(i)) { return;}
                                         return $(val).text().replace(/"/g, '""');
                                     }).get().join(colD);
                                 }).get().join(rdel) + '"',
@@ -89,8 +98,10 @@
                     txt: function (rdel, name) {
                         var colD = $.fn.tableExport.txt.separator,
                             dataURL = $rows.map(function (i, val) {
+                                if (!!~ignoreRows.indexOf(i-thAdj)) { return;}
                                 var $cols = $(val).find('th, td');
                                 return $cols.map(function (i, val) {
+                                    if (!!~ignoreCols.indexOf(i)) { return;}
                                     return $(val).text();
                                 }).get().join(colD);
                             }).get().join(rdel),
@@ -145,10 +156,12 @@
     // Define the plugin default properties.
     $.fn.tableExport.defaults = {
         headings: true,                           // (Boolean), display table headings (th elements) in the first row, (default: true)
-        formats: ["xls", "csv", "txt"],           // (String[]), filetype for the export, (default: ["xls", "csv", "txt"])
+        formats: ["xls", "csv", "txt"],           // (String[]), filetype(s) for the export, (default: ["xls", "csv", "txt"])
         fileName: "id",                           // (id, String), filename for the downloaded file, (default: "id")
         bootstrap: true,                          // (Boolean), style buttons using bootstrap, (default: true)
-        position: "bottom"                        // (top, bottom), position of the caption element relative to table, (default: "bottom")
+        position: "bottom",                       // (top, bottom), position of the caption element relative to table, (default: "bottom")
+        ignoreRows: null,                         // (Number, Number[]), row indices to exclude from the exported file (default: null)
+        ignoreCols: null                          // (Number, Number[]), column indices to exclude from the exported file (default: null)
     };
 
     $.fn.tableExport.charset = "charset=utf-8";
