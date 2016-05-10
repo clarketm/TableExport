@@ -74,16 +74,15 @@
                         createObjButton(dataObject, name, myContent, myClass);
                     },
                     csv: function (rdel, name) {
-                        rdel = '"' + rdel + '"';
-                        var colD = '"' + $.fn.tableExport.csv.separator + '"',
-                            dataURL = '"' + $rows.map(function (i, val) {
-                                    if (!!~ignoreRows.indexOf(i-thAdj)) { return;}
-                                    var $cols = $(val).find('th, td');
-                                    return $cols.map(function (i, val) {
-                                        if (!!~ignoreCols.indexOf(i)) { return;}
-                                        return $(val).text().replace(/"/g, '""');
-                                    }).get().join(colD);
-                                }).get().join(rdel) + '"',
+                        var colD = $.fn.tableExport.csv.separator,
+                            dataURL = $rows.map(function (i, val) {
+                                if (!!~ignoreRows.indexOf(i-thAdj)) { return;}
+                                var $cols = $(val).find('th, td');
+                                return $cols.map(function (i, val) {
+                                    if (!!~ignoreCols.indexOf(i)) { return;}
+                                    return $(val).text();
+                                }).get().join(colD);
+                            }).get().join(rdel),
                             dataObject = escapeHtml(
                                 JSON.stringify({
                                     data: dataURL,
@@ -185,7 +184,7 @@
         defaultClass: "csv",
         buttonContent: "Export to csv",
         separator: ",",
-        mimeType: "text/csv",
+        mimeType: "application/csv",
         fileExtension: ".csv"
     };
 
