@@ -27,9 +27,7 @@
 .button-default {
     font: bold 12px sans-serif;
     color: #222222;
-    appearance: button;
-    -moz-appearance: button;
-    -webkit-appearance: button;
+    cursor: pointer;
     padding: 5px;
     margin: 5px;
 }

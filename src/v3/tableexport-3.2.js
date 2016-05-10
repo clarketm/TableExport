@@ -130,7 +130,7 @@
             }
 
             function createObjButton(dataObject, myFile, myContent, myClass) {
-                var exportButton = "<a href='#' data-obj='" + dataObject + "' download='" + myFile + "' role='button' class='" + bootstrapClass + bootstrapTheme + myClass + "'>" + myContent + "</a>";
+                var exportButton = "<button data-obj='" + dataObject + "' class='" + bootstrapClass + bootstrapTheme + myClass + "'>" + myContent + "</button>";
                 checkCaption(exportButton);
                 addListener(myClass);
             }
