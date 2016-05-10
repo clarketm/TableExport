@@ -6,10 +6,12 @@ The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, an
 
 ### Download and Setup
 
-To use this plugin, include the [jQuery](https://jquery.com) library and the [TableExport.js](http://www.clarketravis.com/tableexport) plugin before the closing `<body>` tag of your HTML document:
+To use this plugin, include the [jQuery](https://jquery.com) library, [FileSaver.js](https://github.com/eligrey/FileSaver.js/) script, and the [TableExport.js](http://www.clarketravis.com/tableexport) plugin before the closing `<body>` tag of your HTML document:
 
 ```html
 <script src="jquery.js"></script>
+<script src="filesaver.js"></script>
+ ...
 <script src="tableexport.js"></script>
 ```
 
@@ -28,17 +30,17 @@ $ npm install tableexport
 
 ##### Required:
 
-[jQuery](https://jquery.com) (1.2.1 or higher)
+* [jQuery](https://jquery.com) (1.2.1 or higher)
+* [FileSaver.js](https://github.com/eligrey/FileSaver.js/)
 
 ##### Optional / Theming:
 
-[Bootstrap](http://getbootstrap.com/getting-started/#download) (3.1.0 or higher)
+* [Bootstrap](http://getbootstrap.com/getting-started/#download) (3.1.0 or higher)
 
 ##### Add-Ons:
-In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, you must include the following third-party scripts to your project before TableExport.js.
+In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, you must include the following third-party script to your project before TableExport.js.
 
 * SheetJS -> [xlsx-core.js](https://github.com/SheetJS/js-xlsx)
-* Eli Grey -> [filesaver.js](https://github.com/eligrey/FileSaver.js/)
 
 ```html
 <script src="xlsx-core.js"></script>
@@ -47,7 +49,7 @@ In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, 
 <script src="tableexport.js"></script>
 ```
 
-To support **.xlsx** in older browsers ( **Firefox** < 20, **Opera** < 15, **Safari** < 6 ) also include [blob.js](https://github.com/eligrey/Blob.js/) before the filesaver.js script.
+To support older browsers ( **Firefox** < 20, **Opera** < 15, **Safari** < 6 ) also include [blob.js](https://github.com/eligrey/Blob.js/) before the filesaver.js script.
 
 ```html
 <script src="xlsx-core.js"></script>

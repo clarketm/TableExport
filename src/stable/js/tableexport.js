@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v3.1.3 (http://www.clarketravis.com)
+ * TableExport.js v3.2.0 (http://www.clarketravis.com)
  * Copyright 2015 Travis Clarke
  * Licensed under the MIT license
  */
@@ -31,63 +31,79 @@
                 exporters = {
                     xlsx: function (rDel, name) {
                         var dataURL = $rows.map(function (i, val) {
-                              var $cols = $(val).find('th, td');
-                              return [$cols.map(function (i, val) {
-                                  return $(val).text();
-                              }).get()];
-                          }).get(),
+                                var $cols = $(val).find('th, td');
+                                return [$cols.map(function (i, val) {
+                                    return $(val).text();
+                                }).get()];
+                            }).get(),
                             dataObject = escapeHtml(
-                              JSON.stringify({
-                                data: dataURL,
-                                name: name
-                            })),
-                            myFile = name + ".xlsx",
+                                JSON.stringify({
+                                    data: dataURL,
+                                    fileName: name,
+                                    mimeType: $.fn.tableExport.xlsx.mimeType,
+                                    fileExtension: $.fn.tableExport.xlsx.fileExtension
+                                })),
                             myContent = $.fn.tableExport.xlsx.buttonContent,
                             myClass = $.fn.tableExport.xlsx.defaultClass;
-                        createObjButton(dataObject, myFile, myContent, myClass);
+                        createObjButton(dataObject, name, myContent, myClass);
                     },
                     xls: function (rdel, name) {
                         var colD = $.fn.tableExport.xls.separator,
-                            dataURL = 'data:application/vnd.ms-excel;charset=utf-8,' +
-                                encodeURIComponent($rows.map(function (i, val) {
-                                    var $cols = $(val).find('th, td');
-                                    return $cols.map(function (i, val) {
-                                        return $(val).text();
-                                    }).get().join(colD);
-                                }).get().join(rdel)),
-                            myFile = name + ".xls",
+                            dataURL = $rows.map(function (i, val) {
+                                var $cols = $(val).find('th, td');
+                                return $cols.map(function (i, val) {
+                                    return $(val).text();
+                                }).get().join(colD);
+                            }).get().join(rdel),
+                            dataObject = escapeHtml(
+                                JSON.stringify({
+                                    data: dataURL,
+                                    fileName: name,
+                                    mimeType: $.fn.tableExport.xls.mimeType,
+                                    fileExtension: $.fn.tableExport.xls.fileExtension
+                                })),
                             myContent = $.fn.tableExport.xls.buttonContent,
                             myClass = $.fn.tableExport.xls.defaultClass;
-                        createButton(dataURL, myFile, myContent, myClass);
+                        createObjButton(dataObject, name, myContent, myClass);
                     },
                     csv: function (rdel, name) {
                         rdel = '"' + rdel + '"';
                         var colD = '"' + $.fn.tableExport.csv.separator + '"',
-                            dataURL = 'data:text/csv;charset=utf-8,' +
-                                encodeURIComponent('"' + $rows.map(function (i, val) {
-                                        var $cols = $(val).find('th, td');
-                                        return $cols.map(function (i, val) {
-                                            return $(val).text().replace(/"/g, '""');
-                                        }).get().join(colD);
-                                    }).get().join(rdel) + '"'),
-                            myFile = name + ".csv",
+                            dataURL = '"' + $rows.map(function (i, val) {
+                                    var $cols = $(val).find('th, td');
+                                    return $cols.map(function (i, val) {
+                                        return $(val).text().replace(/"/g, '""');
+                                    }).get().join(colD);
+                                }).get().join(rdel) + '"',
+                            dataObject = escapeHtml(
+                                JSON.stringify({
+                                    data: dataURL,
+                                    fileName: name,
+                                    mimeType: $.fn.tableExport.csv.mimeType,
+                                    fileExtension: $.fn.tableExport.csv.fileExtension
+                                })),
                             myContent = $.fn.tableExport.csv.buttonContent,
                             myClass = $.fn.tableExport.csv.defaultClass;
-                        createButton(dataURL, myFile, myContent, myClass);
+                        createObjButton(dataObject, name, myContent, myClass);
                     },
                     txt: function (rdel, name) {
                         var colD = $.fn.tableExport.txt.separator,
-                            dataURL = 'data:text/plain;charset=utf-8,' +
-                                encodeURIComponent($rows.map(function (i, val) {
-                                    var $cols = $(val).find('th, td');
-                                    return $cols.map(function (i, val) {
-                                        return $(val).text();
-                                    }).get().join(colD);
-                                }).get().join(rdel)),
-                            myFile = name + ".txt",
+                            dataURL = $rows.map(function (i, val) {
+                                var $cols = $(val).find('th, td');
+                                return $cols.map(function (i, val) {
+                                    return $(val).text();
+                                }).get().join(colD);
+                            }).get().join(rdel),
+                            dataObject = escapeHtml(
+                                JSON.stringify({
+                                    data: dataURL,
+                                    fileName: name,
+                                    mimeType: $.fn.tableExport.txt.mimeType,
+                                    fileExtension: $.fn.tableExport.txt.fileExtension
+                                })),
                             myContent = $.fn.tableExport.txt.buttonContent,
                             myClass = $.fn.tableExport.txt.defaultClass;
-                        createButton(dataURL, myFile, myContent, myClass);
+                        createObjButton(dataObject, name, myContent, myClass);
                     }
                 };
 
@@ -102,15 +118,10 @@
                 $caption.length ? $caption.append(exportButton) : $el.prepend('<caption class="' + bootstrapSpacing + settings.position + '">' + exportButton + '</caption>');
             }
 
-            function createButton(dataURL, myFile, myContent, myClass) {
-                var exportButton = '<a href="' + dataURL + '" download="' + myFile + '" role="button" class="' + bootstrapClass + bootstrapTheme + myClass + '">' + myContent + '</a>';
-                checkCaption(exportButton);
-            }
-
             function createObjButton(dataObject, myFile, myContent, myClass) {
                 var exportButton = "<a href='#' data-obj='" + dataObject + "' download='" + myFile + "' role='button' class='" + bootstrapClass + bootstrapTheme + myClass + "'>" + myContent + "</a>";
                 checkCaption(exportButton);
-                addListener(myClass)
+                addListener(myClass);
             }
 
             function addListener(el) {
@@ -120,8 +131,10 @@
                         e.preventDefault();
                         var object = $(this).data("obj"),
                             data = object.data,
-                            fileName = object.name;
-                        export2xlsx(data, fileName);
+                            fileName = object.fileName,
+                            mimeType = object.mimeType,
+                            fileExtension = object.fileExtension;
+                        export2file(data, mimeType, fileName, fileExtension);
                     }
                 });
             }
@@ -138,27 +151,37 @@
         position: "bottom"                        // (top, bottom), position of the caption element relative to table, (default: "bottom")
     };
 
+    $.fn.tableExport.charset = "charset=utf-8";
+
     $.fn.tableExport.xlsx = {
         defaultClass: "xlsx",
-        buttonContent: "Export to xlsx"
+        buttonContent: "Export to xlsx",
+        mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        fileExtension: ".xlsx"
     };
 
     $.fn.tableExport.xls = {
         defaultClass: "xls",
         buttonContent: "Export to xls",
-        separator: "\t"
+        separator: "\t",
+        mimeType: "application/vnd.ms-excel",
+        fileExtension: ".xls"
     };
 
     $.fn.tableExport.csv = {
         defaultClass: "csv",
         buttonContent: "Export to csv",
-        separator: ","
+        separator: ",",
+        mimeType: "text/csv",
+        fileExtension: ".csv"
     };
 
     $.fn.tableExport.txt = {
         defaultClass: "txt",
         buttonContent: "Export to txt",
-        separator: "  "
+        separator: "  ",
+        mimeType: "text/plain",
+        fileExtension: ".txt"
     };
 
     $.fn.tableExport.defaultFileName = "myDownload";
@@ -225,18 +248,22 @@
         return buf;
     }
 
-    function export2xlsx(data, name) {
-        var wb = new Workbook(),
-            ws = createSheet(data);
+    function export2file(data, mime, name, extension) {
+        if (extension === ".xlsx") {
+            var wb = new Workbook(),
+                ws = createSheet(data);
 
-        wb.SheetNames.push(name);
-        wb.Sheets[name] = ws;
+            wb.SheetNames.push(name);
+            wb.Sheets[name] = ws;
 
-        var wopts = {bookType: 'xlsx', bookSST: false, type: 'binary'};
-        var wbout = XLSX.write(wb, wopts);
+            var wopts = {bookType: 'xlsx', bookSST: false, type: 'binary'},
+                wbout = XLSX.write(wb, wopts);
 
-        saveAs(new Blob([string2ArrayBuffer(wbout)],
-            {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}),
-            name + ".xlsx");
+            data = string2ArrayBuffer(wbout);
+        }
+        saveAs(new Blob([data],
+            {type: mime + ";" + $.fn.tableExport.charset}),
+            name + extension);
     }
+
 }(window));
