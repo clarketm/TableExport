@@ -136,7 +136,7 @@ $.fn.tableExport.csv = {
     defaultClass: "csv",
     buttonContent: "Export to csv",
     separator: ",",
-    mimeType: "text/csv",
+    mimeType: "application/csv",
     fileExtension: ".csv"
 };
 
