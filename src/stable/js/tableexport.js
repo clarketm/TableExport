@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v3.2.0 (http://www.clarketravis.com)
+ * TableExport.js v3.2.1 (http://www.clarketravis.com)
  * Copyright 2015 Travis Clarke
  * Licensed under the MIT license
  */
@@ -15,6 +15,7 @@
             rowD = $.fn.tableExport.rowDel,
             ignoreRows = settings.ignoreRows instanceof Array ? settings.ignoreRows : [settings.ignoreRows],
             ignoreCols = settings.ignoreCols instanceof Array ? settings.ignoreCols : [settings.ignoreCols],
+            ignoreCSS = settings.ignoreCSS instanceof Array ? settings.ignoreCSS.join(", ") : settings.ignoreCSS,
             bootstrapClass, bootstrapTheme, bootstrapSpacing;
 
         if (settings.bootstrap) {
@@ -36,10 +37,11 @@
                 exporters = {
                     xlsx: function (rDel, name) {
                         var dataURL = $rows.map(function (i, val) {
-                                if (!!~ignoreRows.indexOf(i-thAdj)) { return;}
+                                if (!!~ignoreRows.indexOf(i-thAdj) || $(val).is(ignoreCSS)) { return;}
                                 var $cols = $(val).find('th, td');
                                 return [$cols.map(function (i, val) {
-                                    if (!!~ignoreCols.indexOf(i)) { return;}
+                                    if (!!~ignoreCols.indexOf(i) || $(val).is(ignoreCSS)) { return;}
+                                    console.log($(val).is(ignoreCSS));
                                     return $(val).text();
                                 }).get()];
                             }).get(),
@@ -57,10 +59,10 @@
                     xls: function (rdel, name) {
                         var colD = $.fn.tableExport.xls.separator,
                             dataURL = $rows.map(function (i, val) {
-                                if (!!~ignoreRows.indexOf(i-thAdj)) { return;}
+                                if (!!~ignoreRows.indexOf(i-thAdj) || $(val).is(ignoreCSS)) { return;}
                                 var $cols = $(val).find('th, td');
                                 return $cols.map(function (i, val) {
-                                    if (!!~ignoreCols.indexOf(i)) { return;}
+                                    if (!!~ignoreCols.indexOf(i) || $(val).is(ignoreCSS)) { return;}
                                     return $(val).text();
                                 }).get().join(colD);
                             }).get().join(rdel),
@@ -78,10 +80,10 @@
                     csv: function (rdel, name) {
                         var colD = $.fn.tableExport.csv.separator,
                             dataURL = $rows.map(function (i, val) {
-                                if (!!~ignoreRows.indexOf(i-thAdj)) { return;}
+                                if (!!~ignoreRows.indexOf(i-thAdj) || $(val).is(ignoreCSS)) { return;}
                                 var $cols = $(val).find('th, td');
                                 return $cols.map(function (i, val) {
-                                    if (!!~ignoreCols.indexOf(i)) { return;}
+                                    if (!!~ignoreCols.indexOf(i) || $(val).is(ignoreCSS)) { return;}
                                     return $(val).text();
                                 }).get().join(colD);
                             }).get().join(rdel),
@@ -99,10 +101,10 @@
                     txt: function (rdel, name) {
                         var colD = $.fn.tableExport.txt.separator,
                             dataURL = $rows.map(function (i, val) {
-                                if (!!~ignoreRows.indexOf(i-thAdj)) { return;}
+                                if (!!~ignoreRows.indexOf(i-thAdj) || $(val).is(ignoreCSS)) { return;}
                                 var $cols = $(val).find('th, td');
                                 return $cols.map(function (i, val) {
-                                    if (!!~ignoreCols.indexOf(i)) { return;}
+                                    if (!!~ignoreCols.indexOf(i) || $(val).is(ignoreCSS)) { return;}
                                     return $(val).text();
                                 }).get().join(colD);
                             }).get().join(rdel),
@@ -136,14 +138,16 @@
             }
         });
 
-        $("button[data-fileblob]").on("click", function () {
-            var object = $(this).data("fileblob"),
-                data = object.data,
-                fileName = object.fileName,
-                mimeType = object.mimeType,
-                fileExtension = object.fileExtension;
-            export2file(data, mimeType, fileName, fileExtension);
-        });
+        $("button[data-fileblob]")
+            .off("click")
+            .on("click", function () {
+                var object = $(this).data("fileblob"),
+                    data = object.data,
+                    fileName = object.fileName,
+                    mimeType = object.mimeType,
+                    fileExtension = object.fileExtension;
+                export2file(data, mimeType, fileName, fileExtension);
+            });
     };
 
     // Define the plugin default properties.
@@ -155,7 +159,8 @@
         bootstrap: true,                            // (Boolean), style buttons using bootstrap, (default: true)
         position: "bottom",                         // (top, bottom), position of the caption element relative to table, (default: "bottom")
         ignoreRows: null,                           // (Number, Number[]), row indices to exclude from the exported file (default: null)
-        ignoreCols: null                            // (Number, Number[]), column indices to exclude from the exported file (default: null)
+        ignoreCols: null,                           // (Number, Number[]), column indices to exclude from the exported file (default: null)
+        ignoreCSS: ".tableexport-ignore"            // (selector, selector[]), selector(s) to exclude from the exported file (default: ".tableexport-ignore")
     };
 
     $.fn.tableExport.charset = "charset=utf-8";
