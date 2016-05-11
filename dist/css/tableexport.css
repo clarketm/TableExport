@@ -48,20 +48,20 @@
 
 .xlsx:before {
     background-color: darkgreen;
-    content: url("../img/ixlsx.png");
+    content: url("../img/xlsx.svg");
 }
 
 .xls:before {
     background-color: green;
-    content: url("../img/ixls.png");
+    content: url("../img/xls.svg");
 }
 
 .csv:before {
     background-color: blue;
-    content: url("../img/icsv.png");
+    content: url("../img/csv.svg");
 }
 
 .txt:before {
     background-color: purple;
-    content: url("../img/itxt.png");
+    content: url("../img/txt.svg");
 }
