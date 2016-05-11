@@ -26,15 +26,17 @@
             bootstrapTheme = bootstrapSpacing = "";
         }
 
-        return this.each(function () {
+        this.each(function () {
             var $el = $(this),
-                $rows = settings.headings ? $el.find('tr') : $el.find('tr:has(td)'),
-                thAdj = settings.headings ? 1 : 0,
+                $rows =  $el.find('tbody').find('tr'),
+                $rows = settings.headings ? $rows.add($el.find('thead>tr')) : $rows,
+                $rows = settings.footers ? $rows.add($el.find('tfoor>tr')) : $rows,
+                thAdj = settings.headings ? $el.find('thead>tr').length : 0,
                 fileName = settings.fileName === "id" ? ($el.attr('id') ? $el.attr('id') : $.fn.tableExport.defaultFileName) : settings.fileName,
                 exporters = {
                     xlsx: function (rDel, name) {
                         var dataURL = $rows.map(function (i, val) {
-                            if (!!~ignoreRows.indexOf(i-thAdj)) { return;}
+                                if (!!~ignoreRows.indexOf(i-thAdj)) { return;}
                                 var $cols = $(val).find('th, td');
                                 return [$cols.map(function (i, val) {
                                     if (!!~ignoreCols.indexOf(i)) { return;}
@@ -50,7 +52,7 @@
                                 })),
                             myContent = $.fn.tableExport.xlsx.buttonContent,
                             myClass = $.fn.tableExport.xlsx.defaultClass;
-                        createObjButton(dataObject, name, myContent, myClass);
+                        createObjButton(dataObject, myContent, myClass);
                     },
                     xls: function (rdel, name) {
                         var colD = $.fn.tableExport.xls.separator,
@@ -71,7 +73,7 @@
                                 })),
                             myContent = $.fn.tableExport.xls.buttonContent,
                             myClass = $.fn.tableExport.xls.defaultClass;
-                        createObjButton(dataObject, name, myContent, myClass);
+                        createObjButton(dataObject, myContent, myClass);
                     },
                     csv: function (rdel, name) {
                         var colD = $.fn.tableExport.csv.separator,
@@ -92,7 +94,7 @@
                                 })),
                             myContent = $.fn.tableExport.csv.buttonContent,
                             myClass = $.fn.tableExport.csv.defaultClass;
-                        createObjButton(dataObject, name, myContent, myClass);
+                        createObjButton(dataObject, myContent, myClass);
                     },
                     txt: function (rdel, name) {
                         var colD = $.fn.tableExport.txt.separator,
@@ -113,7 +115,7 @@
                                 })),
                             myContent = $.fn.tableExport.txt.buttonContent,
                             myClass = $.fn.tableExport.txt.defaultClass;
-                        createObjButton(dataObject, name, myContent, myClass);
+                        createObjButton(dataObject, myContent, myClass);
                     }
                 };
 
@@ -128,39 +130,32 @@
                 $caption.length ? $caption.append(exportButton) : $el.prepend('<caption class="' + bootstrapSpacing + settings.position + '">' + exportButton + '</caption>');
             }
 
-            function createObjButton(dataObject, myFile, myContent, myClass) {
-                var exportButton = "<button data-obj='" + dataObject + "' class='" + bootstrapClass + bootstrapTheme + myClass + "'>" + myContent + "</button>";
+            function createObjButton(dataObject, myContent, myClass) {
+                var exportButton = "<button data-fileblob='" + dataObject + "' class='" + bootstrapClass + bootstrapTheme + myClass + "'>" + myContent + "</button>";
                 checkCaption(exportButton);
-                addListener(myClass);
             }
+        });
 
-            function addListener(el) {
-                var $el = "." + el;
-                return $($el).on("click", function (e) {
-                    if ($(this).data("obj")) {
-                        e.preventDefault();
-                        var object = $(this).data("obj"),
-                            data = object.data,
-                            fileName = object.fileName,
-                            mimeType = object.mimeType,
-                            fileExtension = object.fileExtension;
-                        export2file(data, mimeType, fileName, fileExtension);
-                    }
-                });
-            }
-
+        $("button[data-fileblob]").on("click", function () {
+            var object = $(this).data("fileblob"),
+                data = object.data,
+                fileName = object.fileName,
+                mimeType = object.mimeType,
+                fileExtension = object.fileExtension;
+            export2file(data, mimeType, fileName, fileExtension);
         });
     };
 
     // Define the plugin default properties.
     $.fn.tableExport.defaults = {
-        headings: true,                           // (Boolean), display table headings (th elements) in the first row, (default: true)
+        headings: true,                           // (Boolean), display table headings (th or td elements) in the <thead>, (default: true)
+        footers: false,                           // (Boolean), display table footers (th or td elements) in the <tfoot>, (default: false)
         formats: ["xls", "csv", "txt"],           // (String[]), filetype(s) for the export, (default: ["xls", "csv", "txt"])
         fileName: "id",                           // (id, String), filename for the downloaded file, (default: "id")
         bootstrap: true,                          // (Boolean), style buttons using bootstrap, (default: true)
         position: "bottom",                       // (top, bottom), position of the caption element relative to table, (default: "bottom")
         ignoreRows: null,                         // (Number, Number[]), row indices to exclude from the exported file (default: null)
-        ignoreCols: null                          // (Number, Number[]), column indices to exclude from the exported file (default: null)
+        ignoreCols: null                         // (Number, Number[]), column indices to exclude from the exported file (default: null)
     };
 
     $.fn.tableExport.charset = "charset=utf-8";
