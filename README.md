@@ -88,7 +88,8 @@ Notice that by default, TableExport will create export buttons for three differe
 ```js
 /* Defaults */
 $("table").tableExport({
-    headings: true,                    // (Boolean), display table headings (th elements) in the first row
+    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>>
+    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
     formats: ["xls", "csv", "txt"],    // (String[]), filetype(s) for the export
     fileName: "id",                    // (id, String), filename for the downloaded file
     bootstrap: true,                   // (Boolean), style buttons using bootstrap
