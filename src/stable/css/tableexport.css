@@ -48,12 +48,12 @@
 
 .xlsx:before {
     content: "";
-    background: darkgreen url(../img/csv.svg) no-repeat center;
+    background: darkgreen url(../img/xlsx.svg) no-repeat center;
 }
 
 .xls:before {
     content: "";
-    background: green url(../img/csv.svg) no-repeat center;
+    background: green url(../img/xls.svg) no-repeat center;
 }
 
 .csv:before {
@@ -63,5 +63,5 @@
 
 .txt:before {
     content: "";
-    background: purple url(../img/csv.svg) no-repeat center;
+    background: purple url(../img/txt.svg) no-repeat center;
 }
