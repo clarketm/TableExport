@@ -1,6 +1,6 @@
 {
   "name": "tableexport.js",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "authors": [
     "clarketm <travis.m.clarke@gmail.com>"
   ],
@@ -9,8 +9,7 @@
   "keywords": [
     "table",
     "export",
-    "table",
-    "export",
+    "tableexport",
     "Excel",
     "xlsx",
     "xls",

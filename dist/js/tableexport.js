@@ -1,6 +1,6 @@
 /*!
- * TableExport.js v3.2.3 (http://www.clarketravis.com)
- * Copyright 2015 Travis Clarke
+ * TableExport.js v3.2.4 (http://www.clarketravis.com)
+ * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
 
@@ -41,7 +41,6 @@
                                 var $cols = $(val).find('th, td');
                                 return [$cols.map(function (i, val) {
                                     if (!!~ignoreCols.indexOf(i) || $(val).is(ignoreCSS)) { return;}
-                                    console.log($(val).is(ignoreCSS));
                                     return $(val).text();
                                 }).get()];
                             }).get(),
