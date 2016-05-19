@@ -111,7 +111,7 @@ var tables = $("table").tableExport();
 ```js
 /* update */
 tables.tableExport.update({
-    filename: "newFile"         // pass in a new set of options
+    filename: "newFile"         // pass in a new set of properties
 });
 
 /* reset */
@@ -127,8 +127,10 @@ A table of available properties and their usage can be found here:
 ##### [www.clarketravis.com/tableexport](http://www.clarketravis.com/tableexport/#properties)
 
 
-A table of available properties and their usage can be found here:
-##### [www.clarketravis.com/tableexport](http://www.clarketravis.com/tableexport/#properties)
+### Methods
+
+A table of available methods and their usage can be found here:
+##### [www.clarketravis.com/tableexport](http://www.clarketravis.com/tableexport/#methods)
 
 
 ### Settings
