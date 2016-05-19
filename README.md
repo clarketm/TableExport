@@ -115,7 +115,7 @@ tables.tableExport.update({
 })
 
 /* reset */ 
-tables.tableExport.reset();     // useful for a dynamically alter table
+tables.tableExport.reset();     // useful for a dynamically altered table
 
 /* remove */
 table.tableExport.remove();     // removes caption and buttons
