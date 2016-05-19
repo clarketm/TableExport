@@ -101,11 +101,34 @@ $("table").tableExport({
 ```
 > **Note:**  to use the xlsx filetype, you must include the third-party scripts listed in the Dependencies section.
 
+TableExport supports additional methods (**update**, **reset** and **remove**) to control it after creation.
+
+```js
+/* Run plugin and save it to a variable */
+var tables = $("table").tableExport();
+```
+
+```js
+/* update  */
+tables.tableExport.update({
+    filename: "newFile"                 // new set of options
+})
+
+/* reset */ 
+tables.tableExport.reset();             // this is useful when a table is dyanically alterted after intitialization
+
+/* remove */
+table.tableExport.reset();
+```
+
 ### Properties
 
 A table of available properties and their usage can be found here:
 ##### [www.clarketravis.com/tableexport](http://www.clarketravis.com/tableexport/#properties)
 
+
+A table of available properties and their usage can be found here:
+##### [www.clarketravis.com/tableexport](http://www.clarketravis.com/tableexport/#properties)
 
 
 ### Settings

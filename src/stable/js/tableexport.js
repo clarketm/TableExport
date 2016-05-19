@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v3.2.4 (http://www.clarketravis.com)
+ * TableExport.js v3.2.5 (http://www.clarketravis.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -9,9 +9,10 @@
     /*--- GLOBALS ---*/
     var $ = window.jQuery;
 
-    $.fn.tableExport = function (options) {
+    $.fn.tableExport = function (options, isUpdate) {
 
-        var settings = $.extend({}, $.fn.tableExport.defaults, options),
+        var $this = this,
+            settings = isUpdate ? options : $.extend({}, $.fn.tableExport.defaults, options),
             rowD = $.fn.tableExport.rowDel,
             ignoreRows = settings.ignoreRows instanceof Array ? settings.ignoreRows : [settings.ignoreRows],
             ignoreCols = settings.ignoreCols instanceof Array ? settings.ignoreCols : [settings.ignoreCols],
@@ -27,11 +28,12 @@
             bootstrapTheme = bootstrapSpacing = "";
         }
 
-        this.each(function () {
-            var $el = $(this),
-                $rows =  $el.find('tbody').find('tr'),
+        $this.each(function () {
+            var $el = $(this);
+            if (isUpdate) { $el.find('caption:not(.head)').remove();}
+            var $rows = $el.find('tbody').find('tr'),
                 $rows = settings.headings ? $rows.add($el.find('thead>tr')) : $rows,
-                $rows = settings.footers ? $rows.add($el.find('tfoor>tr')) : $rows,
+                $rows = settings.footers ? $rows.add($el.find('tfoot>tr')) : $rows,
                 thAdj = settings.headings ? $el.find('thead>tr').length : 0,
                 fileName = settings.fileName === "id" ? ($el.attr('id') ? $el.attr('id') : $.fn.tableExport.defaultFileName) : settings.fileName,
                 exporters = {
@@ -147,6 +149,22 @@
                     fileExtension = object.fileExtension;
                 export2file(data, mimeType, fileName, fileExtension);
             });
+
+        $.fn.tableExport.update = function (options) {
+            $this.tableExport($.extend({}, settings, options), true)
+        };
+
+        $.fn.tableExport.reset = function (options) {
+            $this.tableExport(settings, true)
+        };
+
+        $.fn.tableExport.remove = function (options) {
+            $this.each(function () {
+                $(this).find('caption:not(.head)').remove();
+            });
+        };
+
+        return $this;
     };
 
     // Define the plugin default properties.
