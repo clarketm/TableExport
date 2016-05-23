@@ -26,6 +26,13 @@ $ bower install tableexport.js
 $ npm install tableexport
 ```
 
+### [CDNjs](https://cdnjs.com/libraries/TableExport)
+|          | uncompressed | compressed |
+| :------: | :----------: | :--------: |
+|  __CSS__ |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.2.5/css/tableexport.css)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.2.5/css/tableexport.min.css)      |
+|  __JS__  |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.2.5/js/tableexport.js)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.2.5/js/tableexport.min.js)      |
+|  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.2.5/img/xlsx.svg)[🔗<sup>xls</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.2.5/img/xls.svg)[🔗<sup>csv</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.2.5/img/csv.svg)[🔗<sup>txt</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.2.5/img/txt.svg)  |
+
 ### Dependencies
 
 ##### Required:
