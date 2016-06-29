@@ -424,6 +424,11 @@
             return new TableExport(this, options, isUpdate);
         };
 
+        // alias the TableExport prototype
+        for (var prop in TableExport.prototype) {
+            $.fn.tableExport[prop] = TableExport.prototype[prop];
+        }
+
         return TableExport;
 
     }
