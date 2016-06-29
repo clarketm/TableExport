@@ -21,7 +21,6 @@
         root.TableExport = factory(root.jQuery, root.saveAs, root.XLSX)
     }
 }(this, function ($, saveAs, XLSX) {
-        console.log(saveAs, XLSX);
         'use strict';
         /**
          * TableExport main plugin constructor
