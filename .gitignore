@@ -1,1 +1,11 @@
+# IDE
+.idea
+*.iml
+
+# Modules
+bower_components
 node_modules
+
+#test
+test
+spec

@@ -117,15 +117,15 @@ var tables = $("table").tableExport();
 
 ```js
 /* update */
-tables.tableExport.update({
+tables.update({
     filename: "newFile"         // pass in a new set of properties
 });
 
 /* reset */
-tables.tableExport.reset();     // useful for a dynamically altered table
+tables.reset();     // useful for a dynamically altered table
 
 /* remove */
-tables.tableExport.remove();     // removes caption and buttons
+tables.remove();     // removes caption and buttons
 ```
 
 ### Properties
