@@ -4,20 +4,25 @@
  * Licensed under the MIT license
  */
 
-;(function (factory) {
-    'use strict';
+;(function (root, factory) {
     if (typeof define === 'function' && define.amd) {
-        define(['jquery', 'file-saver', 'xlsx'], function ($, fs, xlsx) {
-            return factory(window, $, fs.saveAs, xlsx.XLSX);
-        });
-    } else if (typeof exports !== 'undefined') {
-        module.exports = factory(window, require('jquery'), require('file-saver').saveAs, require('xlsx').XLSX);
+        // AMD
+        define(['jquery', 'file-saver', 'xlsx'], factory);
+    } else if (typeof exports === 'object') {
+        // Node, CommonJS-like
+        module.exports = function (root, jQuery) {
+            if (jQuery === undefined) {
+                jQuery = typeof window !== 'undefined' ? require('jquery') : require('jquery')(root);
+            }
+            return factory(jQuery, require('file-saver'), require('xlsx'));
+        };
     } else {
-        factory(window, window.jQuery, window.saveAs, window.XLSX)
+        // Browser globals (root is window)
+        root.TableExport = factory(root.jQuery, root.saveAs, root.XLSX)
     }
-}(function (window, $, saveAs, XLSX) {
+}(this, function ($, saveAs, XLSX) {
+        console.log(saveAs, XLSX);
         'use strict';
-
         /**
          * TableExport main plugin constructor
          * @param selectors {jQuery} jQuery selector(s)
@@ -419,6 +424,8 @@
         $.fn.tableExport = function (options, isUpdate) {
             return new TableExport(this, options, isUpdate);
         };
+
+        return TableExport;
 
     }
 ));
