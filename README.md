@@ -118,14 +118,14 @@ var tables = $("table").tableExport();
 ```js
 /* update */
 tables.update({
-    filename: "newFile"         // pass in a new set of properties
+    filename: "newFile"     // pass in a new set of properties
 });
 
 /* reset */
-tables.reset();     // useful for a dynamically altered table
+tables.reset();             // useful for a dynamically altered table
 
 /* remove */
-tables.remove();     // removes caption and buttons
+tables.remove();            // removes caption and buttons
 ```
 
 ### Properties
