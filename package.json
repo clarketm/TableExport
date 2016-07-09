@@ -48,7 +48,7 @@
     "jasmine": "^2.4.1"
   },
   "license": "MIT",
-  "homepage": "http://www.clarketravis.com",
+  "homepage": "https://www.travismclarke.com",
   "ignore": [
     "**/.*",
     "node_modules",

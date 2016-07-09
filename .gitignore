@@ -1,11 +1,13 @@
-# IDE
-.idea
+# ignore all files in the following directories
+.idea/
 *.iml
-
-# Modules
+/assets
+/.gitignore
+/index.html
+/search
+/test
+.jshintrc
+.DS_store
+*.ico
 bower_components
 node_modules
-
-#test
-test
-spec

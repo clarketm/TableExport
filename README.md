@@ -1,12 +1,12 @@
 [![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
-# [TableExport](http://www.clarketravis.com/tableexport)
+# [TableExport](https://www.travismclarke.com/tableexport)
 The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, and txt files
 
 ## Getting Started
 
 ### Download and Setup
 
-To use this plugin, include the [jQuery](https://jquery.com) library, [FileSaver.js](https://github.com/eligrey/FileSaver.js/) script, and [TableExport.js](http://www.clarketravis.com/tableexport) plugin before the closing `<body>` tag of your HTML document:
+To use this plugin, include the [jQuery](https://jquery.com) library, [FileSaver.js](https://github.com/eligrey/FileSaver.js/) script, and [TableExport.js](https://www.travismclarke.com/tableexport) plugin before the closing `<body>` tag of your HTML document:
 
 ```html
 <script src="jquery.js"></script>
@@ -45,7 +45,7 @@ $ npm install tableexport
 * [Bootstrap](http://getbootstrap.com/getting-started/#download) (3.1.0 or higher)
 
 ##### Add-Ons:
-In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, you must include the following third-party script to your project before [FileSaver.js](https://github.com/eligrey/FileSaver.js/) and [TableExport.js](http://www.clarketravis.com/tableexport).
+In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, you must include the following third-party script to your project before [FileSaver.js](https://github.com/eligrey/FileSaver.js/) and [TableExport.js](https://www.travismclarke.com/tableexport).
 
 * SheetJS -> [xlsx-core.js](https://github.com/SheetJS/js-xlsx)
 
@@ -70,7 +70,7 @@ To support older browsers ( **Firefox** < 20, **Opera** < 15, **Safari** < 6 ) a
 
 ### CSS
 
-By default, [TableExport.js](http://www.clarketravis.com/tableexport) utilizes the [Bootstrap](http://getbootstrap.com/getting-started/#download) CSS framework to deliver enhanced table and button styling. For non-Bootstrap projects, initialize with the `bootstrap` property set to `false`.
+By default, [TableExport.js](https://www.travismclarke.com/tableexport) utilizes the [Bootstrap](http://getbootstrap.com/getting-started/#download) CSS framework to deliver enhanced table and button styling. For non-Bootstrap projects, initialize with the `bootstrap` property set to `false`.
 
 ```js
 $("table").tableExport({
@@ -131,13 +131,13 @@ tables.remove();            // removes caption and buttons
 ### Properties
 
 A table of available properties and their usage can be found here:
-##### [www.clarketravis.com/tableexport](http://www.clarketravis.com/tableexport/#properties)
+##### [www.travismclarke.com/tableexport](https://www.travismclarke.com/tableexport/#properties)
 
 
 ### Methods
 
 A table of available methods and their usage can be found here:
-##### [www.clarketravis.com/tableexport](http://www.clarketravis.com/tableexport/#methods)
+##### [www.travismclarke.com/tableexport](https://www.travismclarke.com/tableexport/#methods)
 
 
 ### Settings
@@ -216,10 +216,10 @@ $.fn.tableExport.rowDel = "\r\n";
 
 ### Live Demo 
 A live, interactive demo can be found here:
-##### [www.clarketravis.com/tableexport](http://www.clarketravis.com/tableexport/#live-demo)
+##### [www.travismclarke.com/tableexport](https://www.travismclarke.com/tableexport/#live-demo)
 
 ### License
-[TableExport.js](http://www.clarketravis.com/tableexport) is licensed under the terms of the [MIT](http://opensource.org/licenses/mit-license.php) License
+[TableExport.js](https://www.travismclarke.com/tableexport) is licensed under the terms of the [MIT](http://opensource.org/licenses/mit-license.php) License
 
 ### Credits
 
