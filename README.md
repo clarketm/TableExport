@@ -130,14 +130,12 @@ tables.remove();            // removes caption and buttons
 
 ### Properties
 
-A table of available properties and their usage can be found here:
-##### [www.travismclarke.com/tableexport](https://www.travismclarke.com/tableexport/#properties)
+A table of available properties and their usage can be found **[here](https://www.travismclarke.com/tableexport/#properties)**
 
 
 ### Methods
 
-A table of available methods and their usage can be found here:
-##### [www.travismclarke.com/tableexport](https://www.travismclarke.com/tableexport/#methods)
+A table of available methods and their usage can be found **[here](https://www.travismclarke.com/tableexport/#methods)**
 
 
 ### Settings
@@ -215,8 +213,7 @@ $.fn.tableExport.rowDel = "\r\n";
 *requires third-party dependencies
 
 ### Live Demo 
-A live, interactive demo can be found here:
-##### [www.travismclarke.com/tableexport](https://www.travismclarke.com/tableexport/#live-demo)
+A live, interactive demo can be found **[here](https://www.travismclarke.com/tableexport/#live-demo)**
 
 ### License
 [TableExport.js](https://www.travismclarke.com/tableexport) is licensed under the terms of the [MIT](http://opensource.org/licenses/mit-license.php) License
