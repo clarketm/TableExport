@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v4.0.0-beta (https://www.travismclarke.com)
+ * TableExport.js v3.2.7 (https://www.travismclarke.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -92,6 +92,30 @@
                                 myClass = TableExport.prototype.xlsx.defaultClass;
                             createObjButton(dataObject, myContent, myClass);
                         },
+                        xlsm: function (rDel, name) {
+                            var dataURL = $rows.map(function (i, val) {
+                                    if (!!~ignoreRows.indexOf(i - thAdj) || $(val).is(ignoreCSS)) {
+                                        return;
+                                    }
+                                    var $cols = $(val).find('th, td');
+                                    return [$cols.map(function (i, val) {
+                                        if (!!~ignoreCols.indexOf(i) || $(val).is(ignoreCSS)) {
+                                            return;
+                                        }
+                                        return $(val).text();
+                                    }).get()];
+                                }).get(),
+                                dataObject = TableExport.prototype.escapeHtml(
+                                    JSON.stringify({
+                                        data: dataURL,
+                                        fileName: name,
+                                        mimeType: TableExport.prototype.xls.mimeType,
+                                        fileExtension: TableExport.prototype.xls.fileExtension
+                                    })),
+                                myContent = TableExport.prototype.xls.buttonContent,
+                                myClass = TableExport.prototype.xls.defaultClass;
+                            createObjButton(dataObject, myContent, myClass);
+                        },
                         xls: function (rdel, name) {
                             var colD = TableExport.prototype.xls.separator,
                                 dataURL = $rows.map(function (i, val) {
@@ -171,7 +195,10 @@
 
                 self.settings.formats.forEach(
                     function (key) {
-                        exporters[key](rowD, fileName);
+                        XLSX && key === 'xls' ? key ='xlsm' : false;
+                        !XLSX && key === 'xlsx' ? key = null : false;
+                        key && exporters[key](rowD, fileName);
+                        console.log(key);
                     }
                 );
 
@@ -373,14 +400,13 @@
              * @param extension {String} file extension
              */
             export2file: function (data, mime, name, extension) {
-                if (extension === ".xlsx") {
+                if (XLSX && extension.startsWith(".xls")) {
                     var wb = new this.Workbook(),
                         ws = this.createSheet(data);
 
                     wb.SheetNames.push(name);
                     wb.Sheets[name] = ws;
-
-                    var wopts = {bookType: 'xlsx', bookSST: false, type: 'binary'},
+                    var wopts = {bookType: extension.substr(1, 3) + (extension.substr(4) || 'm'), bookSST: false, type: 'binary'},
                         wbout = XLSX.write(wb, wopts);
 
                     data = this.string2ArrayBuffer(wbout);
