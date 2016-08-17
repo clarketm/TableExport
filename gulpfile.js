@@ -13,7 +13,8 @@ gulp.task('css', ['clean'], function () {
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(gulp.dest('./dist/css/'));
+        .pipe(gulp.dest('./dist/css/'))
+        .pipe(gulp.dest('./src/stable/css/'));
 });
 
 gulp.task('js', ['clean'], function () {
@@ -23,7 +24,8 @@ gulp.task('js', ['clean'], function () {
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(gulp.dest('./dist/js/'));
+        .pipe(gulp.dest('./dist/js/'))
+        .pipe(gulp.dest('./src/stable/js/'));
 });
 
 gulp.task('bump', ['bump-js', 'bump-css'], function(){
@@ -34,13 +36,13 @@ gulp.task('bump', ['bump-js', 'bump-css'], function(){
 
 gulp.task('bump-js', function () {
     return gulp.src(['src/stable/js/tableexport.js'])
-    .pipe(replace(/(v\d\.\d\.)(\d)/g, function (matches, match1, match2) {
-        return match1 + (Number(match2)+1);
-    }))
-    .pipe(gulp.dest('src/stable/js/'))
-    .on('end', function () {
-        gulp.start('js');
-    });
+        .pipe(replace(/(v\d\.\d\.)(\d)/g, function (matches, match1, match2) {
+            return match1 + (Number(match2)+1);
+        }))
+        .pipe(gulp.dest('src/stable/js/'))
+        .on('end', function () {
+            gulp.start('js');
+        });
 });
 
 gulp.task('bump-css', function () {
