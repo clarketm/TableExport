@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v3.2.7 (https://www.travismclarke.com)
+ * TableExport.js v3.2.8 (https://www.travismclarke.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -69,14 +69,28 @@
                     fileName = self.settings.fileName === "id" ? ($el.attr('id') ? $el.attr('id') : TableExport.prototype.defaultFileName) : self.settings.fileName,
                     exporters = {
                         xlsx: function (rDel, name) {
-                            var dataURL = $rows.map(function (i, val) {
-                                    if (!!~ignoreRows.indexOf(i - thAdj) || $(val).is(ignoreCSS)) {
+                            var rcMap = {},
+                                dataURL = $rows.map(function (ir, val) {
+                                    if (!!~ignoreRows.indexOf(ir - thAdj) || $(val).is(ignoreCSS)) {
                                         return;
                                     }
                                     var $cols = $(val).find('th, td');
-                                    return [$cols.map(function (i, val) {
-                                        if (!!~ignoreCols.indexOf(i) || $(val).is(ignoreCSS)) {
+                                    return [$cols.map(function (ic, val) {
+                                        if (!!~ignoreCols.indexOf(ic) || $(val).is(ignoreCSS)) {
                                             return;
+                                        }
+                                        if (rcMap[ir] && rcMap[ir][ic]) {
+                                            return new Array(rcMap[ir][ic]).concat($(val).text());
+                                        }
+                                        if (val.hasAttribute('colspan')) {
+                                            rcMap[ir] = rcMap[ir] || {};
+                                            rcMap[ir][ic+1] = val.getAttribute('colspan') - 1
+                                        }
+                                        if (val.hasAttribute('rowspan')) {
+                                            for(var i = 1; i < val.getAttribute('rowspan'); i++) {
+                                                rcMap[ir+i] = rcMap[ir+i] || {};
+                                                rcMap[ir+i][ic] = 1
+                                            }
                                         }
                                         return $(val).text();
                                     }).get()];
@@ -93,14 +107,28 @@
                             createObjButton(dataObject, myContent, myClass);
                         },
                         xlsm: function (rDel, name) {
-                            var dataURL = $rows.map(function (i, val) {
-                                    if (!!~ignoreRows.indexOf(i - thAdj) || $(val).is(ignoreCSS)) {
+                            var rcMap = {},
+                                dataURL = $rows.map(function (ir, val) {
+                                    if (!!~ignoreRows.indexOf(ir - thAdj) || $(val).is(ignoreCSS)) {
                                         return;
                                     }
                                     var $cols = $(val).find('th, td');
-                                    return [$cols.map(function (i, val) {
-                                        if (!!~ignoreCols.indexOf(i) || $(val).is(ignoreCSS)) {
+                                    return [$cols.map(function (ic, val) {
+                                        if (!!~ignoreCols.indexOf(ic) || $(val).is(ignoreCSS)) {
                                             return;
+                                        }
+                                        if (rcMap[ir] && rcMap[ir][ic]) {
+                                            return new Array(rcMap[ir][ic]).concat($(val).text());
+                                        }
+                                        if (val.hasAttribute('colspan')) {
+                                            rcMap[ir] = rcMap[ir] || {};
+                                            rcMap[ir][ic+1] = val.getAttribute('colspan') - 1
+                                        }
+                                        if (val.hasAttribute('rowspan')) {
+                                            for(var i = 1; i < val.getAttribute('rowspan'); i++) {
+                                                rcMap[ir+i] = rcMap[ir+i] || {};
+                                                rcMap[ir+i][ic] = 1
+                                            }
                                         }
                                         return $(val).text();
                                     }).get()];
@@ -198,7 +226,6 @@
                         XLSX && key === 'xls' ? key ='xlsm' : false;
                         !XLSX && key === 'xlsx' ? key = null : false;
                         key && exporters[key](rowD, fileName);
-                        console.log(key);
                     }
                 );
 
