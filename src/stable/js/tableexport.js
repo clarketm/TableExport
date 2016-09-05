@@ -1,26 +1,21 @@
 /*!
- * TableExport.js v3.2.8 (https://www.travismclarke.com)
+ * TableExport.js v3.2.9 (https://www.travismclarke.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
 
 ;(function (root, factory) {
     if (typeof define === 'function' && define.amd) {
-        // AMD
-        define(['jquery', 'file-saver', 'xlsx'], factory);
-    } else if (typeof exports === 'object') {
-        // Node, CommonJS-like
-        module.exports = function (root, jQuery) {
-            if (jQuery === undefined) {
-                jQuery = typeof window !== 'undefined' ? require('jquery') : require('jquery')(root);
-            }
-            return factory(jQuery, require('file-saver'), require('xlsx'));
-        };
+        // AMD. Register as an anonymous module.
+        define(['exports', 'jquery', 'file-saver', 'xlsx'], factory);
+    } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
+        // CommonJS
+        factory(exports, require('jquery'), require('file-saver'), require('xlsx'));
     } else {
-        // Browser globals (root is window)
-        root.TableExport = factory(root.jQuery, root.saveAs, root.XLSX)
+        // Browser globals
+        factory(root, root.jQuery, root.saveAs, root.XLSX);
     }
-}(this, function ($, saveAs, XLSX) {
+}(this, function (exports, $, saveAs, XLSX) {
         'use strict';
         /**
          * TableExport main plugin constructor
@@ -482,7 +477,7 @@
             $.fn.tableExport[prop] = TableExport.prototype[prop];
         }
 
-        return TableExport;
+        exports.default = exports.TableExport = TableExport;
 
     }
 ));
