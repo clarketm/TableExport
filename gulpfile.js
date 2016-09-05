@@ -29,7 +29,7 @@ gulp.task('js', ['clean'], function () {
 });
 
 gulp.task('bump', ['bump-js', 'bump-css'], function(){
-    return gulp.src(['./bower.json', './package.json', './src/stable.tableexport.js'])
+    return gulp.src(['./bower.json', './package.json', './src/stable/tableexport.js'])
         .pipe(bump())
         .pipe(gulp.dest('./'));
 });
