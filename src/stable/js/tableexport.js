@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v3.2.11 (https://www.travismclarke.com)
+ * TableExport.js v3.2.12 (https://www.travismclarke.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -41,6 +41,7 @@
                 ignoreRows = self.settings.ignoreRows instanceof Array ? self.settings.ignoreRows : [self.settings.ignoreRows],
                 ignoreCols = self.settings.ignoreCols instanceof Array ? self.settings.ignoreCols : [self.settings.ignoreCols],
                 ignoreCSS = self.settings.ignoreCSS instanceof Array ? self.settings.ignoreCSS.join(", ") : self.settings.ignoreCSS,
+                emptyCSS = self.settings.emptyCSS instanceof Array ? self.settings.emptyCSS.join(", ") : self.settings.emptyCSS,
                 bootstrapClass, bootstrapTheme, bootstrapSpacing;
 
             if (self.settings.bootstrap) {
@@ -73,6 +74,9 @@
                                     return [$cols.map(function (ic, val) {
                                         if (!!~ignoreCols.indexOf(ic) || $(val).is(ignoreCSS)) {
                                             return;
+                                        }
+                                        if ($(val).is(emptyCSS)) {
+                                            return " "
                                         }
                                         if (val.hasAttribute('colspan')) {
                                             rcMap[ir] = rcMap[ir] || {};
@@ -112,6 +116,9 @@
                                         if (!!~ignoreCols.indexOf(ic) || $(val).is(ignoreCSS)) {
                                             return;
                                         }
+                                        if ($(val).is(emptyCSS)) {
+                                            return " "
+                                        }
                                         if (val.hasAttribute('colspan')) {
                                             rcMap[ir] = rcMap[ir] || {};
                                             rcMap[ir][ic+1] = val.getAttribute('colspan') - 1
@@ -150,6 +157,9 @@
                                         if (!!~ignoreCols.indexOf(i) || $(val).is(ignoreCSS)) {
                                             return;
                                         }
+                                        if ($(val).is(emptyCSS)) {
+                                            return " "
+                                        }
                                         return $(val).text();
                                     }).get().join(colD);
                                 }).get().join(rdel),
@@ -175,6 +185,9 @@
                                         if (!!~ignoreCols.indexOf(i) || $(val).is(ignoreCSS)) {
                                             return;
                                         }
+                                        if ($(val).is(emptyCSS)) {
+                                            return " "
+                                        }
                                         return $(val).text();
                                     }).get().join(colD);
                                 }).get().join(rdel),
@@ -199,6 +212,9 @@
                                     return $cols.map(function (i, val) {
                                         if (!!~ignoreCols.indexOf(i) || $(val).is(ignoreCSS)) {
                                             return;
+                                        }
+                                        if ($(val).is(emptyCSS)) {
+                                            return " "
                                         }
                                         return $(val).text();
                                     }).get().join(colD);
@@ -264,7 +280,8 @@
                 position: "bottom",                         // (top, bottom), position of the caption element relative to table, (default: "bottom")
                 ignoreRows: null,                           // (Number, Number[]), row indices to exclude from the exported file (default: null)
                 ignoreCols: null,                           // (Number, Number[]), column indices to exclude from the exported file (default: null)
-                ignoreCSS: ".tableexport-ignore"            // (selector, selector[]), selector(s) to exclude from the exported file (default: ".tableexport-ignore")
+                ignoreCSS: ".tableexport-ignore",           // (selector, selector[]), selector(s) to exclude cells from the exported file (default: ".tableexport-ignore")
+                emptyCSS: ".tableexport-empty"              // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file (default: ".tableexport-empty")
             },
             /**
              * Character set (character encoding) of the HTML.
