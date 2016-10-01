@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v3.2.10 (https://www.travismclarke.com)
+ * TableExport.js v3.2.11 (https://www.travismclarke.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -295,7 +295,7 @@
              * HTML entity mapping for special characters.
              * @memberof TableExport.prototype
              */
-            entityMap: {"&": "&#38;", "<": "&#60;", ">": "&#62;", "'": '&#39;', "/": '&#47'},
+            entityMap: {"&": "&#38;", "<": "&#60;", ">": "&#62;", "'": '&#39;', "/": '&#47;'},
             /**
              * XLSX (Open XML spreadsheet) file extension configuration
              * @memberof TableExport.prototype
