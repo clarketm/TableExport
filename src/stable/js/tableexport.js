@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v3.2.12 (https://www.travismclarke.com)
+ * TableExport.js v3.2.13 (https://www.travismclarke.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -22,7 +22,6 @@
          * @param selectors {jQuery} jQuery selector(s)
          * @param options {Object} TableExport configuration options
          * @param isUpdate {Boolean}
-         * @function update { }
          * @constructor
          */
         var TableExport = function (selectors, options, isUpdate) {
@@ -359,6 +358,7 @@
             /**
              * Escapes special characters with HTML entities
              * @memberof TableExport.prototype
+             * @param string {String}
              * @returns {String} escaped string
              */
             escapeHtml: function (string) {
@@ -369,6 +369,8 @@
             /**
              * Formats datetimes for compatibility with Excel
              * @memberof TableExport.prototype
+             * @param v {Number}
+             * @param date1904 {Date}
              * @returns {Number} epoch time
              */
             dateNum: function (v, date1904) {
@@ -421,6 +423,7 @@
             },
             /**
              * Converts a string to an arraybuffer
+             * @param s {String}
              * @memberof TableExport.prototype
              * @returns {ArrayBuffer}
              */

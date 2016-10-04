@@ -1,0 +1,4 @@
+{
+  "name": "tableexport",
+  "main": "dist/typings/tableexport.d.ts"
+}
