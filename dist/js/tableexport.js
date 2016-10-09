@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v3.2.13 (https://www.travismclarke.com)
+ * TableExport.js v3.2.14 (https://www.travismclarke.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -442,7 +442,7 @@
              * @param extension {String} file extension
              */
             export2file: function (data, mime, name, extension) {
-                if (XLSX && extension.startsWith(".xls")) {
+                if (XLSX && extension.substr(0, 4) == ".xls") {
                     var wb = new this.Workbook(),
                         ws = this.createSheet(data);
 
