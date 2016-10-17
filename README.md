@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
+[![CDNJS](https://img.shields.io/cdnjs/v/TableExport.svg)](https://cdnjs.com/libraries/TableExport)
+
 # [TableExport](https://www.travismclarke.com/tableexport)
 The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, and txt files
 
