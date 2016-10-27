@@ -252,7 +252,6 @@
             });
 
             var exportButton = document.querySelectorAll("button[data-fileblob]");
-            // _off(exportButton, "click");
             _on(exportButton, "click", function () {
                 var object = JSON.parse(this.getAttribute("data-fileblob")),
                     data = object.data,
@@ -496,11 +495,6 @@
         function _on(el, event, fn) {
             for (var i = 0; i < el.length; ++i) {
                 el[i].addEventListener(event, fn, false);
-            }
-        }
-        function _off(el, event) {
-            for (var i = 0; i < el.length; ++i) {
-                el[i].removeEventListener(event);
             }
         }
         function _hasClass(el, cls) {
