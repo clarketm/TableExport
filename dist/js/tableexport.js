@@ -30,7 +30,7 @@
             /**
              * TableExport configuration options (user-defined w/ default fallback)
              */
-            self.settings = isUpdate ? options : $.extend({}, TableExport.prototype.defaults, options);
+            self.settings = isUpdate ? options : _extend({}, TableExport.prototype.defaults, options);
             /**
              * jQuery selectors (tables) to apply the plugin to
              */
@@ -53,28 +53,29 @@
             }
 
             self.selectors.each(function () {
-                var $el = $(this);
+                var el = this;
                 if (isUpdate) {
-                    $el.find('caption:not(.head)').remove();
+                    var caption = el.querySelectorAll('caption:not(.head)');
+                    caption.parentNode.removeChild(caption);
                 }
-                var $rows = $el.find('tbody').find('tr'),
-                    $rows = self.settings.headings ? $rows.add($el.find('thead>tr')) : $rows,
-                    $rows = self.settings.footers ? $rows.add($el.find('tfoot>tr')) : $rows,
-                    thAdj = self.settings.headings ? $el.find('thead>tr').length : 0,
-                    fileName = self.settings.fileName === "id" ? ($el.attr('id') ? $el.attr('id') : TableExport.prototype.defaultFileName) : self.settings.fileName,
+                var rows = [].slice.call(el.querySelectorAll('tbody > tr')),
+                    rows = self.settings.headings ? rows.concat([].slice.call(el.querySelectorAll("tbody > tr, thead > tr"))) : rows,
+                    rows = self.settings.footers ? rows.concat([].slice.call(el.querySelectorAll("tbody > tr, tfoot > tr"))) : rows,
+                    thAdj = self.settings.headings ? el.querySelectorAll('thead > tr').length : 0,
+                    fileName = self.settings.fileName === "id" ? (el.getAttribute('id') ? el.getAttribute('id') : TableExport.prototype.defaultFileName) : self.settings.fileName,
                     exporters = {
                         xlsx: function (rDel, name) {
                             var rcMap = {},
-                                dataURL = $rows.map(function (ir, val) {
-                                    if (!!~ignoreRows.indexOf(ir - thAdj) || $(val).is(ignoreCSS)) {
+                                dataURL = [].slice.call(rows).map(function (val, ir) {
+                                    if (!!~ignoreRows.indexOf(ir - thAdj) || _hasClass(val, ignoreCSS)) {
                                         return;
                                     }
-                                    var $cols = $(val).find('th, td');
-                                    return [$cols.map(function (ic, val) {
-                                        if (!!~ignoreCols.indexOf(ic) || $(val).is(ignoreCSS)) {
+                                    var cols = val.querySelectorAll('th, td');
+                                    return [[].slice.call(cols).map(function (val, ic) {
+                                        if (!!~ignoreCols.indexOf(ic) || _hasClass(val, ignoreCSS)) {
                                             return;
                                         }
-                                        if ($(val).is(emptyCSS)) {
+                                        if (_hasClass(val, ignoreCSS)) {
                                             return " "
                                         }
                                         if (val.hasAttribute('colspan')) {
@@ -88,11 +89,11 @@
                                             }
                                         }
                                         if (rcMap[ir] && rcMap[ir][ic]) {
-                                            return new Array(rcMap[ir][ic]).concat($(val).text());
+                                            return new Array(rcMap[ir][ic]).concat(val.textContent);
                                         }
-                                        return $(val).text();
-                                    }).get()];
-                                }).get(),
+                                        return val.textContent;
+                                    })];
+                                }),
                                 dataObject = TableExport.prototype.escapeHtml(
                                     JSON.stringify({
                                         data: dataURL,
@@ -106,16 +107,16 @@
                         },
                         xlsm: function (rDel, name) {
                             var rcMap = {},
-                                dataURL = $rows.map(function (ir, val) {
-                                    if (!!~ignoreRows.indexOf(ir - thAdj) || $(val).is(ignoreCSS)) {
+                                dataURL = [].slice.call(rows).map(function (val, ir) {
+                                    if (!!~ignoreRows.indexOf(ir - thAdj) || _hasClass(val, ignoreCSS)) {
                                         return;
                                     }
-                                    var $cols = $(val).find('th, td');
-                                    return [$cols.map(function (ic, val) {
-                                        if (!!~ignoreCols.indexOf(ic) || $(val).is(ignoreCSS)) {
+                                    var cols = val.querySelectorAll('th, td');
+                                    return [[].slice.call(cols).map(function (val, ic) {
+                                        if (!!~ignoreCols.indexOf(ic) || _hasClass(val, ignoreCSS)) {
                                             return;
                                         }
-                                        if ($(val).is(emptyCSS)) {
+                                        if (_hasClass(val, ignoreCSS)) {
                                             return " "
                                         }
                                         if (val.hasAttribute('colspan')) {
@@ -129,11 +130,11 @@
                                             }
                                         }
                                         if (rcMap[ir] && rcMap[ir][ic]) {
-                                            return new Array(rcMap[ir][ic]).concat($(val).text());
+                                            return new Array(rcMap[ir][ic]).concat(val.textContent);
                                         }
-                                        return $(val).text();
-                                    }).get()];
-                                }).get(),
+                                        return val.textContent;
+                                    })];
+                                }),
                                 dataObject = TableExport.prototype.escapeHtml(
                                     JSON.stringify({
                                         data: dataURL,
@@ -147,21 +148,21 @@
                         },
                         xls: function (rdel, name) {
                             var colD = TableExport.prototype.xls.separator,
-                                dataURL = $rows.map(function (i, val) {
-                                    if (!!~ignoreRows.indexOf(i - thAdj) || $(val).is(ignoreCSS)) {
+                                dataURL = [].slice.call(rows).map(function (val, i) {
+                                    if (!!~ignoreRows.indexOf(i - thAdj) || _hasClass(val, ignoreCSS)) {
                                         return;
                                     }
-                                    var $cols = $(val).find('th, td');
-                                    return $cols.map(function (i, val) {
-                                        if (!!~ignoreCols.indexOf(i) || $(val).is(ignoreCSS)) {
+                                    var cols = val.querySelectorAll('th, td');
+                                    return [].slice.call(cols).map(function (val, i) {
+                                        if (!!~ignoreCols.indexOf(i) || _hasClass(val, ignoreCSS)) {
                                             return;
                                         }
-                                        if ($(val).is(emptyCSS)) {
+                                        if (_hasClass(val, ignoreCSS)) {
                                             return " "
                                         }
-                                        return $(val).text();
-                                    }).get().join(colD);
-                                }).get().join(rdel),
+                                        return val.textContent;
+                                    }).join(colD);
+                                }).join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
                                     JSON.stringify({
                                         data: dataURL,
@@ -175,21 +176,21 @@
                         },
                         csv: function (rdel, name) {
                             var colD = TableExport.prototype.csv.separator,
-                                dataURL = $rows.map(function (i, val) {
-                                    if (!!~ignoreRows.indexOf(i - thAdj) || $(val).is(ignoreCSS)) {
+                                dataURL = [].slice.call(rows).map(function (val, i) {
+                                    if (!!~ignoreRows.indexOf(i - thAdj) || _hasClass(val, ignoreCSS)) {
                                         return;
                                     }
-                                    var $cols = $(val).find('th, td');
-                                    return $cols.map(function (i, val) {
-                                        if (!!~ignoreCols.indexOf(i) || $(val).is(ignoreCSS)) {
+                                    var cols = val.querySelectorAll('th, td');
+                                    return [].slice.call(cols).map(function (val, i) {
+                                        if (!!~ignoreCols.indexOf(i) || _hasClass(val, ignoreCSS)) {
                                             return;
                                         }
-                                        if ($(val).is(emptyCSS)) {
+                                        if (_hasClass(val, ignoreCSS)) {
                                             return " "
                                         }
-                                        return $(val).text();
-                                    }).get().join(colD);
-                                }).get().join(rdel),
+                                        return val.textContent;
+                                    }).join(colD);
+                                }).join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
                                     JSON.stringify({
                                         data: dataURL,
@@ -203,21 +204,21 @@
                         },
                         txt: function (rdel, name) {
                             var colD = TableExport.prototype.txt.separator,
-                                dataURL = $rows.map(function (i, val) {
-                                    if (!!~ignoreRows.indexOf(i - thAdj) || $(val).is(ignoreCSS)) {
+                                dataURL = [].slice.call(rows).map(function (val, i) {
+                                    if (!!~ignoreRows.indexOf(i - thAdj) || _hasClass(val, ignoreCSS)) {
                                         return;
                                     }
-                                    var $cols = $(val).find('th, td');
-                                    return $cols.map(function (i, val) {
-                                        if (!!~ignoreCols.indexOf(i) || $(val).is(ignoreCSS)) {
+                                    var cols = val.querySelectorAll('th, td');
+                                    return [].slice.call(cols).map(function (val, i) {
+                                        if (!!~ignoreCols.indexOf(i) || _hasClass(val, ignoreCSS)) {
                                             return;
                                         }
-                                        if ($(val).is(emptyCSS)) {
+                                        if (_hasClass(val, ignoreCSS)) {
                                             return " "
                                         }
-                                        return $(val).text();
-                                    }).get().join(colD);
-                                }).get().join(rdel),
+                                        return val.textContent;
+                                    }).join(colD);
+                                }).join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
                                     JSON.stringify({
                                         data: dataURL,
@@ -240,8 +241,8 @@
                 );
 
                 function checkCaption(exportButton) {
-                    var $caption = $el.find('caption:not(.head)');
-                    $caption.length ? $caption.append(exportButton) : $el.prepend('<caption class="' + bootstrapSpacing + self.settings.position + '">' + exportButton + '</caption>');
+                    var caption = this.querySelectorAll('caption:not(.head)');
+                    caption.length ? caption.appendChild(exportButton) : el.insertBefore('<caption class="' + bootstrapSpacing + self.settings.position + '">' + exportButton + '</caption>', el.firstChild);
                 }
 
                 function createObjButton(dataObject, myContent, myClass) {
@@ -250,20 +251,20 @@
                 }
             });
 
-            $("button[data-fileblob]")
-                .off("click")
-                .on("click", function () {
-                    var object = $(this).data("fileblob"),
-                        data = object.data,
-                        fileName = object.fileName,
-                        mimeType = object.mimeType,
-                        fileExtension = object.fileExtension;
-                    TableExport.prototype.export2file(data, mimeType, fileName, fileExtension);
-                });
+            var exportButton = document.querySelectorAll("button[data-fileblob]");
+            // _off(exportButton, "click");
+            _on(exportButton, "click", function () {
+                var object = JSON.parse(this.getAttribute("data-fileblob")),
+                    data = object.data,
+                    fileName = object.fileName,
+                    mimeType = object.mimeType,
+                    fileExtension = object.fileExtension;
+                console.log(object, data, fileName, mimeType, fileExtension);
+                TableExport.prototype.export2file(data, mimeType, fileName, fileExtension);
+            });
 
             return self;
         };
-
 
         TableExport.prototype = {
             /**
@@ -463,7 +464,7 @@
              * @returns {TableExport} updated TableExport instance
              */
             update: function (options) {
-                return new TableExport(this.selectors, $.extend({}, this.settings, options), true);
+                return new TableExport(this.selectors, _extend({}, this.settings, options), true);
             },
             /**
              * Reset the plugin instance to its original state
@@ -477,24 +478,51 @@
              */
             remove: function () {
                 this.selectors.each(function () {
-                    $(this).find('caption:not(.head)').remove();
+                    var caption = this.querySelectorAll('caption:not(.head)');
+                    caption.parentNode.removeChild(caption);
                 });
             }
         };
 
-        /**
-         * jQuery TableExport wrapper
-         * @param options {Object} TableExport configuration options
-         * @param isUpdate {Boolean}
-         * @returns {TableExport} TableExport instance
-         */
-        $.fn.tableExport = function (options, isUpdate) {
-            return new TableExport(this, options, isUpdate);
-        };
+        function _extend(dst, src) {
+        if (dst && src) {
+            for (var key in src) {
+                if (src.hasOwnProperty(key)) {
+                    dst[key] = src[key];
+                }
+            }
+        }
+        return dst;
+    }
+        function _on(el, event, fn) {
+            for (var i = 0; i < el.length; ++i) {
+                el[i].addEventListener(event, fn, false);
+            }
+        }
+        function _off(el, event) {
+            for (var i = 0; i < el.length; ++i) {
+                el[i].removeEventListener(event);
+            }
+        }
+        function _hasClass(el, cls) {
+            return el.classList ? el.classList.contains(cls) : new RegExp('(^| )' + cls + '( |$)', 'gi').test(el.cls);
+        }
 
-        // alias the TableExport prototype
-        for (var prop in TableExport.prototype) {
-            $.fn.tableExport[prop] = TableExport.prototype[prop];
+        if ($) {
+            /**
+             * jQuery TableExport wrapper
+             * @param options {Object} TableExport configuration options
+             * @param isUpdate {Boolean}
+             * @returns {TableExport} TableExport instance
+             */
+            $.fn.tableExport = function (options, isUpdate) {
+                return new TableExport(this, options, isUpdate);
+            };
+
+            // alias the TableExport prototype
+            for (var prop in TableExport.prototype) {
+                $.fn.tableExport[prop] = TableExport.prototype[prop];
+            }
         }
 
         exports.default = exports.TableExport = TableExport;
