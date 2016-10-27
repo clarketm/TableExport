@@ -244,16 +244,18 @@
                         caption[0].appendChild(exportButton);
                     } else {
                         caption = document.createElement('caption');
-                        caption.className = '"' + bootstrapSpacing + self.settings.position + '"';
+                        caption.className = bootstrapSpacing + self.settings.position;
                         caption.appendChild(exportButton);
                         el.insertBefore(caption, el.firstChild);
                     }
                 }
 
                 function createObjButton(dataObject, myContent, myClass) {
-                    var exportButton = document.createElement('div');
-                    exportButton.innerHTML = "<button data-fileblob='" + dataObject + "' class='" + bootstrapClass + bootstrapTheme + myClass + "'>" + myContent + "</button>";
-                    checkCaption(exportButton.firstChild);
+                    var exportButton = document.createElement('button');
+                    exportButton.setAttribute('data-fileblob', dataObject);
+                    exportButton.className = bootstrapClass + bootstrapTheme + myClass;
+                    exportButton.textContent = myContent;
+                    checkCaption(exportButton);
                 }
             });
 
