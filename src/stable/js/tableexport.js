@@ -259,7 +259,6 @@
                     fileName = object.fileName,
                     mimeType = object.mimeType,
                     fileExtension = object.fileExtension;
-                console.log(object, data, fileName, mimeType, fileExtension);
                 TableExport.prototype.export2file(data, mimeType, fileName, fileExtension);
             });
 
