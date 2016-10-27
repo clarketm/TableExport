@@ -75,7 +75,7 @@
                                         if (!!~ignoreCols.indexOf(ic) || _hasClass(val, ignoreCSS)) {
                                             return;
                                         }
-                                        if (_hasClass(val, ignoreCSS)) {
+                                        if (_hasClass(val, emptyCSS)) {
                                             return " "
                                         }
                                         if (val.hasAttribute('colspan')) {
@@ -116,7 +116,7 @@
                                         if (!!~ignoreCols.indexOf(ic) || _hasClass(val, ignoreCSS)) {
                                             return;
                                         }
-                                        if (_hasClass(val, ignoreCSS)) {
+                                        if (_hasClass(val, emptyCSS)) {
                                             return " "
                                         }
                                         if (val.hasAttribute('colspan')) {
@@ -157,7 +157,7 @@
                                         if (!!~ignoreCols.indexOf(i) || _hasClass(val, ignoreCSS)) {
                                             return;
                                         }
-                                        if (_hasClass(val, ignoreCSS)) {
+                                        if (_hasClass(val, emptyCSS)) {
                                             return " "
                                         }
                                         return val.textContent;
@@ -185,7 +185,7 @@
                                         if (!!~ignoreCols.indexOf(i) || _hasClass(val, ignoreCSS)) {
                                             return;
                                         }
-                                        if (_hasClass(val, ignoreCSS)) {
+                                        if (_hasClass(val, emptyCSS)) {
                                             return " "
                                         }
                                         return val.textContent;
@@ -213,7 +213,7 @@
                                         if (!!~ignoreCols.indexOf(i) || _hasClass(val, ignoreCSS)) {
                                             return;
                                         }
-                                        if (_hasClass(val, ignoreCSS)) {
+                                        if (_hasClass(val, emptyCSS)) {
                                             return " "
                                         }
                                         return val.textContent;
