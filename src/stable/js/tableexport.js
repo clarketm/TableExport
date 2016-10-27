@@ -34,7 +34,7 @@
             /**
              * jQuery selectors (tables) to apply the plugin to
              */
-            self.selectors = selectors;
+            self.selectors = _nodesArray(selectors);
 
             var rowD = TableExport.prototype.rowDel,
                 ignoreRows = self.settings.ignoreRows instanceof Array ? self.settings.ignoreRows : [self.settings.ignoreRows],
@@ -52,26 +52,24 @@
                 bootstrapTheme = bootstrapSpacing = "";
             }
 
-            self.selectors.each(function () {
-                var el = this;
-                if (isUpdate) {
-                    var caption = el.querySelectorAll('caption:not(.head)');
-                    caption.parentNode.removeChild(caption);
-                }
-                var rows = [].slice.call(el.querySelectorAll('tbody > tr')),
-                    rows = self.settings.headings ? rows.concat([].slice.call(el.querySelectorAll("tbody > tr, thead > tr"))) : rows,
-                    rows = self.settings.footers ? rows.concat([].slice.call(el.querySelectorAll("tbody > tr, tfoot > tr"))) : rows,
+            self.selectors.forEach(function (el) {
+                var caption = el.querySelectorAll('caption:not(.head)');
+                isUpdate && caption.parentNode.removeChild(caption);
+
+                var rows = _nodesArray(el.querySelectorAll('tbody > tr')),
+                    rows = self.settings.headings ? rows.concat(_nodesArray(el.querySelectorAll("tbody > tr, thead > tr"))) : rows,
+                    rows = self.settings.footers ? rows.concat(_nodesArray(el.querySelectorAll("tbody > tr, tfoot > tr"))) : rows,
                     thAdj = self.settings.headings ? el.querySelectorAll('thead > tr').length : 0,
                     fileName = self.settings.fileName === "id" ? (el.getAttribute('id') ? el.getAttribute('id') : TableExport.prototype.defaultFileName) : self.settings.fileName,
                     exporters = {
                         xlsx: function (rDel, name) {
                             var rcMap = {},
-                                dataURL = [].slice.call(rows).map(function (val, ir) {
+                                dataURL = _nodesArray(rows).map(function (val, ir) {
                                     if (!!~ignoreRows.indexOf(ir - thAdj) || _hasClass(val, ignoreCSS)) {
                                         return;
                                     }
                                     var cols = val.querySelectorAll('th, td');
-                                    return [[].slice.call(cols).map(function (val, ic) {
+                                    return [_nodesArray(cols).map(function (val, ic) {
                                         if (!!~ignoreCols.indexOf(ic) || _hasClass(val, ignoreCSS)) {
                                             return;
                                         }
@@ -107,12 +105,12 @@
                         },
                         xlsm: function (rDel, name) {
                             var rcMap = {},
-                                dataURL = [].slice.call(rows).map(function (val, ir) {
+                                dataURL = _nodesArray(rows).map(function (val, ir) {
                                     if (!!~ignoreRows.indexOf(ir - thAdj) || _hasClass(val, ignoreCSS)) {
                                         return;
                                     }
                                     var cols = val.querySelectorAll('th, td');
-                                    return [[].slice.call(cols).map(function (val, ic) {
+                                    return [_nodesArray(cols).map(function (val, ic) {
                                         if (!!~ignoreCols.indexOf(ic) || _hasClass(val, ignoreCSS)) {
                                             return;
                                         }
@@ -148,12 +146,12 @@
                         },
                         xls: function (rdel, name) {
                             var colD = TableExport.prototype.xls.separator,
-                                dataURL = [].slice.call(rows).map(function (val, i) {
+                                dataURL = _nodesArray(rows).map(function (val, i) {
                                     if (!!~ignoreRows.indexOf(i - thAdj) || _hasClass(val, ignoreCSS)) {
                                         return;
                                     }
                                     var cols = val.querySelectorAll('th, td');
-                                    return [].slice.call(cols).map(function (val, i) {
+                                    return _nodesArray(cols).map(function (val, i) {
                                         if (!!~ignoreCols.indexOf(i) || _hasClass(val, ignoreCSS)) {
                                             return;
                                         }
@@ -176,12 +174,12 @@
                         },
                         csv: function (rdel, name) {
                             var colD = TableExport.prototype.csv.separator,
-                                dataURL = [].slice.call(rows).map(function (val, i) {
+                                dataURL = _nodesArray(rows).map(function (val, i) {
                                     if (!!~ignoreRows.indexOf(i - thAdj) || _hasClass(val, ignoreCSS)) {
                                         return;
                                     }
                                     var cols = val.querySelectorAll('th, td');
-                                    return [].slice.call(cols).map(function (val, i) {
+                                    return _nodesArray(cols).map(function (val, i) {
                                         if (!!~ignoreCols.indexOf(i) || _hasClass(val, ignoreCSS)) {
                                             return;
                                         }
@@ -204,12 +202,12 @@
                         },
                         txt: function (rdel, name) {
                             var colD = TableExport.prototype.txt.separator,
-                                dataURL = [].slice.call(rows).map(function (val, i) {
+                                dataURL = _nodesArray(rows).map(function (val, i) {
                                     if (!!~ignoreRows.indexOf(i - thAdj) || _hasClass(val, ignoreCSS)) {
                                         return;
                                     }
                                     var cols = val.querySelectorAll('th, td');
-                                    return [].slice.call(cols).map(function (val, i) {
+                                    return _nodesArray(cols).map(function (val, i) {
                                         if (!!~ignoreCols.indexOf(i) || _hasClass(val, ignoreCSS)) {
                                             return;
                                         }
@@ -241,13 +239,21 @@
                 );
 
                 function checkCaption(exportButton) {
-                    var caption = this.querySelectorAll('caption:not(.head)');
-                    caption.length ? caption.appendChild(exportButton) : el.insertBefore('<caption class="' + bootstrapSpacing + self.settings.position + '">' + exportButton + '</caption>', el.firstChild);
+                    var caption = el.querySelectorAll('caption:not(.head)');
+                    if (caption.length) {
+                        caption[0].appendChild(exportButton);
+                    } else {
+                        caption = document.createElement('caption');
+                        caption.className = '"' + bootstrapSpacing + self.settings.position + '"';
+                        caption.appendChild(exportButton);
+                        el.insertBefore(caption, el.firstChild);
+                    }
                 }
 
                 function createObjButton(dataObject, myContent, myClass) {
-                    var exportButton = "<button data-fileblob='" + dataObject + "' class='" + bootstrapClass + bootstrapTheme + myClass + "'>" + myContent + "</button>";
-                    checkCaption(exportButton);
+                    var exportButton = document.createElement('div');
+                    exportButton.innerHTML = "<button data-fileblob='" + dataObject + "' class='" + bootstrapClass + bootstrapTheme + myClass + "'>" + myContent + "</button>";
+                    checkCaption(exportButton.firstChild);
                 }
             });
 
@@ -492,6 +498,9 @@
         }
         return dst;
     }
+        function _nodesArray(els) {
+            return [].slice.call(els)
+        }
         function _on(el, event, fn) {
             for (var i = 0; i < el.length; ++i) {
                 el[i].addEventListener(event, fn, false);
