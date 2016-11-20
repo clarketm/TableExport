@@ -56,11 +56,11 @@ In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, 
 <script src="tableexport.js"></script>
 ```
 
-To support older browsers ( **Firefox** < 20, **Opera** < 15, **Safari** < 6 ) also include [Blob.js](https://github.com/eligrey/Blob.js/) before the [FileSaver.js](https://github.com/eligrey/FileSaver.js/) script.
+To support older browsers ( **Firefox** < 20, **Opera** < 15 ) or **Safari** also include [Blob.js](https://github.com/clarketm/Blob.js/) before the [FileSaver.js](https://github.com/eligrey/FileSaver.js/) script.
 
 ```html
 <script src="xlsx-core.js"></script>
-<script src="blob.js"></script>
+<script src="Blob.js"></script>
 <script src="filesaver.js"></script>
  ...
 <script src="tableexport.js"></script>
@@ -204,14 +204,14 @@ $.fn.tableExport.rowDel = "\r\n";
 
 ### Browser Support
 
-|  | Chrome | Firefox | IE *  | Opera | Safari |
+|  | Chrome | Firefox | IE *  | Opera | Safari * |
 | :------: | :------: | :-------: | :---: | :-----: | :------: |
-| __Android__ * |    &#10003;   |    &#10003;    | - |   &#10003;   |  -   |
-| __iOS__ * |    &#10003;   |  -    | - |   -   |   &#10003;    |
+| __Android__ |    &#10003;   |    &#10003;    | - |   &#10003;   |  -   |
+| __iOS__ |    &#10003;   |  -    | - |   -   |   &#10003;    |
 | **Mac OSX**|    &#10003;   |    &#10003;    | - |   &#10003;  |   &#10003;    |
 | **Windows** |    &#10003;   |    &#10003;    | &#10003; |   &#10003;   |   &#10003;    |
 
-*requires third-party dependencies
+*requires third-party dependencies ([Blob.js](https://github.com/clarketm/Blob.js/))
 
 ### Live Demo 
 A live, interactive demo can be found **[here](https://www.travismclarke.com/tableexport/#live-demo)**

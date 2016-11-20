@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v3.2.15 (https://www.travismclarke.com)
+ * TableExport.js 3.3.0 (https://www.travismclarke.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -7,15 +7,15 @@
 ;(function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['exports', 'jquery', 'file-saver', 'xlsx'], factory);
+        define(['exports', 'jquery', 'blobjs', 'file-saver', 'xlsx'], factory);
     } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
         // CommonJS
-        factory(exports, require('jquery'), require('file-saver'), require('xlsx'));
+        factory(exports, require('jquery'), require('blobjs'), require('file-saver'), require('xlsx'));
     } else {
         // Browser globals
-        factory(root, root.jQuery, root.saveAs, root.XLSX);
+        factory(root, root.jQuery, root.Blob, root.saveAs, root.XLSX);
     }
-}(this, function (exports, $, saveAs, XLSX) {
+}(this, function (exports, $, Blob, saveAs, XLSX) {
         'use strict';
         /**
          * TableExport main plugin constructor
@@ -187,7 +187,7 @@
                                         if ($(val).is(emptyCSS)) {
                                             return " "
                                         }
-                                        return $(val).text();
+                                        return '"' + $(val).text().replace(/"/g, '""') + '"';
                                     }).get().join(colD);
                                 }).get().join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(

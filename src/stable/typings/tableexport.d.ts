@@ -184,6 +184,7 @@ export interface XLSX {
     defaultClass: string;
     buttonContent: string;
     mimeType: string;
+    separator: string;
     fileExtension: string;
 }
 
@@ -195,6 +196,7 @@ export interface XLS {
     defaultClass: string;
     buttonContent: string;
     mimeType: string;
+    separator: string;
     fileExtension: string;
 }
 
@@ -206,6 +208,7 @@ export interface CSV {
     defaultClass: string;
     buttonContent: string;
     mimeType: string;
+    separator: string;
     fileExtension: string;
 }
 
@@ -217,6 +220,7 @@ export interface TXT {
     defaultClass: string;
     buttonContent: string;
     mimeType: string;
+    separator: string;
     fileExtension: string;
 }
 
