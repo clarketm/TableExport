@@ -211,7 +211,7 @@ $.fn.tableExport.rowDel = "\r\n";
 | **Mac OSX**|    &#10003;   |    &#10003;    | - |   &#10003;  |   &#10003;    |
 | **Windows** |    &#10003;   |    &#10003;    | &#10003; |   &#10003;   |   &#10003;    |
 
-*requires third-party dependencies ([Blob.js](https://github.com/clarketm/Blob.js/))
+*only _partial_ support: requires third-party dependency ([Blob.js](https://github.com/clarketm/Blob.js/))
 
 ### Live Demo 
 A live, interactive demo can be found **[here](https://www.travismclarke.com/tableexport/#live-demo)**
