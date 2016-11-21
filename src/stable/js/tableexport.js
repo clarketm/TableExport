@@ -78,12 +78,12 @@
                                         }
                                         if (val.hasAttribute('colspan')) {
                                             rcMap[ir] = rcMap[ir] || {};
-                                            rcMap[ir][ic+1] = val.getAttribute('colspan') - 1
+                                            rcMap[ir][ic + 1] = val.getAttribute('colspan') - 1
                                         }
                                         if (val.hasAttribute('rowspan')) {
-                                            for(var i = 1; i < val.getAttribute('rowspan'); i++) {
-                                                rcMap[ir+i] = rcMap[ir+i] || {};
-                                                rcMap[ir+i][ic] = 1
+                                            for (var i = 1; i < val.getAttribute('rowspan'); i++) {
+                                                rcMap[ir + i] = rcMap[ir + i] || {};
+                                                rcMap[ir + i][ic] = 1
                                             }
                                         }
                                         if (rcMap[ir] && rcMap[ir][ic]) {
@@ -119,12 +119,12 @@
                                         }
                                         if (val.hasAttribute('colspan')) {
                                             rcMap[ir] = rcMap[ir] || {};
-                                            rcMap[ir][ic+1] = val.getAttribute('colspan') - 1
+                                            rcMap[ir][ic + 1] = val.getAttribute('colspan') - 1
                                         }
                                         if (val.hasAttribute('rowspan')) {
-                                            for(var i = 1; i < val.getAttribute('rowspan'); i++) {
-                                                rcMap[ir+i] = rcMap[ir+i] || {};
-                                                rcMap[ir+i][ic] = 1
+                                            for (var i = 1; i < val.getAttribute('rowspan'); i++) {
+                                                rcMap[ir + i] = rcMap[ir + i] || {};
+                                                rcMap[ir + i][ic] = 1
                                             }
                                         }
                                         if (rcMap[ir] && rcMap[ir][ic]) {
@@ -232,8 +232,7 @@
 
                 self.settings.formats.forEach(
                     function (key) {
-                        console.log(key);
-                        XLSX && key === 'xls' ? key ='xlsm' : false;
+                        XLSX && key === 'xls' ? key = 'xlsm' : false;
                         !XLSX && key === 'xlsx' ? key = null : false;
                         key && exporters[key](rowD, fileName);
                     }
@@ -456,7 +455,11 @@
 
                     wb.SheetNames.push(name);
                     wb.Sheets[name] = ws;
-                    var wopts = {bookType: extension.substr(1, 3) + (extension.substr(4) || 'm'), bookSST: false, type: 'binary'},
+                    var wopts = {
+                            bookType: extension.substr(1, 3) + (extension.substr(4) || 'm'),
+                            bookSST: false,
+                            type: 'binary'
+                        },
                         wbout = XLSX.write(wb, wopts);
 
                     data = this.string2ArrayBuffer(wbout);
@@ -499,14 +502,17 @@
                         args[0][key] = args[i][key];
             return args[0];
         }
+
         function _nodesArray(els) {
             return [].slice.call(els)
         }
+
         function _on(el, event, fn) {
             for (var i = 0; i < el.length; ++i) {
                 el[i].addEventListener(event, fn, false);
             }
         }
+
         function _hasClass(el, cls) {
             return el.classList ? el.classList.contains(cls) : new RegExp('(^| )' + cls + '( |$)', 'gi').test(el.cls);
         }
