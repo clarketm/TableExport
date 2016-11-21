@@ -1,6 +1,4 @@
 [![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
-[![CDNJS](https://img.shields.io/cdnjs/v/TableExport.svg)](https://cdnjs.com/libraries/TableExport)
-
 # [TableExport](https://www.travismclarke.com/tableexport)
 The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, and txt files
 
@@ -58,11 +56,12 @@ In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, 
 <script src="tableexport.js"></script>
 ```
 
-To support older browsers ( **Firefox** < 20, **Opera** < 15, **Safari** < 6 ) also include [Blob.js](https://github.com/eligrey/Blob.js/) before the [FileSaver.js](https://github.com/eligrey/FileSaver.js/) script.
+To support older browsers ( **Chrome** < 20, **Firefox** < 13, **Opera** < 12.10, **IE** < 10, __Safari *__ < 6 ) also include the [Blob.js](https://github.com/clarketm/Blob.js/) polyfill before the [FileSaver.js](https://github.com/eligrey/FileSaver.js/) script.
+> \* until [Safari](https://github.com/eligrey/FileSaver.js/issues/242) provides native support for either the [HTML5 download attribute](http://caniuse.com/#feat=download) or [service workers](http://caniuse.com/#search=service%20workers), limited `xlx` and `xlsx` support is provided by including the [Blob.js](https://github.com/clarketm/Blob.js/) polyfill, albeit the **filename** will always be labeled `unknown`.
 
 ```html
 <script src="xlsx-core.js"></script>
-<script src="blob.js"></script>
+<script src="Blob.js"></script>
 <script src="filesaver.js"></script>
  ...
 <script src="tableexport.js"></script>
@@ -206,14 +205,14 @@ $.fn.tableExport.rowDel = "\r\n";
 
 ### Browser Support
 
-|  | Chrome | Firefox | IE *  | Opera | Safari |
+|  | Chrome | Firefox | IE  | Opera | Safari * |
 | :------: | :------: | :-------: | :---: | :-----: | :------: |
-| __Android__ * |    &#10003;   |    &#10003;    | - |   &#10003;   |  -   |
-| __iOS__ * |    &#10003;   |  -    | - |   -   |   &#10003;    |
+| __Android__ |    &#10003;   |    &#10003;    | - |   &#10003;   |  -   |
+| __iOS__ |    &#10003;   |  -    | - |   -   |   &#10003;    |
 | **Mac OSX**|    &#10003;   |    &#10003;    | - |   &#10003;  |   &#10003;    |
 | **Windows** |    &#10003;   |    &#10003;    | &#10003; |   &#10003;   |   &#10003;    |
 
-*requires third-party dependencies
+*only _partial_ support for `xls` and `xlsx`: requires third-party dependency ([Blob.js](https://github.com/clarketm/Blob.js/))
 
 ### Live Demo 
 A live, interactive demo can be found **[here](https://www.travismclarke.com/tableexport/#live-demo)**

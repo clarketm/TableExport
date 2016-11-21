@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v3.2.14 (https://www.travismclarke.com)
+ * TableExport.js 3.3.1 (https://www.travismclarke.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -7,15 +7,15 @@
 ;(function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['exports', 'jquery', 'file-saver', 'xlsx'], factory);
+        define(['exports', 'jquery', 'blobjs', 'file-saver', 'xlsx'], factory);
     } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
         // CommonJS
-        factory(exports, require('jquery'), require('file-saver'), require('xlsx'));
+        factory(exports, require('jquery'), require('blobjs'), require('file-saver'), require('xlsx'));
     } else {
         // Browser globals
-        factory(root, root.jQuery, root.saveAs, root.XLSX);
+        factory(root, root.jQuery, root.Blob, root.saveAs, root.XLSX);
     }
-}(this, function (exports, $, saveAs, XLSX) {
+}(this, function (exports, $, Blob, saveAs, XLSX) {
         'use strict';
         /**
          * TableExport main plugin constructor
@@ -186,7 +186,7 @@
                                         if (_hasClass(val, emptyCSS)) {
                                             return " "
                                         }
-                                        return val.textContent;
+                                        return '"' + val.textContent.replace(/"/g, '""') + '"';
                                     }).join(colD);
                                 }).join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -348,7 +348,7 @@
                 defaultClass: "csv",
                 buttonContent: "Export to csv",
                 separator: ",",
-                mimeType: "application/csv",
+                mimeType: "text/csv",
                 fileExtension: ".csv"
             },
             /**
@@ -462,7 +462,7 @@
                 }
                 saveAs(new Blob([data],
                     {type: mime + ";" + this.charset}),
-                    name + extension);
+                    name + extension, true);
             },
             /**
              * Updates the plugin instance with new/updated options
