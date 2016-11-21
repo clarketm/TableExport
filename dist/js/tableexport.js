@@ -1,5 +1,5 @@
 /*!
- * TableExport.js 3.3.0 (https://www.travismclarke.com)
+ * TableExport.js 3.3.1 (https://www.travismclarke.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -341,7 +341,7 @@
                 defaultClass: "csv",
                 buttonContent: "Export to csv",
                 separator: ",",
-                mimeType: "application/csv",
+                mimeType: "text/csv",
                 fileExtension: ".csv"
             },
             /**
@@ -442,7 +442,7 @@
              * @param extension {String} file extension
              */
             export2file: function (data, mime, name, extension) {
-                if (XLSX && extension.startsWith(".xls")) {
+                if (XLSX && extension.substr(0, 4) ==(".xls")) {
                     var wb = new this.Workbook(),
                         ws = this.createSheet(data);
 
@@ -455,7 +455,7 @@
                 }
                 saveAs(new Blob([data],
                     {type: mime + ";" + this.charset}),
-                    name + extension);
+                    name + extension, true);
             },
             /**
              * Updates the plugin instance with new/updated options
