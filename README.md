@@ -37,8 +37,10 @@ $ npm install tableexport
 
 ##### Required:
 
-* [jQuery](https://jquery.com) (1.2.1 or higher)
+* [jQuery](https://jquery.com) (1.2.1 or higher) `*`
 * [FileSaver.js](https://github.com/eligrey/FileSaver.js/)
+
+> `*` jQuery dependency requirement is removed as of [4.0.0-alpha.1](https://github.com/clarketm/TableExport/tree/v4.0.0-alpha.1)
 
 ##### Optional / Theming:
 
