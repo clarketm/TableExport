@@ -35,21 +35,21 @@ $ npm install tableexport
 
 ### Dependencies
 
-##### Required:
+#### Required:
 
 * [jQuery](https://jquery.com) (1.2.1 or higher) `*`
 * [FileSaver.js](https://github.com/eligrey/FileSaver.js/)
 
 > `*` jQuery dependency requirement is removed as of [4.0.0-alpha.1](https://github.com/clarketm/TableExport/tree/v4.0.0-alpha.1)
 
-##### Optional / Theming:
+#### Optional / Theming:
 
 * [Bootstrap](http://getbootstrap.com/getting-started/#download) (3.1.0 or higher)
 
-##### Add-Ons:
+#### Add-Ons:
 In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, you must include the following third-party script to your project before [FileSaver.js](https://github.com/eligrey/FileSaver.js/) and [TableExport.js](https://www.travismclarke.com/tableexport).
 
-* SheetJS -> [xlsx-core.js](https://github.com/SheetJS/js-xlsx)
+* [xlsx-core.js](https://github.com/SheetJS/js-xlsx) by _SheetJS_
 
 ```html
 <script src="xlsx-core.js"></script>
@@ -58,8 +58,12 @@ In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, 
 <script src="tableexport.js"></script>
 ```
 
+#### Older Browsers:
 To support older browsers ( **Chrome** < 20, **Firefox** < 13, **Opera** < 12.10, **IE** < 10, __Safari *__ < 6 ) also include the [Blob.js](https://github.com/clarketm/Blob.js/) polyfill before the [FileSaver.js](https://github.com/eligrey/FileSaver.js/) script.
-> \* until [Safari](https://github.com/eligrey/FileSaver.js/issues/242) provides native support for either the [HTML5 download attribute](http://caniuse.com/#feat=download) or [service workers](http://caniuse.com/#search=service%20workers), limited `xlx` and `xlsx` support is provided by including the [Blob.js](https://github.com/clarketm/Blob.js/) polyfill, albeit the **filename** will always be labeled `unknown`.
+
+Until [Safari](https://github.com/eligrey/FileSaver.js/issues/242) provides native support for either the [HTML5 download attribute](http://caniuse.com/#feat=download) or [service workers](http://caniuse.com/#search=service%20workers), limited `xlx` and `xlsx` support is provided by including the [Blob.js](https://github.com/clarketm/Blob.js/) polyfill, albeit the **filename** will always be labeled `unknown`.
+
+* [Blob.js](https://github.com/clarketm/Blob.js) by _clarketm_
 
 ```html
 <script src="xlsx-core.js"></script>
