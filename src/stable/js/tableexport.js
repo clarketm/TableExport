@@ -57,8 +57,8 @@
                 isUpdate && caption.parentNode.removeChild(caption);
 
                 var rows = _nodesArray(el.querySelectorAll('tbody > tr')),
-                    rows = self.settings.headings ? rows.concat(_nodesArray(el.querySelectorAll("tbody > tr, thead > tr"))) : rows,
-                    rows = self.settings.footers ? rows.concat(_nodesArray(el.querySelectorAll("tbody > tr, tfoot > tr"))) : rows,
+                    rows = self.settings.headings ? _nodesArray(el.querySelectorAll("thead > tr")).concat(rows) : rows,
+                    rows = self.settings.footers ? _nodesArray(el.querySelectorAll("tfoot > tr")).concat(rows) : rows,
                     thAdj = self.settings.headings ? el.querySelectorAll('thead > tr').length : 0,
                     fileName = self.settings.fileName === "id" ? (el.getAttribute('id') ? el.getAttribute('id') : TableExport.prototype.defaultFileName) : self.settings.fileName,
                     exporters = {
@@ -69,7 +69,7 @@
                                         return;
                                     }
                                     var cols = val.querySelectorAll('th, td');
-                                    return [_nodesArray(cols).map(function (val, ic) {
+                                    return _nodesArray(cols).map(function (val, ic) {
                                         if (!!~ignoreCols.indexOf(ic) || _hasClass(val, ignoreCSS)) {
                                             return;
                                         }
@@ -90,7 +90,7 @@
                                             return new Array(rcMap[ir][ic]).concat(val.textContent);
                                         }
                                         return val.textContent;
-                                    })];
+                                    });
                                 }),
                                 dataObject = TableExport.prototype.escapeHtml(
                                     JSON.stringify({
@@ -110,7 +110,7 @@
                                         return;
                                     }
                                     var cols = val.querySelectorAll('th, td');
-                                    return [_nodesArray(cols).map(function (val, ic) {
+                                    return _nodesArray(cols).map(function (val, ic) {
                                         if (!!~ignoreCols.indexOf(ic) || _hasClass(val, ignoreCSS)) {
                                             return;
                                         }
@@ -131,7 +131,7 @@
                                             return new Array(rcMap[ir][ic]).concat(val.textContent);
                                         }
                                         return val.textContent;
-                                    })];
+                                    });
                                 }),
                                 dataObject = TableExport.prototype.escapeHtml(
                                     JSON.stringify({
@@ -232,6 +232,7 @@
 
                 self.settings.formats.forEach(
                     function (key) {
+                        console.log(key);
                         XLSX && key === 'xls' ? key ='xlsm' : false;
                         !XLSX && key === 'xlsx' ? key = null : false;
                         key && exporters[key](rowD, fileName);
@@ -490,16 +491,14 @@
             }
         };
 
-        function _extend(dst, src) {
-        if (dst && src) {
-            for (var key in src) {
-                if (src.hasOwnProperty(key)) {
-                    dst[key] = src[key];
-                }
-            }
+        function _extend() {
+            var args = arguments;
+            for (var i = 1; i < args.length; i++)
+                for (var key in args[i])
+                    if (args[i].hasOwnProperty(key))
+                        args[0][key] = args[i][key];
+            return args[0];
         }
-        return dst;
-    }
         function _nodesArray(els) {
             return [].slice.call(els)
         }
