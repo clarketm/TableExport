@@ -3,14 +3,14 @@
  *
  * @class TableExport
  *
- * @param selectors {jQuery} jQuery selector(s)
+ * @param selectors {NodeList|JQuery} selector(s)
  * @param options {Object} TableExport configuration options
  * @param isUpdate {Boolean}
  * @constructor
  */
 export class TableExport {
 
-    constructor(selectors: string|string[], options: Defaults, isUpdate: boolean);
+    constructor(selectors: NodeList|JQuery, options: Defaults, isUpdate: boolean);
 
     /**
      * Default plugin options.
@@ -24,9 +24,9 @@ export class TableExport {
     settings: any;
 
     /**
-     * jQuery selectors (tables) to apply the plugin to
+     * selectors (e.g. tables) to apply the plugin to
      */
-    selectors: any;
+    selectors: NodeList;
 
     /**
      * Character set (character encoding) of the HTML.
