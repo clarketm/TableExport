@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v3.3.3 (https://www.travismclarke.com)
+ * TableExport.js v3.3.4 (https://www.travismclarke.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -270,7 +270,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: "3.3.3",
+            version: "3.3.4",
             /**
              * Default plugin options.
              * @memberof TableExport.prototype
