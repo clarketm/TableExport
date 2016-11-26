@@ -10,7 +10,7 @@ To use this plugin, include the [jQuery](https://jquery.com) library, [FileSaver
 
 ```html
 <script src="jquery.js"></script>
-<script src="filesaver.js"></script>
+<script src="FileSaver.js"></script>
  ...
 <script src="tableexport.js"></script>
 ```
@@ -29,9 +29,9 @@ $ npm install tableexport
 ### [CDNjs](https://cdnjs.com/libraries/TableExport)
 |          | uncompressed | compressed |
 | :------: | :----------: | :--------: |
-|  __CSS__ |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.2.5/css/tableexport.css)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.2.5/css/tableexport.min.css)      |
-|  __JS__  |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.2.5/js/tableexport.js)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.2.5/js/tableexport.min.js)      |
-|  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.2.5/img/xlsx.svg)[🔗<sup>xls</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.2.5/img/xls.svg)[🔗<sup>csv</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.2.5/img/csv.svg)[🔗<sup>txt</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.2.5/img/txt.svg)  |
+|  __CSS__ |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/css/tableexport.css)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/css/tableexport.min.css)      |
+|  __JS__  |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/js/tableexport.js)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/js/tableexport.min.js)      |
+|  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/img/xlsx.svg)[🔗<sup>xls</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/img/xls.svg)[🔗<sup>csv</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/img/csv.svg)[🔗<sup>txt</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/img/txt.svg)  |
 
 ### Dependencies
 
@@ -52,7 +52,7 @@ In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, 
 * [xls.js](https://github.com/clarketm/js-xls) by _clarketm_
 
 ```html
-<script src="xlsx-core.js"></script>
+<script src="xls.js"></script>
 <script src="FileSaver.js"></script>
  ...
 <script src="tableexport.js"></script>
@@ -66,7 +66,7 @@ Until [Safari](https://github.com/clarketm/FileSaver.js/issues/242) provides nat
 * [Blob.js](https://github.com/clarketm/Blob.js) by _clarketm_
 
 ```html
-<script src="xlsx-core.js"></script>
+<script src="xls.js"></script>
 <script src="Blob.js"></script>
 <script src="FileSaver.js"></script>
  ...
