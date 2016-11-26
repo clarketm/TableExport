@@ -1,5 +1,5 @@
 /*!
- * TableExport.js 3.3.1 (https://www.travismclarke.com)
+ * TableExport.js v3.3.2 (https://www.travismclarke.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -79,12 +79,12 @@
                                         }
                                         if (val.hasAttribute('colspan')) {
                                             rcMap[ir] = rcMap[ir] || {};
-                                            rcMap[ir][ic+1] = val.getAttribute('colspan') - 1
+                                            rcMap[ir][ic + 1] = val.getAttribute('colspan') - 1
                                         }
                                         if (val.hasAttribute('rowspan')) {
-                                            for(var i = 1; i < val.getAttribute('rowspan'); i++) {
-                                                rcMap[ir+i] = rcMap[ir+i] || {};
-                                                rcMap[ir+i][ic] = 1
+                                            for (var i = 1; i < val.getAttribute('rowspan'); i++) {
+                                                rcMap[ir + i] = rcMap[ir + i] || {};
+                                                rcMap[ir + i][ic] = 1
                                             }
                                         }
                                         if (rcMap[ir] && rcMap[ir][ic]) {
@@ -120,12 +120,12 @@
                                         }
                                         if (val.hasAttribute('colspan')) {
                                             rcMap[ir] = rcMap[ir] || {};
-                                            rcMap[ir][ic+1] = val.getAttribute('colspan') - 1
+                                            rcMap[ir][ic + 1] = val.getAttribute('colspan') - 1
                                         }
                                         if (val.hasAttribute('rowspan')) {
-                                            for(var i = 1; i < val.getAttribute('rowspan'); i++) {
-                                                rcMap[ir+i] = rcMap[ir+i] || {};
-                                                rcMap[ir+i][ic] = 1
+                                            for (var i = 1; i < val.getAttribute('rowspan'); i++) {
+                                                rcMap[ir + i] = rcMap[ir + i] || {};
+                                                rcMap[ir + i][ic] = 1
                                             }
                                         }
                                         if (rcMap[ir] && rcMap[ir][ic]) {
@@ -233,7 +233,7 @@
 
                 self.settings.formats.forEach(
                     function (key) {
-                        XLSX && key === 'xls' ? key ='xlsm' : false;
+                        XLSX && key === 'xls' ? key = 'xlsm' : false;
                         !XLSX && key === 'xlsx' ? key = null : false;
                         key && exporters[key](rowD, fileName);
                     }
@@ -266,6 +266,11 @@
 
 
         TableExport.prototype = {
+            /**
+             * Version.
+             * @memberof TableExport.prototype
+             */
+            version: "3.3.2",
             /**
              * Default plugin options.
              * @memberof TableExport.prototype
@@ -442,13 +447,17 @@
              * @param extension {String} file extension
              */
             export2file: function (data, mime, name, extension) {
-                if (XLSX && extension.substr(0, 4) ==(".xls")) {
+                if (XLSX && extension.substr(0, 4) == (".xls")) {
                     var wb = new this.Workbook(),
                         ws = this.createSheet(data);
 
                     wb.SheetNames.push(name);
                     wb.Sheets[name] = ws;
-                    var wopts = {bookType: extension.substr(1, 3) + (extension.substr(4) || 'm'), bookSST: false, type: 'binary'},
+                    var wopts = {
+                            bookType: extension.substr(1, 3) + (extension.substr(4) || 'm'),
+                            bookSST: false,
+                            type: 'binary'
+                        },
                         wbout = XLSX.write(wb, wopts);
 
                     data = this.string2ArrayBuffer(wbout);
@@ -497,7 +506,7 @@
             $.fn.tableExport[prop] = TableExport.prototype[prop];
         }
 
-        exports.default = exports.TableExport = TableExport;
+        return exports.default = exports.TableExport = TableExport;
 
     }
 ));
