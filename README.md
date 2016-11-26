@@ -6,7 +6,7 @@ The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, an
 
 ### Download and Setup
 
-To use this plugin, include the [jQuery](https://jquery.com) library, [FileSaver.js](https://github.com/eligrey/FileSaver.js/) script, and [TableExport.js](https://www.travismclarke.com/tableexport) plugin before the closing `<body>` tag of your HTML document:
+To use this plugin, include the [jQuery](https://jquery.com) library, [FileSaver.js](https://github.com/clarketm/FileSaver.js/) script, and [TableExport.js](https://www.travismclarke.com/tableexport) plugin before the closing `<body>` tag of your HTML document:
 
 ```html
 <script src="jquery.js"></script>
@@ -38,7 +38,7 @@ $ npm install tableexport
 #### Required:
 
 * [jQuery](https://jquery.com) (1.2.1 or higher) `*`
-* [FileSaver.js](https://github.com/eligrey/FileSaver.js/)
+* [FileSaver.js](https://github.com/clarketm/FileSaver.js/)
 
 > `*` jQuery dependency requirement is removed as of [4.0.0-alpha.1](https://github.com/clarketm/TableExport/tree/v4.0.0-alpha.1)
 
@@ -47,28 +47,28 @@ $ npm install tableexport
 * [Bootstrap](http://getbootstrap.com/getting-started/#download) (3.1.0 or higher)
 
 #### Add-Ons:
-In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, you must include the following third-party script to your project before [FileSaver.js](https://github.com/eligrey/FileSaver.js/) and [TableExport.js](https://www.travismclarke.com/tableexport).
+In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, you must include the following third-party script to your project before [FileSaver.js](https://github.com/clarketm/FileSaver.js/) and [TableExport.js](https://www.travismclarke.com/tableexport).
 
-* [xlsx-core.js](https://github.com/SheetJS/js-xlsx) by _SheetJS_
+* [xls.js](https://github.com/clarketm/js-xls) by _clarketm_
 
 ```html
 <script src="xlsx-core.js"></script>
-<script src="filesaver.js"></script>
+<script src="FileSaver.js"></script>
  ...
 <script src="tableexport.js"></script>
 ```
 
 #### Older Browsers:
-To support older browsers ( **Chrome** < 20, **Firefox** < 13, **Opera** < 12.10, **IE** < 10, __Safari__ < 6 ) include the [Blob.js](https://github.com/clarketm/Blob.js/) polyfill before the [FileSaver.js](https://github.com/eligrey/FileSaver.js/) script.
+To support older browsers ( **Chrome** < 20, **Firefox** < 13, **Opera** < 12.10, **IE** < 10, __Safari__ < 6 ) include the [Blob.js](https://github.com/clarketm/Blob.js/) polyfill before the [FileSaver.js](https://github.com/clarketm/FileSaver.js/) script.
 
-Until [Safari](https://github.com/eligrey/FileSaver.js/issues/242) provides native support for either the [HTML5 download attribute](http://caniuse.com/#feat=download) or [service workers](http://caniuse.com/#search=service%20workers), limited `xlx` and `xlsx` support is provided by including the [Blob.js](https://github.com/clarketm/Blob.js/) polyfill, albeit the **filename** will always be labeled `Unknown`.
+Until [Safari](https://github.com/clarketm/FileSaver.js/issues/242) provides native support for either the [HTML5 download attribute](http://caniuse.com/#feat=download) or [service workers](http://caniuse.com/#search=service%20workers), limited `xlx` and `xlsx` support is provided by including the [Blob.js](https://github.com/clarketm/Blob.js/) polyfill, albeit the **filename** will always be labeled `Unknown`.
 
 * [Blob.js](https://github.com/clarketm/Blob.js) by _clarketm_
 
 ```html
 <script src="xlsx-core.js"></script>
 <script src="Blob.js"></script>
-<script src="filesaver.js"></script>
+<script src="FileSaver.js"></script>
  ...
 <script src="tableexport.js"></script>
 ```
@@ -229,5 +229,5 @@ A live, interactive demo can be found **[here](https://www.travismclarke.com/tab
 ### Credits
 
 * [John Resig](https://github.com/jeresig) - jQuery
-* [SheetJS](https://github.com/SheetJS) - js-xlsx 
+* [SheetJS](https://github.com/SheetJS) - js-xls 
 * [Eli Grey](https://github.com/eligrey) - FileSaver.js & Blob.js
