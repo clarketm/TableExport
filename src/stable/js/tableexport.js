@@ -1,5 +1,9 @@
 /*!
+<<<<<<< HEAD
  * TableExport.js 4.0.0-alpha.1 (https://www.travismclarke.com)
+=======
+ * TableExport.js v3.3.5 (https://www.travismclarke.com)
+>>>>>>> master
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -7,10 +11,10 @@
 ;(function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['exports', 'jquery', 'blobjs', 'file-saver', 'xlsx'], factory);
+        define(['exports', 'jquery', 'blobjs', 'file-saverjs', 'xlsx-js'], factory);
     } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
         // CommonJS
-        factory(exports, require('jquery'), require('blobjs'), require('file-saver'), require('xlsx'));
+        factory(exports, require('jquery'), require('blobjs'), require('file-saverjs'), require('xlsx-js'));
     } else {
         // Browser globals
         factory(root, root.jQuery, root.Blob, root.saveAs, root.XLSX);
@@ -274,6 +278,11 @@
 
         TableExport.prototype = {
             /**
+             * Version.
+             * @memberof TableExport.prototype
+             */
+            version: "3.3.5",
+            /**
              * Default plugin options.
              * @memberof TableExport.prototype
              */
@@ -449,7 +458,11 @@
              * @param extension {String} file extension
              */
             export2file: function (data, mime, name, extension) {
+<<<<<<< HEAD
                 if (XLSX && extension.substr(0, 4) == ".xls") {
+=======
+                if (XLSX && extension.substr(0, 4) == (".xls")) {
+>>>>>>> master
                     var wb = new this.Workbook(),
                         ws = this.createSheet(data);
 
@@ -534,7 +547,7 @@
             }
         }
 
-        exports.default = exports.TableExport = TableExport;
+        return exports.default = exports.TableExport = TableExport;
 
     }
 ));

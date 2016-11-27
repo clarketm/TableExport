@@ -34,14 +34,17 @@ gulp.task('typings', ['clean'], function () {
 });
 
 gulp.task('bump', ['bump-js', 'bump-css'], function(){
-    return gulp.src(['./bower.json', './package.json', './src/stable/tableexport.js'])
+    return gulp.src(['./bower.json', './package.json'])
         .pipe(bump())
         .pipe(gulp.dest('./'));
 });
 
 gulp.task('bump-js', function () {
     return gulp.src(['src/stable/js/tableexport.js'])
-        .pipe(replace(/(v\d\.\d\.)(\d+)/g, function (matches, match1, match2) {
+        .pipe(replace(/(v\d+\.\d+\.)(\d+)/g, function (matches, match1, match2) {
+            return match1 + (Number(match2)+1);
+        }))
+        .pipe(replace(/(version: "\d+\.\d+\.)(\d+)/g, function (matches, match1, match2) {
             return match1 + (Number(match2)+1);
         }))
         .pipe(gulp.dest('src/stable/js/'))
@@ -52,7 +55,7 @@ gulp.task('bump-js', function () {
 
 gulp.task('bump-css', function () {
     gulp.src(['src/stable/css/tableexport.css'])
-        .pipe(replace(/(v\d\.\d\.)(\d+)/g, function (matches, match1, match2) {
+        .pipe(replace(/(v\d+\.\d+\.)(\d+)/g, function (matches, match1, match2) {
             return match1 + (Number(match2) + 1);
         }))
         .pipe(gulp.dest('src/stable/css/'))
