@@ -49,10 +49,10 @@ $ npm install tableexport
 #### Add-Ons:
 In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, you must include the following third-party script to your project before [FileSaver.js](https://github.com/clarketm/FileSaver.js/) and [TableExport.js](https://www.travismclarke.com/tableexport).
 
-* [xls.js](https://github.com/clarketm/js-xls) by _clarketm_
+* [xlsx.core.js](https://github.com/clarketm/js-xls) by _clarketm_
 
 ```html
-<script src="xls.js"></script>
+<script src="xlsx.core.js"></script>
 <script src="FileSaver.js"></script>
  ...
 <script src="tableexport.js"></script>
@@ -66,7 +66,7 @@ Until [Safari](https://github.com/clarketm/FileSaver.js/issues/242) provides nat
 * [Blob.js](https://github.com/clarketm/Blob.js) by _clarketm_
 
 ```html
-<script src="xls.js"></script>
+<script src="xlsx.core.js"></script>
 <script src="Blob.js"></script>
 <script src="FileSaver.js"></script>
  ...
@@ -229,5 +229,5 @@ A live, interactive demo can be found **[here](https://www.travismclarke.com/tab
 ### Credits
 
 * [John Resig](https://github.com/jeresig) - jQuery
-* [SheetJS](https://github.com/SheetJS) - js-xls 
+* [SheetJS](https://github.com/SheetJS) - js-xlsx 
 * [Eli Grey](https://github.com/eligrey) - FileSaver.js & Blob.js
