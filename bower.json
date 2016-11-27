@@ -1,6 +1,6 @@
 {
   "name": "tableexport.js",
-  "version": "4.0.0-alpha.1",
+  "version": "4.0.0-alpha.2",
   "authors": [
     "clarketm <travis.m.clarke@gmail.com>"
   ],
@@ -26,7 +26,7 @@
     "blobjs": "^1.0.0"
   },
   "license": "MIT",
-  "homepage": "https://www.travismclarke.com",
+  "homepage": "https://www.travismclarke.com/tableexport/",
   "ignore": [
     "**/.*",
     "node_modules",

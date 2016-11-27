@@ -1,9 +1,5 @@
 /*!
-<<<<<<< HEAD
- * TableExport.js 4.0.0-alpha.1 (https://www.travismclarke.com)
-=======
- * TableExport.js v3.3.5 (https://www.travismclarke.com)
->>>>>>> master
+ * TableExport.js 4.0.0-alpha.2 (https://www.travismclarke.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -281,7 +277,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: "3.3.5",
+            version: "4.0.0-alpha.2",
             /**
              * Default plugin options.
              * @memberof TableExport.prototype
@@ -458,11 +454,7 @@
              * @param extension {String} file extension
              */
             export2file: function (data, mime, name, extension) {
-<<<<<<< HEAD
                 if (XLSX && extension.substr(0, 4) == ".xls") {
-=======
-                if (XLSX && extension.substr(0, 4) == (".xls")) {
->>>>>>> master
                     var wb = new this.Workbook(),
                         ws = this.createSheet(data);
 
@@ -547,7 +539,7 @@
             }
         }
 
-        return exports.default = exports.TableExport = TableExport;
+        exports.default = exports.TableExport = TableExport;
 
     }
 ));

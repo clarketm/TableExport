@@ -24,7 +24,8 @@
     "ecosystem:jquery"
   ],
   "scripts": {
-    "test": "gulp"
+    "test": "gulp",
+    "build": "gulp"
   },
   "repository": {
     "type": "git",
@@ -51,7 +52,7 @@
     "jasmine": "^2.4.1"
   },
   "license": "MIT",
-  "homepage": "https://www.travismclarke.com",
+  "homepage": "https://www.travismclarke.com/tableexport/",
   "ignore": [
     "**/.*",
     "node_modules",
