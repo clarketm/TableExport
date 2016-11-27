@@ -49,7 +49,7 @@ $ npm install tableexport
 #### Add-Ons:
 In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, you must include the following third-party script to your project before [FileSaver.js](https://github.com/clarketm/FileSaver.js/) and [TableExport.js](https://www.travismclarke.com/tableexport).
 
-* [xlsx.core.js](https://github.com/clarketm/js-xls) by _clarketm_
+* [xlsx.core.js](https://github.com/clarketm/js-xlsx) by _clarketm_
 
 ```html
 <script src="xlsx.core.js"></script>
