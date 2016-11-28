@@ -221,7 +221,9 @@ $.fn.tableExport.rowDel = "\r\n";
 *only _partial_ support for `xls` and `xlsx`: requires third-party dependency ([Blob.js](https://github.com/clarketm/Blob.js/))
 
 ### Live Demo 
-A live, interactive demo can be found **[here](https://www.travismclarke.com/tableexport/#live-demo)**. Also, check out the [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app/blob/master/README.md) skeleton,
+A live, interactive demo can be found on the **[TableExport](https://www.travismclarke.com/tableexport/#live-demo)** webpage. 
+* [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app/blob/master/README.md) skeleton.
+* [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app/blob/master/README.md) skeleton.
 
 ### License
 [TableExport.js](https://www.travismclarke.com/tableexport) is licensed under the terms of the [MIT](http://opensource.org/licenses/mit-license.php) License
