@@ -1,5 +1,5 @@
 /*!
- * TableExport.js 4.0.0-alpha.3 (https://www.travismclarke.com)
+ * TableExport.js 4.0.0-alpha.4 (https://www.travismclarke.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -87,13 +87,17 @@
                                             }
                                         }
                                         if (rcMap[ir]) {
-                                            var total = 0,
-                                                min = Math.min.apply(Math, Object.keys(rcMap[ir])),
-                                                max = Math.max.apply(Math, Object.keys(rcMap[ir]));
-                                            while (min < max && rcMap[ir][min]) {
-                                                total += rcMap[ir][min] && delete rcMap[ir][min++];
+                                            var threshold = ic + 1,
+                                                total = 0,
+                                                count = 0;
+
+                                            for (var i = 0; i <= Math.max.apply(Math, Object.keys(rcMap[ir])); i++) {
+                                                (!rcMap[ir][i]) ? count++ : total = count >= ic ? total + rcMap[ir][i] : total;
+                                                if (count === threshold) {
+                                                    break;
+                                                }
                                             }
-                                            return new Array(total).concat(val.textContent);
+                                            return new Array(total).concat($(val).text());
                                         }
                                         return val.textContent;
                                     });
@@ -134,13 +138,17 @@
                                             }
                                         }
                                         if (rcMap[ir]) {
-                                            var total = 0,
-                                                min = Math.min.apply(Math, Object.keys(rcMap[ir])),
-                                                max = Math.max.apply(Math, Object.keys(rcMap[ir]));
-                                            while (min < max && rcMap[ir][min]) {
-                                                total += rcMap[ir][min] && delete rcMap[ir][min++];
+                                            var threshold = ic + 1,
+                                                total = 0,
+                                                count = 0;
+
+                                            for (var i = 0; i <= Math.max.apply(Math, Object.keys(rcMap[ir])); i++) {
+                                                (!rcMap[ir][i]) ? count++ : total = count >= ic ? total + rcMap[ir][i] : total;
+                                                if (count === threshold) {
+                                                    break;
+                                                }
                                             }
-                                            return new Array(total).concat(val.textContent);
+                                            return new Array(total).concat($(val).text());
                                         }
                                         return val.textContent;
                                     });
@@ -289,7 +297,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: "4.0.0-alpha.3",
+            version: "4.0.0-alpha.4",
             /**
              * Default plugin options.
              * @memberof TableExport.prototype
