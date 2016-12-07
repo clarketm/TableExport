@@ -1,5 +1,5 @@
 /*!
- * TableExport.js 4.0.0-alpha.2 (https://www.travismclarke.com)
+ * TableExport.js 4.0.0-alpha.3 (https://www.travismclarke.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -86,8 +86,14 @@
                                                 rcMap[ir + i][ic] = 1
                                             }
                                         }
-                                        if (rcMap[ir] && rcMap[ir][ic]) {
-                                            return new Array(rcMap[ir][ic]).concat(val.textContent);
+                                        if (rcMap[ir]) {
+                                            var total = 0,
+                                                min = Math.min.apply(Math, Object.keys(rcMap[ir])),
+                                                max = Math.max.apply(Math, Object.keys(rcMap[ir]));
+                                            while (min < max && rcMap[ir][min]) {
+                                                total += rcMap[ir][min] && delete rcMap[ir][min++];
+                                            }
+                                            return new Array(total).concat(val.textContent);
                                         }
                                         return val.textContent;
                                     });
@@ -127,8 +133,14 @@
                                                 rcMap[ir + i][ic] = 1
                                             }
                                         }
-                                        if (rcMap[ir] && rcMap[ir][ic]) {
-                                            return new Array(rcMap[ir][ic]).concat(val.textContent);
+                                        if (rcMap[ir]) {
+                                            var total = 0,
+                                                min = Math.min.apply(Math, Object.keys(rcMap[ir])),
+                                                max = Math.max.apply(Math, Object.keys(rcMap[ir]));
+                                            while (min < max && rcMap[ir][min]) {
+                                                total += rcMap[ir][min] && delete rcMap[ir][min++];
+                                            }
+                                            return new Array(total).concat(val.textContent);
                                         }
                                         return val.textContent;
                                     });
@@ -277,7 +289,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: "4.0.0-alpha.2",
+            version: "4.0.0-alpha.3",
             /**
              * Default plugin options.
              * @memberof TableExport.prototype
