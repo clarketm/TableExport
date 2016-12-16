@@ -506,7 +506,7 @@
              * @returns {TableExport} original TableExport instance
              */
             reset: function () {
-                return new TableExport(this.selectors, settings, true);
+                return new TableExport(this.selectors, this.settings, true);
             },
             /**
              * Remove the instance (i.e. caption containing the export buttons)
