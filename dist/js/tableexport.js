@@ -98,9 +98,9 @@
                                                     break;
                                                 }
                                             }
-                                            return new Array(total).concat($(val).text());
+                                            return new Array(total).push({'val': $(val).text(), 'type': getTypeFromClass($(val))});
                                         }
-                                        return $(val).text();
+                                        return {'val': $(val).text(), 'type': getTypeFromClass($(val))};
                                     }).get()];
                                 }).get(),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -149,9 +149,9 @@
                                                     break;
                                                 }
                                             }
-                                            return new Array(total).concat($(val).text());
+                                            return new Array(total).push({'val': $(val).text(), 'type': getTypeFromClass($(val))});
                                         }
-                                        return $(val).text();
+                                        return {'val': $(val).text(), 'type': getTypeFromClass($(val))};
                                     }).get()];
                                 }).get(),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -179,7 +179,7 @@
                                         if ($(val).is(emptyCSS)) {
                                             return " "
                                         }
-                                        return $(val).text();
+                                        return {'val': $(val).text(), 'type': getTypeFromClass($(val))};
                                     }).get().join(colD);
                                 }).get().join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -258,6 +258,18 @@
                         key && exporters[key](rowD, fileName);
                     }
                 );
+
+                function getTypeFromClass(cell) {
+                    if (cell.hasClass('te-string')) {
+                        return 's';
+                    } else if (cell.hasClass('te-number')) {
+                        return 'n';
+                    } else if (cell.hasClass('te-boolean')) {
+                        return 'b';
+                    } else {
+                        return '';
+                    }
+                }
 
                 function checkCaption(exportButton) {
                     var $caption = $el.find('caption:not(.head)');
@@ -418,18 +430,20 @@
                         if (range.s.c > C) range.s.c = C;
                         if (range.e.r < R) range.e.r = R;
                         if (range.e.c < C) range.e.c = C;
-                        var cell = {v: data[R][C]};
+                        var cell = {v: data[R][C]['val'], t: data[R][C]['type']};
                         if (cell.v == null) continue;
                         var cell_ref = XLSX.utils.encode_cell({c: C, r: R});
 
-                        if (typeof cell.v === 'number') cell.t = 'n';
-                        else if (typeof cell.v === 'boolean') cell.t = 'b';
-                        else if (cell.v instanceof Date) {
-                            cell.t = 'n';
-                            cell.z = XLSX.SSF._table[14];
-                            cell.v = this.dateNum(cell.v);
+                        if (!cell.t) {
+                            if (typeof cell.v === 'number') cell.t = 'n';
+                            else if (typeof cell.v === 'boolean') cell.t = 'b';
+                            else if (cell.v instanceof Date) {
+                                cell.t = 'n';
+                                cell.z = XLSX.SSF._table[14];
+                                cell.v = this.dateNum(cell.v);
+                            }
+                            else cell.t = 's';
                         }
-                        else cell.t = 's';
 
                         ws[cell_ref] = cell;
                     }
