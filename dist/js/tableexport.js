@@ -63,7 +63,7 @@
                     thAdj = self.settings.headings ? $el.find('thead>tr').length : 0,
                     fileName = self.settings.fileName === "id" ? ($el.attr('id') ? $el.attr('id') : TableExport.prototype.defaultFileName) : self.settings.fileName,
                     exporters = {
-                        xlsx: function (rDel, name) {
+                        xlsx: function (rDel, name, target) {
                             var rcMap = {},
                                 dataURL = $rows.map(function (ir, val) {
                                     if (!!~ignoreRows.indexOf(ir - thAdj) || $(val).is(ignoreCSS)) {
@@ -112,9 +112,14 @@
                                     })),
                                 myContent = TableExport.prototype.xlsx.buttonContent,
                                 myClass = TableExport.prototype.xlsx.defaultClass;
-                            createObjButton(dataObject, myContent, myClass);
+                            if (target) {
+                                attachExportToButton(dataObject, target);
+                            }
+                            else {
+                                createObjButton(dataObject, myContent, myClass);
+                            }
                         },
-                        xlsm: function (rDel, name) {
+                        xlsm: function (rDel, name, target) {
                             var rcMap = {},
                                 dataURL = $rows.map(function (ir, val) {
                                     if (!!~ignoreRows.indexOf(ir - thAdj) || $(val).is(ignoreCSS)) {
@@ -163,9 +168,14 @@
                                     })),
                                 myContent = TableExport.prototype.xls.buttonContent,
                                 myClass = TableExport.prototype.xls.defaultClass;
-                            createObjButton(dataObject, myContent, myClass);
+                            if (target) {
+                                attachExportToButton(dataObject, target);
+                            }
+                            else {
+                                createObjButton(dataObject, myContent, myClass);
+                            }
                         },
-                        xls: function (rdel, name) {
+                        xls: function (rdel, name, target) {
                             var colD = TableExport.prototype.xls.separator,
                                 dataURL = $rows.map(function (i, val) {
                                     if (!!~ignoreRows.indexOf(i - thAdj) || $(val).is(ignoreCSS)) {
@@ -191,9 +201,14 @@
                                     })),
                                 myContent = TableExport.prototype.xls.buttonContent,
                                 myClass = TableExport.prototype.xls.defaultClass;
-                            createObjButton(dataObject, myContent, myClass);
+                            if (target) {
+                                attachExportToButton(dataObject, target);
+                            }
+                            else {
+                                createObjButton(dataObject, myContent, myClass);
+                            }
                         },
-                        csv: function (rdel, name) {
+                        csv: function (rdel, name, target) {
                             var colD = TableExport.prototype.csv.separator,
                                 dataURL = $rows.map(function (i, val) {
                                     if (!!~ignoreRows.indexOf(i - thAdj) || $(val).is(ignoreCSS)) {
@@ -219,9 +234,14 @@
                                     })),
                                 myContent = TableExport.prototype.csv.buttonContent,
                                 myClass = TableExport.prototype.csv.defaultClass;
-                            createObjButton(dataObject, myContent, myClass);
+                            if (target) {
+                                attachExportToButton(dataObject, target);
+                            }
+                            else {
+                                createObjButton(dataObject, myContent, myClass);
+                            }
                         },
-                        txt: function (rdel, name) {
+                        txt: function (rdel, name, target) {
                             var colD = TableExport.prototype.txt.separator,
                                 dataURL = $rows.map(function (i, val) {
                                     if (!!~ignoreRows.indexOf(i - thAdj) || $(val).is(ignoreCSS)) {
@@ -247,7 +267,12 @@
                                     })),
                                 myContent = TableExport.prototype.txt.buttonContent,
                                 myClass = TableExport.prototype.txt.defaultClass;
-                            createObjButton(dataObject, myContent, myClass);
+                            if (target) {
+                                attachExportToButton(dataObject, target);
+                            }
+                            else {
+                                createObjButton(dataObject, myContent, myClass);
+                            }
                         }
                     };
 
@@ -255,7 +280,9 @@
                     function (key) {
                         XLSX && key === 'xls' ? key = 'xlsm' : false;
                         !XLSX && key === 'xlsx' ? key = null : false;
-                        key && exporters[key](rowD, fileName);
+                        var target;
+                        key in self.settings['targets'] ? target = self.settings['targets'][key] : null;
+                        key && exporters[key](rowD, fileName, target);
                     }
                 );
 
@@ -267,6 +294,11 @@
                 function createObjButton(dataObject, myContent, myClass) {
                     var exportButton = "<button data-fileblob='" + dataObject + "' class='" + bootstrapClass + bootstrapTheme + myClass + "'>" + myContent + "</button>";
                     checkCaption(exportButton);
+                }
+
+                function attachExportToButton(dataObject, target) {
+                    var exportButton = $(target);
+                    exportButton.attr('data-fileblob', dataObject)
                 }
             });
 
