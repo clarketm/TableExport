@@ -300,6 +300,11 @@
                     }
                 }
 
+                function unescapeHtml(string) {
+                    var doc = new DOMParser().parseFromString(string, "text/html");
+                    return doc.documentElement.textContent;
+                }
+
                 function checkCaption(exportButton) {
                     var $caption = $el.find('caption:not(.head)');
                     $caption.length ? $caption.append(exportButton) : $el.prepend('<caption class="' + bootstrapSpacing + self.settings.position + '">' + exportButton + '</caption>');
@@ -312,7 +317,7 @@
 
                 function attachExportToButton(dataObject, target) {
                     var exportButton = $(target);
-                    exportButton.attr('data-fileblob', dataObject)
+                    exportButton.attr('data-fileblob', unescapeHtml(dataObject));
                 }
             });
 
