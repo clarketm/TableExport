@@ -281,7 +281,9 @@
                         XLSX && key === 'xls' ? key = 'xlsm' : false;
                         !XLSX && key === 'xlsx' ? key = null : false;
                         var target;
-                        key in self.settings['targets'] ? target = self.settings['targets'][key] : null;
+                        if (self.settings['targets']) {
+                            key in self.settings['targets'] ? target = self.settings['targets'][key] : null;
+                        }
                         key && exporters[key](rowD, fileName, target);
                     }
                 );
