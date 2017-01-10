@@ -281,7 +281,9 @@
                         XLSX && key === 'xls' ? key = 'xlsm' : false;
                         !XLSX && key === 'xlsx' ? key = null : false;
                         var target;
-                        key in self.settings['targets'] ? target = self.settings['targets'][key] : null;
+                        if (self.settings['targets']) {
+                            key in self.settings['targets'] ? target = self.settings['targets'][key] : null;
+                        }
                         key && exporters[key](rowD, fileName, target);
                     }
                 );
@@ -298,6 +300,11 @@
                     }
                 }
 
+                function unescapeHtml(string) {
+                    var doc = new DOMParser().parseFromString(string, "text/html");
+                    return doc.documentElement.textContent;
+                }
+
                 function checkCaption(exportButton) {
                     var $caption = $el.find('caption:not(.head)');
                     $caption.length ? $caption.append(exportButton) : $el.prepend('<caption class="' + bootstrapSpacing + self.settings.position + '">' + exportButton + '</caption>');
@@ -310,14 +317,14 @@
 
                 function attachExportToButton(dataObject, target) {
                     var exportButton = $(target);
-                    exportButton.attr('data-fileblob', dataObject)
+                    exportButton.attr('data-fileblob', unescapeHtml(dataObject));
                 }
             });
 
             $("button[data-fileblob]")
                 .off("click")
                 .on("click", function () {
-                    var object = $(this).data("fileblob"),
+                    var object = JSON.parse($(this).attr('data-fileblob')),
                         data = object.data,
                         fileName = object.fileName,
                         mimeType = object.mimeType,
