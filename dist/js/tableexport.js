@@ -324,7 +324,7 @@
             $("button[data-fileblob]")
                 .off("click")
                 .on("click", function () {
-                    var object = $(this).data("fileblob"),
+                    var object = JSON.parse($(this).attr('data-fileblob')),
                         data = object.data,
                         fileName = object.fileName,
                         mimeType = object.mimeType,
