@@ -114,7 +114,7 @@ $("table").tableExport({
     ignoreCols: null,                   // (Number, Number[]), column indices to exclude from the exported file
     ignoreCSS: ".tableexport-ignore",   // (selector, selector[]), selector(s) to exclude cells from the exported file
     emptyCSS: ".tableexport-empty",     // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file
-    trimWhitespace: false               // (Boolean), remove all newlines, spaces (including non-breaking spaces), and tabs from the beginning and end of cell text
+    trimWhitespace: false               // (Boolean), remove all leading/trailing newlines, spaces (including non-breaking spaces), and tabs from cell text
 });
 ```
 > **Note:**  to use the xlsx filetype, you must include the third-party scripts listed in the Dependencies section.

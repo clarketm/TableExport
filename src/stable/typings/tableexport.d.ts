@@ -174,6 +174,7 @@ export interface Defaults {
     ignoreCols: number[];
     ignoreCSS: string;
     emptyCSS: string;
+    trimWhitespace: boolean;
 }
 
 /**
