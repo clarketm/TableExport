@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v3.3.8 (https://www.travismclarke.com)
+ * TableExport.js v3.3.9 (https://www.travismclarke.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -309,7 +309,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: "3.3.8",
+            version: "3.3.9",
             /**
              * Default plugin options.
              * @memberof TableExport.prototype
@@ -519,7 +519,7 @@
              * @returns {TableExport} original TableExport instance
              */
             reset: function () {
-                return new TableExport(this.selectors, settings, true);
+                return new TableExport(this.selectors, this.settings, true);
             },
             /**
              * Remove the instance (i.e. caption containing the export buttons)

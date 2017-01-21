@@ -26,7 +26,7 @@ export class TableExport {
     /**
      * selectors (e.g. tables) to apply the plugin to
      */
-    selectors: NodeList;
+    selectors: NodeList|JQuery;
 
     /**
      * Character set (character encoding) of the HTML.
