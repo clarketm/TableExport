@@ -35,6 +35,15 @@ $ npm install tableexport
 |  __JS__  |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/js/tableexport.js)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/js/tableexport.min.js)      |
 |  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/img/xlsx.svg)[🔗<sup>xls</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/img/xls.svg)[🔗<sup>csv</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/img/csv.svg)[🔗<sup>txt</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/img/txt.svg)  |
 
+
+### [unpkg](https://unpkg.com/#/)
+|          | uncompressed | compressed |
+| :------: | :----------: | :--------: |
+|  __CSS__ |   [🔗](https://unpkg.com/tableexport/dist/css/tableexport.css)     |  [🔗](https://unpkg.com/tableexport@3.3.7/dist/css/tableexport.min.css)      |
+|  __JS__  |   [🔗](https://unpkg.com/tableexport/dist/js/tableexport.js)     |  [🔗](https://unpkg.com/tableexport/dist/js/tableexport.min.js)      |
+|  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://unpkg.com/tableexport/dist/img/xlsx.svg)[🔗<sup>xls</sup>](https://unpkg.com/tableexport/dist/img/xls.svg)[🔗<sup>csv</sup>](https://unpkg.com/tableexport/dist/img/csv.svg)[🔗<sup>txt</sup>](https://unpkg.com/tableexport/dist/img/txt.svg)  |
+
+
 ### Dependencies
 
 #### Required:
