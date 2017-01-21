@@ -31,9 +31,18 @@ $ npm install tableexport
 ### [CDNjs](https://cdnjs.com/libraries/TableExport)
 |          | uncompressed | compressed |
 | :------: | :----------: | :--------: |
+|  __CSS__ |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/css/tableexport.css)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/css/tableexport.min.css)      |
+|  __JS__  |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/js/tableexport.js)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/js/tableexport.min.js)      |
+|  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/img/xlsx.svg)[🔗<sup>xls</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/img/xls.svg)[🔗<sup>csv</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/img/csv.svg)[🔗<sup>txt</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/img/txt.svg)  |
+
+
+### [unpkg](https://unpkg.com/#/)
+|          | uncompressed | compressed |
+| :------: | :----------: | :--------: |
 |  __CSS__ |   [🔗](https://unpkg.com/tableexport/dist/css/tableexport.css)     |  [🔗](https://unpkg.com/tableexport@3.3.7/dist/css/tableexport.min.css)      |
 |  __JS__  |   [🔗](https://unpkg.com/tableexport/dist/js/tableexport.js)     |  [🔗](https://unpkg.com/tableexport/dist/js/tableexport.min.js)      |
 |  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://unpkg.com/tableexport/dist/img/xlsx.svg)[🔗<sup>xls</sup>](https://unpkg.com/tableexport/dist/img/xls.svg)[🔗<sup>csv</sup>](https://unpkg.com/tableexport/dist/img/csv.svg)[🔗<sup>txt</sup>](https://unpkg.com/tableexport/dist/img/txt.svg)  |
+
 
 ### Dependencies
 
@@ -112,8 +121,9 @@ $("table").tableExport({
     position: "bottom",                 // (top, bottom), position of the caption element relative to table
     ignoreRows: null,                   // (Number, Number[]), row indices to exclude from the exported file
     ignoreCols: null,                   // (Number, Number[]), column indices to exclude from the exported file
-    ignoreCSS: ".tableexport-ignore"    // (selector, selector[]), selector(s) to exclude cells from the exported file
-    emptyCSS: ".tableexport-empty"      // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file
+    ignoreCSS: ".tableexport-ignore",   // (selector, selector[]), selector(s) to exclude cells from the exported file
+    emptyCSS: ".tableexport-empty",     // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file
+    trimWhitespace: false               // (Boolean), remove all leading/trailing newlines, spaces (including non-breaking spaces), and tabs from cell text
 });
 ```
 > **Note:**  to use the xlsx filetype, you must include the third-party scripts listed in the Dependencies section.

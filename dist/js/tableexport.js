@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v3.3.7 (https://www.travismclarke.com)
+ * TableExport.js v3.3.9 (https://www.travismclarke.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -15,7 +15,7 @@
         // Browser globals
         factory(root, root.jQuery, root.Blob, root.saveAs, root.XLSX);
     }
-}(this, function (exports, $, Blob, saveAs, XLSX) {
+}(this || window, function (exports, $, Blob, saveAs, XLSX) {
         'use strict';
         /**
          * TableExport main plugin constructor
@@ -100,7 +100,7 @@
                                             }
                                             return new Array(total).concat($(val).text());
                                         }
-                                        return $(val).text();
+                                        return formatValue($(val).text());
                                     }).get()];
                                 }).get(),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -151,7 +151,7 @@
                                             }
                                             return new Array(total).concat($(val).text());
                                         }
-                                        return $(val).text();
+                                        return formatValue($(val).text());
                                     }).get()];
                                 }).get(),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -179,7 +179,7 @@
                                         if ($(val).is(emptyCSS)) {
                                             return " "
                                         }
-                                        return $(val).text();
+                                        return formatValue($(val).text());
                                     }).get().join(colD);
                                 }).get().join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -207,7 +207,7 @@
                                         if ($(val).is(emptyCSS)) {
                                             return " "
                                         }
-                                        return '"' + $(val).text().replace(/"/g, '""') + '"';
+                                        return '"' + formatValue($(val).text().replace(/"/g, '""')) + '"';
                                     }).get().join(colD);
                                 }).get().join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -235,7 +235,7 @@
                                         if ($(val).is(emptyCSS)) {
                                             return " "
                                         }
-                                        return $(val).text();
+                                        return formatValue($(val).text());
                                     }).get().join(colD);
                                 }).get().join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -259,11 +259,30 @@
                     }
                 );
 
+                /**
+                 * Removes leading/trailing whitespace from cell string
+                 * @param string {String}
+                 * @returns {String} trimmed string
+                 */
+                function formatValue(string) {
+                    return self.settings.trimWhitespace ? string.trim() : string;
+                }
+
+                /**
+                 * Initializes table caption with export buttons
+                 * @param exportButton {HTMLButtonElement}
+                 */
                 function checkCaption(exportButton) {
                     var $caption = $el.find('caption:not(.head)');
                     $caption.length ? $caption.append(exportButton) : $el.prepend('<caption class="' + bootstrapSpacing + self.settings.position + '">' + exportButton + '</caption>');
                 }
 
+                /**
+                 * Creates file export buttons
+                 * @param dataObject {JSON}
+                 * @param myContent {String}
+                 * @param myClass {String}
+                 */
                 function createObjButton(dataObject, myContent, myClass) {
                     var exportButton = "<button data-fileblob='" + dataObject + "' class='" + bootstrapClass + bootstrapTheme + myClass + "'>" + myContent + "</button>";
                     checkCaption(exportButton);
@@ -290,7 +309,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: "3.3.7",
+            version: "3.3.9",
             /**
              * Default plugin options.
              * @memberof TableExport.prototype
@@ -305,7 +324,8 @@
                 ignoreRows: null,                           // (Number, Number[]), row indices to exclude from the exported file (default: null)
                 ignoreCols: null,                           // (Number, Number[]), column indices to exclude from the exported file (default: null)
                 ignoreCSS: ".tableexport-ignore",           // (selector, selector[]), selector(s) to exclude cells from the exported file (default: ".tableexport-ignore")
-                emptyCSS: ".tableexport-empty"              // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file (default: ".tableexport-empty")
+                emptyCSS: ".tableexport-empty",             // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file (default: ".tableexport-empty")
+                trimWhitespace: false                       // (Boolean), remove all leading/trailing newlines, spaces (including non-breaking spaces), and tabs from cell text (default: false)
             },
             /**
              * Character set (character encoding) of the HTML.
@@ -499,7 +519,7 @@
              * @returns {TableExport} original TableExport instance
              */
             reset: function () {
-                return new TableExport(this.selectors, settings, true);
+                return new TableExport(this.selectors, this.settings, true);
             },
             /**
              * Remove the instance (i.e. caption containing the export buttons)
