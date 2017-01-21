@@ -100,7 +100,7 @@
                                             }
                                             return new Array(total).concat($(val).text());
                                         }
-                                        return $(val).text();
+                                        return formatValue($(val).text());
                                     }).get()];
                                 }).get(),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -151,7 +151,7 @@
                                             }
                                             return new Array(total).concat($(val).text());
                                         }
-                                        return $(val).text();
+                                        return formatValue($(val).text());
                                     }).get()];
                                 }).get(),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -179,7 +179,7 @@
                                         if ($(val).is(emptyCSS)) {
                                             return " "
                                         }
-                                        return $(val).text();
+                                        return formatValue($(val).text());
                                     }).get().join(colD);
                                 }).get().join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -207,7 +207,7 @@
                                         if ($(val).is(emptyCSS)) {
                                             return " "
                                         }
-                                        return '"' + $(val).text().replace(/"/g, '""') + '"';
+                                        return '"' + formatValue($(val).text().replace(/"/g, '""')) + '"';
                                     }).get().join(colD);
                                 }).get().join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -235,7 +235,7 @@
                                         if ($(val).is(emptyCSS)) {
                                             return " "
                                         }
-                                        return $(val).text();
+                                        return formatValue($(val).text());
                                     }).get().join(colD);
                                 }).get().join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -258,6 +258,18 @@
                         key && exporters[key](rowD, fileName);
                     }
                 );
+
+                function trimWhitespace(string) {
+                    if (self.settings.trimWhitespace) {
+                        return $.trim(string);
+                    }
+                    return string;
+                }
+
+                function formatValue(string) {
+                    string = trimWhitespace(string);
+                    return string;
+                }
 
                 function checkCaption(exportButton) {
                     var $caption = $el.find('caption:not(.head)');
@@ -305,7 +317,8 @@
                 ignoreRows: null,                           // (Number, Number[]), row indices to exclude from the exported file (default: null)
                 ignoreCols: null,                           // (Number, Number[]), column indices to exclude from the exported file (default: null)
                 ignoreCSS: ".tableexport-ignore",           // (selector, selector[]), selector(s) to exclude cells from the exported file (default: ".tableexport-ignore")
-                emptyCSS: ".tableexport-empty"              // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file (default: ".tableexport-empty")
+                emptyCSS: ".tableexport-empty",             // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file (default: ".tableexport-empty")
+                trimWhitespace: false                       // (Boolean), remove all newlines, spaces (including non-breaking spaces), and tabs from the beginning and end of cell text 
             },
             /**
              * Character set (character encoding) of the HTML.
