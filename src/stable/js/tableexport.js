@@ -502,9 +502,15 @@
 
                     data = this.string2ArrayBuffer(wbout);
                 }
-                saveAs(new Blob([data],
-                    {type: mime + ";" + this.charset}),
-                    name + extension, true);
+                var blob = new Blob([data], {type: mime + ";" + this.charset});
+                if (navigator.appVersion.toString().indexOf('.NET') > 0)
+                {
+                    window.navigator.msSaveOrOpenBlob(blob, name + extension);
+                }
+                else 
+                {                
+                    saveAs(blob, name + extension, true);
+                }
             },
             /**
              * Updates the plugin instance with new/updated options
