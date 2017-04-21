@@ -138,7 +138,7 @@ var tables = $("table").tableExport();
 ```js
 /* update */
 tables.update({
-    filename: "newFile"     // pass in a new set of properties
+    fileName: "newFile"     // pass in a new set of properties
 });
 
 /* reset */
