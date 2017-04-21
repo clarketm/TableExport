@@ -240,8 +240,8 @@ A live, interactive demo can be found on the **[TableExport](https://www.travism
 ### License
 [TableExport.js](https://www.travismclarke.com/tableexport) is licensed under the terms of the [MIT](http://opensource.org/licenses/mit-license.php) License
 
-### Credits
-
+### :star: Credits
+Special thanks the the following contributors: 
 * [John Resig](https://github.com/jeresig) - jQuery
 * [SheetJS](https://github.com/SheetJS) - js-xlsx 
 * [Eli Grey](https://github.com/eligrey) - FileSaver.js & Blob.js
