@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v3.3.9 (https://www.travismclarke.com)
+ * TableExport.js v3.3.10 (https://www.travismclarke.com)
  * Copyright 2016 Travis Clarke
  * Licensed under the MIT license
  */
@@ -309,7 +309,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: "3.3.9",
+            version: "3.3.10",
             /**
              * Default plugin options.
              * @memberof TableExport.prototype
@@ -503,9 +503,9 @@
                     data = this.string2ArrayBuffer(wbout);
                 }
                 var blob = new Blob([data], {type: mime + ";" + this.charset});
-                if (navigator.appVersion.toString().indexOf('.NET') > 0) {
+                if (typeof saveAs === "undefined" && typeof navigator !== "undefined" && navigator.msSaveOrOpenBlob) {
                     window.navigator.msSaveOrOpenBlob(blob, name + extension);
-                } else {                
+                } else {
                     saveAs(blob, name + extension, true);
                 }
             },
