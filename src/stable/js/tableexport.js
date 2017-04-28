@@ -503,12 +503,9 @@
                     data = this.string2ArrayBuffer(wbout);
                 }
                 var blob = new Blob([data], {type: mime + ";" + this.charset});
-                if (navigator.appVersion.toString().indexOf('.NET') > 0)
-                {
+                if (navigator.appVersion.toString().indexOf('.NET') > 0) {
                     window.navigator.msSaveOrOpenBlob(blob, name + extension);
-                }
-                else 
-                {                
+                } else {                
                     saveAs(blob, name + extension, true);
                 }
             },
