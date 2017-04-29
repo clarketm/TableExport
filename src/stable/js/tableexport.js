@@ -321,11 +321,11 @@
                 fileName: "id",                             // (id, String), filename for the downloaded file, (default: "id")
                 bootstrap: true,                            // (Boolean), style buttons using bootstrap, (default: true)
                 position: "bottom",                         // (top, bottom), position of the caption element relative to table, (default: "bottom")
-                ignoreRows: null,                           // (Number, Number[]), row indices to exclude from the exported file (default: null)
-                ignoreCols: null,                           // (Number, Number[]), column indices to exclude from the exported file (default: null)
-                ignoreCSS: ".tableexport-ignore",           // (selector, selector[]), selector(s) to exclude cells from the exported file (default: ".tableexport-ignore")
-                emptyCSS: ".tableexport-empty",             // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file (default: ".tableexport-empty")
-                trimWhitespace: false                       // (Boolean), remove all leading/trailing newlines, spaces (including non-breaking spaces), and tabs from cell text (default: false)
+                ignoreRows: null,                           // (Number, Number[]), row indices to exclude from the exported file(s) (default: null)
+                ignoreCols: null,                           // (Number, Number[]), column indices to exclude from the exported file(s) (default: null)
+                ignoreCSS: ".tableexport-ignore",           // (selector, selector[]), selector(s) to exclude cells from the exported file(s) (default: ".tableexport-ignore")
+                emptyCSS: ".tableexport-empty",             // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file(s) (default: ".tableexport-empty")
+                trimWhitespace: false                       // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s) (default: false)
             },
             /**
              * Character set (character encoding) of the HTML.
