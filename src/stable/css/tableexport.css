@@ -1,6 +1,6 @@
 /*!
  * TableExport.js v3.3.10 (https://www.travismclarke.com)
- * Copyright 2016 Travis Clarke
+ * Copyright 2017 Travis Clarke
  * Licensed under the MIT license
  */
 
