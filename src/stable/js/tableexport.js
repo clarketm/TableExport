@@ -60,7 +60,7 @@
                     rows = self.settings.headings ? _nodesArray(el.querySelectorAll("thead > tr")).concat(rows) : rows,
                     rows = self.settings.footers ? _nodesArray(el.querySelectorAll("tfoot > tr")).concat(rows) : rows,
                     thAdj = self.settings.headings ? el.querySelectorAll('thead > tr').length : 0,
-                    fileName = self.settings.fileName === "id" ? (el.getAttribute('id') ? el.getAttribute('id') : TableExport.prototype.defaultFileName) : self.settings.fileName,
+                    filename = self.settings.filename === "id" ? (el.getAttribute('id') ? el.getAttribute('id') : TableExport.prototype.defaultFilename) : self.settings.filename,
                     exporters = {
                         xlsx: function (rDel, name) {
                             var rcMap = {},
@@ -105,7 +105,7 @@
                                 dataObject = TableExport.prototype.escapeHtml(
                                     JSON.stringify({
                                         data: dataURL,
-                                        fileName: name,
+                                        filename: name,
                                         mimeType: TableExport.prototype.xlsx.mimeType,
                                         fileExtension: TableExport.prototype.xlsx.fileExtension
                                     })),
@@ -156,7 +156,7 @@
                                 dataObject = TableExport.prototype.escapeHtml(
                                     JSON.stringify({
                                         data: dataURL,
-                                        fileName: name,
+                                        filename: name,
                                         mimeType: TableExport.prototype.xls.mimeType,
                                         fileExtension: TableExport.prototype.xls.fileExtension
                                     })),
@@ -184,7 +184,7 @@
                                 dataObject = TableExport.prototype.escapeHtml(
                                     JSON.stringify({
                                         data: dataURL,
-                                        fileName: name,
+                                        filename: name,
                                         mimeType: TableExport.prototype.xls.mimeType,
                                         fileExtension: TableExport.prototype.xls.fileExtension
                                     })),
@@ -212,7 +212,7 @@
                                 dataObject = TableExport.prototype.escapeHtml(
                                     JSON.stringify({
                                         data: dataURL,
-                                        fileName: name,
+                                        filename: name,
                                         mimeType: TableExport.prototype.csv.mimeType,
                                         fileExtension: TableExport.prototype.csv.fileExtension
                                     })),
@@ -240,7 +240,7 @@
                                 dataObject = TableExport.prototype.escapeHtml(
                                     JSON.stringify({
                                         data: dataURL,
-                                        fileName: name,
+                                        filename: name,
                                         mimeType: TableExport.prototype.txt.mimeType,
                                         fileExtension: TableExport.prototype.txt.fileExtension
                                     })),
@@ -254,7 +254,7 @@
                     function (key) {
                         XLSX && key === 'xls' ? key = 'xlsm' : false;
                         !XLSX && key === 'xlsx' ? key = null : false;
-                        key && exporters[key](rowD, fileName);
+                        key && exporters[key](rowD, filename);
                     }
                 );
 
@@ -283,10 +283,10 @@
             _on(exportButton, "click", function () {
                 var object = JSON.parse(this.getAttribute("data-fileblob")),
                     data = object.data,
-                    fileName = object.fileName,
+                    filename = object.filename,
                     mimeType = object.mimeType,
                     fileExtension = object.fileExtension;
-                TableExport.prototype.export2file(data, mimeType, fileName, fileExtension);
+                TableExport.prototype.export2file(data, mimeType, filename, fileExtension);
             });
 
             return self;
@@ -306,7 +306,7 @@
                 headings: true,                             // (Boolean), display table headings (th or td elements) in the <thead>, (default: true)
                 footers: true,                              // (Boolean), display table footers (th or td elements) in the <tfoot>, (default: false)
                 formats: ["xls", "csv", "txt"],             // (String[]), filetype(s) for the export, (default: ["xls", "csv", "txt"])
-                fileName: "id",                             // (id, String), filename for the downloaded file, (default: "id")
+                filename: "id",                             // (id, String), filename for the downloaded file, (default: "id")
                 bootstrap: true,                            // (Boolean), style buttons using bootstrap, (default: true)
                 position: "bottom",                         // (top, bottom), position of the caption element relative to table, (default: "bottom")
                 ignoreRows: null,                           // (Number, Number[]), row indices to exclude from the exported file (default: null)
@@ -323,7 +323,7 @@
              * Filename fallback for exported files.
              * @memberof TableExport.prototype
              */
-            defaultFileName: "myDownload",
+            defaultFilename: "myDownload",
             /**
              * Class applied to each export button element.
              * @memberof TableExport.prototype

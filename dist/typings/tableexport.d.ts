@@ -38,7 +38,7 @@ export class TableExport {
      * Filename fallback for exported files.
      * @memberof TableExport.prototype
      */
-    defaultFileName: string;
+    defaultFilename: string;
 
     /**
      * Class applied to each export button element.
@@ -167,7 +167,7 @@ export interface Defaults {
     headings: boolean;
     footers: boolean;
     formats: string[];
-    fileName: string;
+    filename: string;
     bootstrap: boolean;
     position: string;
     ignoreRows: number[];
