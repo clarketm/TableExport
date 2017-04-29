@@ -1,6 +1,6 @@
 /*!
  * TableExport.js 4.0.0-alpha.4 (https://www.travismclarke.com)
- * Copyright 2016 Travis Clarke
+ * Copyright 2017 Travis Clarke
  * Licensed under the MIT license
  */
 
@@ -506,7 +506,7 @@
              * @returns {TableExport} original TableExport instance
              */
             reset: function () {
-                return new TableExport(this.selectors, settings, true);
+                return new TableExport(this.selectors, this.settings, true);
             },
             /**
              * Remove the instance (i.e. caption containing the export buttons)
