@@ -2,6 +2,12 @@
 # [TableExport](https://www.travismclarke.com/tableexport)
 The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, and txt files
 
+[TableExport](https://www.travismclarke.com/tableexport/) demo **--** [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) skeleton **--** [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) skeleton.
+
+> **Notice:** In May 2017, [v3.0.0](https://github.com/clarketm/TableExport/releases/tag/v3.3.9) will be superceded by [v4.0.0](https://github.com/clarketm/TableExport/releases/tag/v4.0.0-alpha.4). Althought this is a major version bump, fear not, because all changes will be 100% backwards-compatible.
+
+> **So why the major version bump you ask?** Well, the rationale for a major version bump is that due to a change in `TableExport`'s dependencies, in [v4.0.0](https://github.com/clarketm/TableExport/releases/tag/v4.0.0-alpha.4) forth, JQuery will no longer be a **required** dependency, instead it will be purely **optional**. So existing implementations *with* jQuery will continue to work unimpeded, now with the added benefit that new projets no longer need to rely on the overhead of such large library, unless of course you prefer jQuery or it is already part of your project. 
+
 ## Getting Started
 
 ### Download and Setup
@@ -29,9 +35,18 @@ $ npm install tableexport
 ### [CDNjs](https://cdnjs.com/libraries/TableExport)
 |          | uncompressed | compressed |
 | :------: | :----------: | :--------: |
-|  __CSS__ |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/css/tableexport.css)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/css/tableexport.min.css)      |
-|  __JS__  |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/js/tableexport.js)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/js/tableexport.min.js)      |
-|  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/img/xlsx.svg)[🔗<sup>xls</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/img/xls.svg)[🔗<sup>csv</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/img/csv.svg)[🔗<sup>txt</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/img/txt.svg)  |
+|  __CSS__ |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/css/tableexport.css)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/css/tableexport.min.css)      |
+|  __JS__  |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/js/tableexport.js)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/js/tableexport.min.js)      |
+|  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/img/xlsx.svg)[🔗<sup>xls</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/img/xls.svg)[🔗<sup>csv</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/img/csv.svg)[🔗<sup>txt</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/img/txt.svg)  |
+
+
+### [unpkg](https://unpkg.com/#/)
+|          | uncompressed | compressed |
+| :------: | :----------: | :--------: |
+|  __CSS__ |   [🔗](https://unpkg.com/tableexport/dist/css/tableexport.css)     |  [🔗](https://unpkg.com/tableexport/dist/css/tableexport.min.css)      |
+|  __JS__  |   [🔗](https://unpkg.com/tableexport/dist/js/tableexport.js)     |  [🔗](https://unpkg.com/tableexport/dist/js/tableexport.min.js)      |
+|  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://unpkg.com/tableexport/dist/img/xlsx.svg)[🔗<sup>xls</sup>](https://unpkg.com/tableexport/dist/img/xls.svg)[🔗<sup>csv</sup>](https://unpkg.com/tableexport/dist/img/csv.svg)[🔗<sup>txt</sup>](https://unpkg.com/tableexport/dist/img/txt.svg)  |
+
 
 ### Dependencies
 
@@ -40,7 +55,7 @@ $ npm install tableexport
 * [jQuery](https://jquery.com) (1.2.1 or higher) `*`
 * [FileSaver.js](https://github.com/clarketm/FileSaver.js/)
 
-> `*` jQuery dependency requirement is removed as of [4.0.0-alpha.4](https://github.com/clarketm/TableExport/tree/v4.0.0-alpha.4)
+> `*` jQuery dependency requirement is removed as of [4.0.0-alpha.2](https://github.com/clarketm/TableExport/tree/v4.0.0-alpha.2)
 
 #### Optional / Theming:
 
@@ -110,8 +125,9 @@ $("table").tableExport({
     position: "bottom",                 // (top, bottom), position of the caption element relative to table
     ignoreRows: null,                   // (Number, Number[]), row indices to exclude from the exported file
     ignoreCols: null,                   // (Number, Number[]), column indices to exclude from the exported file
-    ignoreCSS: ".tableexport-ignore"    // (selector, selector[]), selector(s) to exclude cells from the exported file
-    emptyCSS: ".tableexport-empty"      // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file
+    ignoreCSS: ".tableexport-ignore",   // (selector, selector[]), selector(s) to exclude cells from the exported file
+    emptyCSS: ".tableexport-empty",     // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file
+    trimWhitespace: false               // (Boolean), remove all leading/trailing newlines, spaces (including non-breaking spaces), and tabs from cell text
 });
 ```
 > **Note:**  to use the xlsx filetype, you must include the third-party scripts listed in the Dependencies section.
@@ -126,7 +142,7 @@ var tables = $("table").tableExport();
 ```js
 /* update */
 tables.update({
-    filename: "newFile"     // pass in a new set of properties
+    fileName: "newFile"     // pass in a new set of properties
 });
 
 /* reset */
@@ -221,13 +237,15 @@ $.fn.tableExport.rowDel = "\r\n";
 *only _partial_ support for `xls` and `xlsx`: requires third-party dependency ([Blob.js](https://github.com/clarketm/Blob.js/))
 
 ### Live Demo 
-A live, interactive demo can be found **[here](https://www.travismclarke.com/tableexport/#live-demo)**. Also, check out the [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app/blob/master/README.md) skeleton,
+A live, interactive demo can be found on the **[TableExport](https://www.travismclarke.com/tableexport/#live-demo)** webpage. 
+* [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) skeleton.
+* [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) skeleton.
 
 ### License
 [TableExport.js](https://www.travismclarke.com/tableexport) is licensed under the terms of the [MIT](http://opensource.org/licenses/mit-license.php) License
 
-### Credits
-
+### :star: Credits
+Special thanks the the following contributors: 
 * [John Resig](https://github.com/jeresig) - jQuery
 * [SheetJS](https://github.com/SheetJS) - js-xlsx 
 * [Eli Grey](https://github.com/eligrey) - FileSaver.js & Blob.js
