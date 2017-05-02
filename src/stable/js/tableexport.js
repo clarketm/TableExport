@@ -41,6 +41,8 @@
                 ignoreCols = self.settings.ignoreCols instanceof Array ? self.settings.ignoreCols : [self.settings.ignoreCols],
                 ignoreCSS = self.settings.ignoreCSS instanceof Array ? self.settings.ignoreCSS.join(", ") : self.settings.ignoreCSS,
                 emptyCSS = self.settings.emptyCSS instanceof Array ? self.settings.emptyCSS.join(", ") : self.settings.emptyCSS,
+                formatValue = TableExport.prototype.formatValue.bind(this, self.settings.trimWhitespace),
+                getType = TableExport.prototype.getType,
                 bootstrapClass, bootstrapTheme, bootstrapSpacing;
 
             if (self.settings.bootstrap) {
@@ -99,7 +101,7 @@
                                             }
                                             return new Array(total).concat($(val).text());
                                         }
-                                        return val.textContent;
+                                        return formatValue(val.textContent);
                                     });
                                 }),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -150,7 +152,7 @@
                                             }
                                             return new Array(total).concat($(val).text());
                                         }
-                                        return val.textContent;
+                                        return formatValue(val.textContent);
                                     });
                                 }),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -178,7 +180,7 @@
                                         if (_hasClass(val, emptyCSS)) {
                                             return " "
                                         }
-                                        return val.textContent;
+                                        return formatValue(val.textContent);
                                     }).join(colD);
                                 }).join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -206,7 +208,7 @@
                                         if (_hasClass(val, emptyCSS)) {
                                             return " "
                                         }
-                                        return '"' + val.textContent.replace(/"/g, '""') + '"';
+                                        return '"' + formatValue(val.textContent.replace(/"/g, '""')) + '"';
                                     }).join(colD);
                                 }).join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -234,7 +236,7 @@
                                         if (_hasClass(val, emptyCSS)) {
                                             return " "
                                         }
-                                        return val.textContent;
+                                        return formatValue(val.textContent);
                                     }).join(colD);
                                 }).join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
