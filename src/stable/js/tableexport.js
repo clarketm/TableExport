@@ -99,9 +99,15 @@
                                                     break;
                                                 }
                                             }
-                                            return new Array(total).concat($(val).text());
+                                            return new Array(total).concat({
+                                                v: formatValue(val.textContent),
+                                                t: getType(val.className)
+                                            });
                                         }
-                                        return formatValue(val.textContent);
+                                        return {
+                                            v: formatValue(val.textContent),
+                                            t: getType(val.className)
+                                        };
                                     });
                                 }),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -150,9 +156,15 @@
                                                     break;
                                                 }
                                             }
-                                            return new Array(total).concat($(val).text());
+                                            return new Array(total).concat({
+                                                v: formatValue(val.textContent),
+                                                t: getType(val.className)
+                                            });
                                         }
-                                        return formatValue(val.textContent);
+                                        return {
+                                            v: formatValue(val.textContent),
+                                            t: getType(val.className)
+                                        };
                                     });
                                 }),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -180,7 +192,10 @@
                                         if (_hasClass(val, emptyCSS)) {
                                             return " "
                                         }
-                                        return formatValue(val.textContent);
+                                        return {
+                                            v: formatValue(val.textContent),
+                                            t: getType(val.className)
+                                        };
                                     }).join(colD);
                                 }).join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
