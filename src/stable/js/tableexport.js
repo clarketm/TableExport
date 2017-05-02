@@ -398,6 +398,33 @@
                 fileExtension: ".txt"
             },
             /**
+             * Cell-types override and assertion configuration
+             * @memberof TableExport.prototype
+             */
+            types: {
+                string: {
+                    defaultClass: "tableexport-string"
+                },
+                number: {
+                    defaultClass: "tableexport-number",
+                    assert: function (v) {
+                        return !isNaN(v.replace(/,/g, ''));
+                    }
+                },
+                boolean: {
+                    defaultClass: "tableexport-boolean",
+                    assert: function (v) {
+                        return v.toLowerCase() === 'true' || v.toLowerCase() === 'false';
+                    }
+                },
+                date: {
+                    defaultClass: "tableexport-date",
+                    assert: function (v) {
+                        return !isNaN(Date.parse(v))
+                    }
+                }
+            },
+            /**
              * Escapes special characters with HTML entities
              * @memberof TableExport.prototype
              * @param string {String}
@@ -407,6 +434,35 @@
                 return String(string).replace(/[&<>'\/]/g, function (s) {
                     return TableExport.prototype.entityMap[s];
                 });
+            },
+            /**
+             * Removes leading/trailing whitespace from cell string
+             * @param isTrimWhitespace {Boolean}
+             * @param string {String}
+             * @returns {String} trimmed string
+             */
+            formatValue: function (isTrimWhitespace, string) {
+                return isTrimWhitespace ? string.trim() : string;
+            },
+            /**
+             * Get cell data-type
+             * @param string {String}
+             * @returns {String} data-type
+             */
+            getType: function (string) {
+                if (!string) return '';
+                var types = TableExport.prototype.types;
+                if (~string.indexOf(types.string.defaultClass)) {
+                    return 's';
+                } else if (~string.indexOf(types.number.defaultClass)) {
+                    return 'n';
+                } else if (~string.indexOf(types.boolean.defaultClass)) {
+                    return 'b';
+                } else if (~string.indexOf(types.date.defaultClass)) {
+                    return 'd';
+                } else {
+                    return '';
+                }
             },
             /**
              * Formats datetimes for compatibility with Excel
