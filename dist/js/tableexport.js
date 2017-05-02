@@ -63,7 +63,7 @@
                     thAdj = self.settings.headings ? $el.find('thead>tr').length : 0,
                     fileName = self.settings.fileName === "id" ? ($el.attr('id') ? $el.attr('id') : TableExport.prototype.defaultFileName) : self.settings.fileName,
                     exporters = {
-                        xlsx: function (rDel, name) {
+                        xlsx: function (rDel, name, target) {
                             var rcMap = {},
                                 dataURL = $rows.map(function (ir, val) {
                                     if (!!~ignoreRows.indexOf(ir - thAdj) || $(val).is(ignoreCSS)) {
@@ -98,9 +98,13 @@
                                                     break;
                                                 }
                                             }
-                                            return new Array(total).concat($(val).text());
+                                            return new Array(total).push({
+                                                'val': $(val).text(),
+                                                'type': getTypeFromClass($(val))
+                                            });
                                         }
-                                        return formatValue($(val).text());
+                                        // return formatValue($(val).text());
+                                        return {'val': $(val).text(), 'type': getTypeFromClass($(val))};
                                     }).get()];
                                 }).get(),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -112,9 +116,14 @@
                                     })),
                                 myContent = TableExport.prototype.xlsx.buttonContent,
                                 myClass = TableExport.prototype.xlsx.defaultClass;
-                            createObjButton(dataObject, myContent, myClass);
+                            if (target) {
+                                attachExportToButton(dataObject, target);
+                            }
+                            else {
+                                createObjButton(dataObject, myContent, myClass);
+                            }
                         },
-                        xlsm: function (rDel, name) {
+                        xlsm: function (rDel, name, target) {
                             var rcMap = {},
                                 dataURL = $rows.map(function (ir, val) {
                                     if (!!~ignoreRows.indexOf(ir - thAdj) || $(val).is(ignoreCSS)) {
@@ -149,9 +158,13 @@
                                                     break;
                                                 }
                                             }
-                                            return new Array(total).concat($(val).text());
+                                            return new Array(total).push({
+                                                'val': $(val).text(),
+                                                'type': getTypeFromClass($(val))
+                                            });
                                         }
-                                        return formatValue($(val).text());
+                                        // return formatValue($(val).text());
+                                        return {'val': $(val).text(), 'type': getTypeFromClass($(val))};
                                     }).get()];
                                 }).get(),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -163,9 +176,14 @@
                                     })),
                                 myContent = TableExport.prototype.xls.buttonContent,
                                 myClass = TableExport.prototype.xls.defaultClass;
-                            createObjButton(dataObject, myContent, myClass);
+                            if (target) {
+                                attachExportToButton(dataObject, target);
+                            }
+                            else {
+                                createObjButton(dataObject, myContent, myClass);
+                            }
                         },
-                        xls: function (rdel, name) {
+                        xls: function (rdel, name, target) {
                             var colD = TableExport.prototype.xls.separator,
                                 dataURL = $rows.map(function (i, val) {
                                     if (!!~ignoreRows.indexOf(i - thAdj) || $(val).is(ignoreCSS)) {
@@ -179,7 +197,8 @@
                                         if ($(val).is(emptyCSS)) {
                                             return " "
                                         }
-                                        return formatValue($(val).text());
+                                        // return formatValue($(val).text());
+                                        return {'val': $(val).text(), 'type': getTypeFromClass($(val))};
                                     }).get().join(colD);
                                 }).get().join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -191,9 +210,14 @@
                                     })),
                                 myContent = TableExport.prototype.xls.buttonContent,
                                 myClass = TableExport.prototype.xls.defaultClass;
-                            createObjButton(dataObject, myContent, myClass);
+                            if (target) {
+                                attachExportToButton(dataObject, target);
+                            }
+                            else {
+                                createObjButton(dataObject, myContent, myClass);
+                            }
                         },
-                        csv: function (rdel, name) {
+                        csv: function (rdel, name, target) {
                             var colD = TableExport.prototype.csv.separator,
                                 dataURL = $rows.map(function (i, val) {
                                     if (!!~ignoreRows.indexOf(i - thAdj) || $(val).is(ignoreCSS)) {
@@ -219,9 +243,14 @@
                                     })),
                                 myContent = TableExport.prototype.csv.buttonContent,
                                 myClass = TableExport.prototype.csv.defaultClass;
-                            createObjButton(dataObject, myContent, myClass);
+                            if (target) {
+                                attachExportToButton(dataObject, target);
+                            }
+                            else {
+                                createObjButton(dataObject, myContent, myClass);
+                            }
                         },
-                        txt: function (rdel, name) {
+                        txt: function (rdel, name, target) {
                             var colD = TableExport.prototype.txt.separator,
                                 dataURL = $rows.map(function (i, val) {
                                     if (!!~ignoreRows.indexOf(i - thAdj) || $(val).is(ignoreCSS)) {
@@ -247,7 +276,12 @@
                                     })),
                                 myContent = TableExport.prototype.txt.buttonContent,
                                 myClass = TableExport.prototype.txt.defaultClass;
-                            createObjButton(dataObject, myContent, myClass);
+                            if (target) {
+                                attachExportToButton(dataObject, target);
+                            }
+                            else {
+                                createObjButton(dataObject, myContent, myClass);
+                            }
                         }
                     };
 
@@ -255,7 +289,11 @@
                     function (key) {
                         XLSX && key === 'xls' ? key = 'xlsm' : false;
                         !XLSX && key === 'xlsx' ? key = null : false;
-                        key && exporters[key](rowD, fileName);
+                        var target;
+                        if (self.settings['targets']) {
+                            key in self.settings['targets'] ? target = self.settings['targets'][key] : null;
+                        }
+                        key && exporters[key](rowD, fileName, target);
                     }
                 );
 
@@ -272,6 +310,23 @@
                  * Initializes table caption with export buttons
                  * @param exportButton {HTMLButtonElement}
                  */
+                function getTypeFromClass(cell) {
+                    if (cell.hasClass('te-string')) {
+                        return 's';
+                    } else if (cell.hasClass('te-number')) {
+                        return 'n';
+                    } else if (cell.hasClass('te-boolean')) {
+                        return 'b';
+                    } else {
+                        return '';
+                    }
+                }
+
+                function unescapeHtml(string) {
+                    var doc = new DOMParser().parseFromString(string, "text/html");
+                    return doc.documentElement.textContent;
+                }
+
                 function checkCaption(exportButton) {
                     var $caption = $el.find('caption:not(.head)');
                     $caption.length ? $caption.append(exportButton) : $el.prepend('<caption class="' + bootstrapSpacing + self.settings.position + '">' + exportButton + '</caption>');
@@ -287,12 +342,17 @@
                     var exportButton = "<button data-fileblob='" + dataObject + "' class='" + bootstrapClass + bootstrapTheme + myClass + "'>" + myContent + "</button>";
                     checkCaption(exportButton);
                 }
+
+                function attachExportToButton(dataObject, target) {
+                    var exportButton = $(target);
+                    exportButton.attr('data-fileblob', unescapeHtml(dataObject));
+                }
             });
 
             $("button[data-fileblob]")
                 .off("click")
                 .on("click", function () {
-                    var object = $(this).data("fileblob"),
+                    var object = JSON.parse($(this).attr('data-fileblob')),
                         data = object.data,
                         fileName = object.fileName,
                         mimeType = object.mimeType,
@@ -438,18 +498,20 @@
                         if (range.s.c > C) range.s.c = C;
                         if (range.e.r < R) range.e.r = R;
                         if (range.e.c < C) range.e.c = C;
-                        var cell = {v: data[R][C]};
+                        var cell = {v: data[R][C]['val'], t: data[R][C]['type']};
                         if (cell.v == null) continue;
                         var cell_ref = XLSX.utils.encode_cell({c: C, r: R});
 
-                        if (typeof cell.v === 'number') cell.t = 'n';
-                        else if (typeof cell.v === 'boolean') cell.t = 'b';
-                        else if (cell.v instanceof Date) {
-                            cell.t = 'n';
-                            cell.z = XLSX.SSF._table[14];
-                            cell.v = this.dateNum(cell.v);
+                        if (!cell.t) {
+                            if (typeof cell.v === 'number') cell.t = 'n';
+                            else if (typeof cell.v === 'boolean') cell.t = 'b';
+                            else if (cell.v instanceof Date) {
+                                cell.t = 'n';
+                                cell.z = XLSX.SSF._table[14];
+                                cell.v = this.dateNum(cell.v);
+                            }
+                            else cell.t = 's';
                         }
-                        else cell.t = 's';
 
                         ws[cell_ref] = cell;
                     }
