@@ -98,13 +98,13 @@
                                                     break;
                                                 }
                                             }
-                                            return new Array(total).push({'val': $(val).text(), 'type': getTypeFromClass($(val))});
+                                            return new Array(total).push({
+                                                'val': $(val).text(),
+                                                'type': getTypeFromClass($(val))
+                                            });
                                         }
-<<<<<<< HEAD
-                                        return formatValue($(val).text());
-=======
+                                        // return formatValue($(val).text());
                                         return {'val': $(val).text(), 'type': getTypeFromClass($(val))};
->>>>>>> eba4197235c01fe6fa9fcb1a714f1fb33d58395e
                                     }).get()];
                                 }).get(),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -158,13 +158,13 @@
                                                     break;
                                                 }
                                             }
-                                            return new Array(total).push({'val': $(val).text(), 'type': getTypeFromClass($(val))});
+                                            return new Array(total).push({
+                                                'val': $(val).text(),
+                                                'type': getTypeFromClass($(val))
+                                            });
                                         }
-<<<<<<< HEAD
-                                        return formatValue($(val).text());
-=======
+                                        // return formatValue($(val).text());
                                         return {'val': $(val).text(), 'type': getTypeFromClass($(val))};
->>>>>>> eba4197235c01fe6fa9fcb1a714f1fb33d58395e
                                     }).get()];
                                 }).get(),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -197,11 +197,8 @@
                                         if ($(val).is(emptyCSS)) {
                                             return " "
                                         }
-<<<<<<< HEAD
-                                        return formatValue($(val).text());
-=======
+                                        // return formatValue($(val).text());
                                         return {'val': $(val).text(), 'type': getTypeFromClass($(val))};
->>>>>>> eba4197235c01fe6fa9fcb1a714f1fb33d58395e
                                     }).get().join(colD);
                                 }).get().join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -300,7 +297,6 @@
                     }
                 );
 
-<<<<<<< HEAD
                 /**
                  * Removes leading/trailing whitespace from cell string
                  * @param string {String}
@@ -314,7 +310,6 @@
                  * Initializes table caption with export buttons
                  * @param exportButton {HTMLButtonElement}
                  */
-=======
                 function getTypeFromClass(cell) {
                     if (cell.hasClass('te-string')) {
                         return 's';
@@ -332,7 +327,6 @@
                     return doc.documentElement.textContent;
                 }
 
->>>>>>> eba4197235c01fe6fa9fcb1a714f1fb33d58395e
                 function checkCaption(exportButton) {
                     var $caption = $el.find('caption:not(.head)');
                     $caption.length ? $caption.append(exportButton) : $el.prepend('<caption class="' + bootstrapSpacing + self.settings.position + '">' + exportButton + '</caption>');
