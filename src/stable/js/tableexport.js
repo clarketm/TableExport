@@ -270,6 +270,12 @@
                     }
                 }
 
+                /**
+                 * Creates file export buttons
+                 * @param dataObject {JSON}
+                 * @param myContent {String}
+                 * @param myClass {String}
+                 */
                 function createObjButton(dataObject, myContent, myClass) {
                     var exportButton = document.createElement('button');
                     exportButton.setAttribute('data-fileblob', dataObject);
