@@ -1,5 +1,5 @@
 /*!
- * TableExport.js 4.0.0-alpha.4 (https://www.travismclarke.com)
+ * TableExport.js 4.0.0-alpha.5 (https://www.travismclarke.com)
  * Copyright 2017 Travis Clarke
  * Licensed under the MIT license
  */
@@ -15,7 +15,7 @@
         // Browser globals
         factory(root, root.jQuery, root.Blob, root.saveAs, root.XLSX);
     }
-}(this, function (exports, $, Blob, saveAs, XLSX) {
+}(this || window, function (exports, $, Blob, saveAs, XLSX) {
         'use strict';
         /**
          * TableExport main plugin constructor
@@ -43,6 +43,7 @@
                 emptyCSS = self.settings.emptyCSS instanceof Array ? self.settings.emptyCSS.join(", ") : self.settings.emptyCSS,
                 formatValue = TableExport.prototype.formatValue.bind(this, self.settings.trimWhitespace),
                 getType = TableExport.prototype.getType,
+                store = new TableExport.prototype.LocalStorage.getInstance(),
                 bootstrapClass, bootstrapTheme, bootstrapSpacing;
 
             if (self.settings.bootstrap) {
@@ -109,6 +110,8 @@
                                             t: getType(val.className)
                                         };
                                     });
+                                }).map(function (val, ir) {
+                                    return [].concat.apply([], val);
                                 }),
                                 dataObject = TableExport.prototype.escapeHtml(
                                     JSON.stringify({
@@ -166,6 +169,8 @@
                                             t: getType(val.className)
                                         };
                                     });
+                                }).map(function (val, ir) {
+                                    return [].concat.apply([], val);
                                 }),
                                 dataObject = TableExport.prototype.escapeHtml(
                                     JSON.stringify({
@@ -197,7 +202,9 @@
                                             t: getType(val.className)
                                         };
                                     }).join(colD);
-                                }).join(rdel),
+                                }).join(rdel).map(function (val, ir) {
+                                    return [].concat.apply([], val);
+                                }),
                                 dataObject = TableExport.prototype.escapeHtml(
                                     JSON.stringify({
                                         data: dataURL,
@@ -299,7 +306,9 @@
                  */
                 function createObjButton(dataObject, myContent, myClass) {
                     var exportButton = document.createElement('button');
-                    exportButton.setAttribute('data-fileblob', dataObject);
+                    var uuid = _uuid();
+                    exportButton.setAttribute('data-fileblob', uuid);
+                    store.setItem(uuid, dataObject, true);
                     exportButton.className = bootstrapClass + bootstrapTheme + myClass;
                     exportButton.textContent = myContent;
                     checkCaption(exportButton);
@@ -308,7 +317,7 @@
 
             var exportButton = document.querySelectorAll("button[data-fileblob]");
             _on(exportButton, "click", function () {
-                var object = JSON.parse(this.getAttribute("data-fileblob")),
+                var object = JSON.parse(store.getItem(this.getAttribute("data-fileblob"))),
                     data = object.data,
                     filename = object.filename,
                     mimeType = object.mimeType,
@@ -324,7 +333,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: "4.0.0-alpha.4",
+            version: "4.0.0-alpha.5",
             /**
              * Default plugin options.
              * @memberof TableExport.prototype
@@ -498,7 +507,6 @@
              * Creates an Excel spreadsheet from a data string
              * @memberof TableExport.prototype
              * @param data {String}
-             * @returns {Number} epoch time
              */
             createSheet: function (data) {
                 var ws = {};
@@ -563,7 +571,7 @@
              * @param extension {String} file extension
              */
             export2file: function (data, mime, name, extension) {
-                if (XLSX && extension.substr(0, 4) === ".xls") {
+                if (XLSX && extension.substr(0, 4) === (".xls")) {
                     var wb = new this.Workbook(),
                         ws = this.createSheet(data);
 
@@ -583,30 +591,61 @@
                     name + extension, true);
             },
             /**
-             * Updates the plugin instance with new/updated options
-             * @param options {Object} TableExport configuration options
-             * @returns {TableExport} updated TableExport instance
+             * LocalStorage main interface constructor
+             * @memberof TableExport.prototype
+             * @constructor
              */
-            update: function (options) {
-                return new TableExport(this.selectors, _extend({}, this.settings, options), true);
-            },
-            /**
-             * Reset the plugin instance to its original state
-             * @returns {TableExport} original TableExport instance
-             */
-            reset: function () {
-                return new TableExport(this.selectors, this.settings, true);
-            },
-            /**
-             * Remove the instance (i.e. caption containing the export buttons)
-             */
-            remove: function () {
-                this.selectors.each(function () {
-                    var caption = this.querySelectorAll('caption:not(.head)');
-                    caption.parentNode.removeChild(caption);
-                });
+            LocalStorage: function () {
+                this.type = 'localStorage';
+                this.store = exports[this.type];
+                this.namespace = 'te';
+                this.getKey = function (key) {
+                    return this.namespace + key;
+                };
+                this.setItem = function (_key, value, overwrite) {
+                    var key = this.getKey(_key);
+                    if (this.exists(key) && !overwrite) {
+                        return;
+                    }
+                    return this.store.setItem(key, value);
+                };
+                this.getItem = function (_key) {
+                    var key = this.getKey(_key);
+                    return this.store.getItem(key);
+                };
+                this.exists = function (_key) {
+                    var key = this.getKey(_key);
+                    return this.store.getItem(key) !== null;
+                };
+                this.removeItem = function (_key) {
+                    var key = this.getKey(_key);
+                    return this.store.removeItem(key);
+                };
+                this.error = function (message) {
+                    return new Error('unknown error occurred', message);
+                };
             }
         };
+
+        var _store = TableExport.prototype.LocalStorage;
+        _store._instance = null;
+        _store.getInstance = function () {
+            if (!_store._instance) {
+                _store._instance = new _store();
+            }
+            return _store._instance;
+        };
+
+        function _uuid() {
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                    .toString(16)
+                    .substring(1);
+            }
+
+            return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+                s4() + '-' + s4() + s4() + s4();
+        }
 
         function _extend() {
             var args = arguments;
@@ -648,7 +687,7 @@
             }
         }
 
-        exports.default = exports.TableExport = TableExport;
+        return exports.default = exports.TableExport = TableExport;
 
     }
 ));

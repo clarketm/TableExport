@@ -1,5 +1,5 @@
 /*!
- * TableExport.js 4.0.0-alpha.4 (https://www.travismclarke.com)
+ * TableExport.js 4.0.0-alpha.5 (https://www.travismclarke.com)
  * Copyright 2017 Travis Clarke
  * Licensed under the MIT license
  */
@@ -15,7 +15,7 @@
         // Browser globals
         factory(root, root.jQuery, root.Blob, root.saveAs, root.XLSX);
     }
-}(this, function (exports, $, Blob, saveAs, XLSX) {
+}(this || window, function (exports, $, Blob, saveAs, XLSX) {
         'use strict';
         /**
          * TableExport main plugin constructor
@@ -41,6 +41,9 @@
                 ignoreCols = self.settings.ignoreCols instanceof Array ? self.settings.ignoreCols : [self.settings.ignoreCols],
                 ignoreCSS = self.settings.ignoreCSS instanceof Array ? self.settings.ignoreCSS.join(", ") : self.settings.ignoreCSS,
                 emptyCSS = self.settings.emptyCSS instanceof Array ? self.settings.emptyCSS.join(", ") : self.settings.emptyCSS,
+                formatValue = TableExport.prototype.formatValue.bind(this, self.settings.trimWhitespace),
+                getType = TableExport.prototype.getType,
+                store = new TableExport.prototype.LocalStorage.getInstance(),
                 bootstrapClass, bootstrapTheme, bootstrapSpacing;
 
             if (self.settings.bootstrap) {
@@ -97,10 +100,18 @@
                                                     break;
                                                 }
                                             }
-                                            return new Array(total).concat($(val).text());
+                                            return new Array(total).concat({
+                                                v: formatValue(val.textContent),
+                                                t: getType(val.className)
+                                            });
                                         }
-                                        return val.textContent;
+                                        return {
+                                            v: formatValue(val.textContent),
+                                            t: getType(val.className)
+                                        };
                                     });
+                                }).map(function (val, ir) {
+                                    return [].concat.apply([], val);
                                 }),
                                 dataObject = TableExport.prototype.escapeHtml(
                                     JSON.stringify({
@@ -148,10 +159,18 @@
                                                     break;
                                                 }
                                             }
-                                            return new Array(total).concat($(val).text());
+                                            return new Array(total).concat({
+                                                v: formatValue(val.textContent),
+                                                t: getType(val.className)
+                                            });
                                         }
-                                        return val.textContent;
+                                        return {
+                                            v: formatValue(val.textContent),
+                                            t: getType(val.className)
+                                        };
                                     });
+                                }).map(function (val, ir) {
+                                    return [].concat.apply([], val);
                                 }),
                                 dataObject = TableExport.prototype.escapeHtml(
                                     JSON.stringify({
@@ -178,9 +197,14 @@
                                         if (_hasClass(val, emptyCSS)) {
                                             return " "
                                         }
-                                        return val.textContent;
+                                        return {
+                                            v: formatValue(val.textContent),
+                                            t: getType(val.className)
+                                        };
                                     }).join(colD);
-                                }).join(rdel),
+                                }).join(rdel).map(function (val, ir) {
+                                    return [].concat.apply([], val);
+                                }),
                                 dataObject = TableExport.prototype.escapeHtml(
                                     JSON.stringify({
                                         data: dataURL,
@@ -206,7 +230,7 @@
                                         if (_hasClass(val, emptyCSS)) {
                                             return " "
                                         }
-                                        return '"' + val.textContent.replace(/"/g, '""') + '"';
+                                        return '"' + formatValue(val.textContent.replace(/"/g, '""')) + '"';
                                     }).join(colD);
                                 }).join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -234,7 +258,7 @@
                                         if (_hasClass(val, emptyCSS)) {
                                             return " "
                                         }
-                                        return val.textContent;
+                                        return formatValue(val.textContent);
                                     }).join(colD);
                                 }).join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -258,6 +282,10 @@
                     }
                 );
 
+                /**
+                 * Initializes table caption with export buttons
+                 * @param exportButton {HTMLButtonElement}
+                 */
                 function checkCaption(exportButton) {
                     var caption = el.querySelectorAll('caption:not(.head)');
                     if (caption.length) {
@@ -270,9 +298,17 @@
                     }
                 }
 
+                /**
+                 * Creates file export buttons
+                 * @param dataObject {JSON}
+                 * @param myContent {String}
+                 * @param myClass {String}
+                 */
                 function createObjButton(dataObject, myContent, myClass) {
                     var exportButton = document.createElement('button');
-                    exportButton.setAttribute('data-fileblob', dataObject);
+                    var uuid = _uuid();
+                    exportButton.setAttribute('data-fileblob', uuid);
+                    store.setItem(uuid, dataObject, true);
                     exportButton.className = bootstrapClass + bootstrapTheme + myClass;
                     exportButton.textContent = myContent;
                     checkCaption(exportButton);
@@ -281,7 +317,7 @@
 
             var exportButton = document.querySelectorAll("button[data-fileblob]");
             _on(exportButton, "click", function () {
-                var object = JSON.parse(this.getAttribute("data-fileblob")),
+                var object = JSON.parse(store.getItem(this.getAttribute("data-fileblob"))),
                     data = object.data,
                     filename = object.filename,
                     mimeType = object.mimeType,
@@ -297,7 +333,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: "4.0.0-alpha.4",
+            version: "4.0.0-alpha.5",
             /**
              * Default plugin options.
              * @memberof TableExport.prototype
@@ -309,10 +345,11 @@
                 filename: "id",                             // (id, String), filename for the downloaded file, (default: "id")
                 bootstrap: true,                            // (Boolean), style buttons using bootstrap, (default: true)
                 position: "bottom",                         // (top, bottom), position of the caption element relative to table, (default: "bottom")
-                ignoreRows: null,                           // (Number, Number[]), row indices to exclude from the exported file (default: null)
-                ignoreCols: null,                           // (Number, Number[]), column indices to exclude from the exported file (default: null)
-                ignoreCSS: ".tableexport-ignore",           // (selector, selector[]), selector(s) to exclude cells from the exported file (default: ".tableexport-ignore")
-                emptyCSS: ".tableexport-empty"              // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file (default: ".tableexport-empty")
+                ignoreRows: null,                           // (Number, Number[]), row indices to exclude from the exported file(s) (default: null)
+                ignoreCols: null,                           // (Number, Number[]), column indices to exclude from the exported file(s) (default: null)
+                ignoreCSS: ".tableexport-ignore",           // (selector, selector[]), selector(s) to exclude cells from the exported file(s) (default: ".tableexport-ignore")
+                emptyCSS: ".tableexport-empty",             // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file(s) (default: ".tableexport-empty")
+                trimWhitespace: false                       // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s) (default: false)
             },
             /**
              * Character set (character encoding) of the HTML.
@@ -388,6 +425,33 @@
                 fileExtension: ".txt"
             },
             /**
+             * Cell-types override and assertion configuration
+             * @memberof TableExport.prototype
+             */
+            types: {
+                string: {
+                    defaultClass: "tableexport-string"
+                },
+                number: {
+                    defaultClass: "tableexport-number",
+                    assert: function (v) {
+                        return !isNaN(v.replace(/,/g, ''));
+                    }
+                },
+                boolean: {
+                    defaultClass: "tableexport-boolean",
+                    assert: function (v) {
+                        return v.toLowerCase() === 'true' || v.toLowerCase() === 'false';
+                    }
+                },
+                date: {
+                    defaultClass: "tableexport-date",
+                    assert: function (v) {
+                        return !isNaN(Date.parse(v))
+                    }
+                }
+            },
+            /**
              * Escapes special characters with HTML entities
              * @memberof TableExport.prototype
              * @param string {String}
@@ -397,6 +461,35 @@
                 return String(string).replace(/[&<>'\/]/g, function (s) {
                     return TableExport.prototype.entityMap[s];
                 });
+            },
+            /**
+             * Removes leading/trailing whitespace from cell string
+             * @param isTrimWhitespace {Boolean}
+             * @param string {String}
+             * @returns {String} trimmed string
+             */
+            formatValue: function (isTrimWhitespace, string) {
+                return isTrimWhitespace ? string.trim() : string;
+            },
+            /**
+             * Get cell data-type
+             * @param string {String}
+             * @returns {String} data-type
+             */
+            getType: function (string) {
+                if (!string) return '';
+                var types = TableExport.prototype.types;
+                if (~string.indexOf(types.string.defaultClass)) {
+                    return 's';
+                } else if (~string.indexOf(types.number.defaultClass)) {
+                    return 'n';
+                } else if (~string.indexOf(types.boolean.defaultClass)) {
+                    return 'b';
+                } else if (~string.indexOf(types.date.defaultClass)) {
+                    return 'd';
+                } else {
+                    return '';
+                }
             },
             /**
              * Formats datetimes for compatibility with Excel
@@ -414,29 +507,33 @@
              * Creates an Excel spreadsheet from a data string
              * @memberof TableExport.prototype
              * @param data {String}
-             * @returns {Number} epoch time
              */
             createSheet: function (data) {
                 var ws = {};
                 var range = {s: {c: 10000000, r: 10000000}, e: {c: 0, r: 0}};
-                for (var R = 0; R != data.length; ++R) {
-                    for (var C = 0; C != data[R].length; ++C) {
+                var types = TableExport.prototype.types;
+                for (var R = 0; R !== data.length; ++R) {
+                    for (var C = 0; C !== data[R].length; ++C) {
                         if (range.s.r > R) range.s.r = R;
                         if (range.s.c > C) range.s.c = C;
                         if (range.e.r < R) range.e.r = R;
                         if (range.e.c < C) range.e.c = C;
-                        var cell = {v: data[R][C]};
-                        if (cell.v == null) continue;
+                        var cell = data[R][C];
+                        if (!cell || !cell.v) continue;
                         var cell_ref = XLSX.utils.encode_cell({c: C, r: R});
 
-                        if (typeof cell.v === 'number') cell.t = 'n';
-                        else if (typeof cell.v === 'boolean') cell.t = 'b';
-                        else if (cell.v instanceof Date) {
+                        if (!cell.t) {
+                            if (types.number.assert(cell.v)) cell.t = 'n';
+                            else if (types.boolean.assert(cell.v)) cell.t = 'b';
+                            else if (types.date.assert(cell.v)) cell.t = 'd';
+                            else cell.t = 's';
+                        }
+
+                        if (cell.t === 'd') {
                             cell.t = 'n';
                             cell.z = XLSX.SSF._table[14];
                             cell.v = this.dateNum(cell.v);
                         }
-                        else cell.t = 's';
 
                         ws[cell_ref] = cell;
                     }
@@ -462,7 +559,7 @@
             string2ArrayBuffer: function (s) {
                 var buf = new ArrayBuffer(s.length);
                 var view = new Uint8Array(buf);
-                for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+                for (var i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
                 return buf;
             },
             /**
@@ -474,7 +571,7 @@
              * @param extension {String} file extension
              */
             export2file: function (data, mime, name, extension) {
-                if (XLSX && extension.substr(0, 4) == ".xls") {
+                if (XLSX && extension.substr(0, 4) === (".xls")) {
                     var wb = new this.Workbook(),
                         ws = this.createSheet(data);
 
@@ -494,30 +591,61 @@
                     name + extension, true);
             },
             /**
-             * Updates the plugin instance with new/updated options
-             * @param options {Object} TableExport configuration options
-             * @returns {TableExport} updated TableExport instance
+             * LocalStorage main interface constructor
+             * @memberof TableExport.prototype
+             * @constructor
              */
-            update: function (options) {
-                return new TableExport(this.selectors, _extend({}, this.settings, options), true);
-            },
-            /**
-             * Reset the plugin instance to its original state
-             * @returns {TableExport} original TableExport instance
-             */
-            reset: function () {
-                return new TableExport(this.selectors, this.settings, true);
-            },
-            /**
-             * Remove the instance (i.e. caption containing the export buttons)
-             */
-            remove: function () {
-                this.selectors.each(function () {
-                    var caption = this.querySelectorAll('caption:not(.head)');
-                    caption.parentNode.removeChild(caption);
-                });
+            LocalStorage: function () {
+                this.type = 'localStorage';
+                this.store = exports[this.type];
+                this.namespace = 'te';
+                this.getKey = function (key) {
+                    return this.namespace + key;
+                };
+                this.setItem = function (_key, value, overwrite) {
+                    var key = this.getKey(_key);
+                    if (this.exists(key) && !overwrite) {
+                        return;
+                    }
+                    return this.store.setItem(key, value);
+                };
+                this.getItem = function (_key) {
+                    var key = this.getKey(_key);
+                    return this.store.getItem(key);
+                };
+                this.exists = function (_key) {
+                    var key = this.getKey(_key);
+                    return this.store.getItem(key) !== null;
+                };
+                this.removeItem = function (_key) {
+                    var key = this.getKey(_key);
+                    return this.store.removeItem(key);
+                };
+                this.error = function (message) {
+                    return new Error('unknown error occurred', message);
+                };
             }
         };
+
+        var _store = TableExport.prototype.LocalStorage;
+        _store._instance = null;
+        _store.getInstance = function () {
+            if (!_store._instance) {
+                _store._instance = new _store();
+            }
+            return _store._instance;
+        };
+
+        function _uuid() {
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                    .toString(16)
+                    .substring(1);
+            }
+
+            return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+                s4() + '-' + s4() + s4() + s4();
+        }
 
         function _extend() {
             var args = arguments;
@@ -559,7 +687,7 @@
             }
         }
 
-        exports.default = exports.TableExport = TableExport;
+        return exports.default = exports.TableExport = TableExport;
 
     }
 ));

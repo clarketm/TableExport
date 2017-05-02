@@ -2,7 +2,6 @@
 .idea/
 *.iml
 /assets
-/.gitignore
 /index.html
 /search
 /test

@@ -89,12 +89,35 @@ export class TableExport {
     txt: TXT;
 
     /**
+     * Cell-types override and assertion configuration
+     * @memberof TableExport.prototype
+     */
+    types: Types;
+
+    /**
      * Escapes special characters with HTML entities
      * @memberof TableExport.prototype
      * @param string {String}
      * @returns {String} escaped string
      */
     escapeHtml: (string: string) => string;
+
+    /**
+     * Removes leading/trailing whitespace from cell string
+     * @memberof TableExport.prototype
+     * @param isTrimWhitespace {Boolean}
+     * @param string {String}
+     * @returns {String} trimmed string
+     */
+    formatValue: (string: string) => string;
+
+    /**
+     * Get cell data-type
+     * @memberof TableExport.prototype
+     * @param string {String}
+     * @returns {String} data-type
+     */
+    getType: (string: string) => string;
 
     /**
      * Formats datetimes for compatibility with Excel
@@ -111,7 +134,7 @@ export class TableExport {
      * @param data {String}
      * @returns {Number} epoch time
      */
-    createSheet: (data: string) => number;
+    createSheet: (data: string) => void;
 
     /**
      * Converts a string to an arraybuffer
@@ -174,6 +197,7 @@ export interface Defaults {
     ignoreCols: number[];
     ignoreCSS: string;
     emptyCSS: string;
+    trimWhitespace: boolean;
 }
 
 /**
@@ -222,6 +246,22 @@ export interface TXT {
     mimeType: string;
     separator: string;
     fileExtension: string;
+}
+
+/**
+ * Cell-types override and assertion configuration
+ * @memberof TableExport.prototype
+ */
+export interface Types {
+    string: Type;
+    number: Type;
+    boolean: Type;
+    date: Type;
+}
+
+export interface Type {
+    defaultClass: string;
+    assert: (v: any) => boolean;
 }
 
 interface JQuery {

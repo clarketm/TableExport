@@ -4,9 +4,9 @@ The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, an
 
 [TableExport](https://www.travismclarke.com/tableexport/) demo **--** [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) skeleton **--** [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) skeleton.
 
-> **Notice:** In May 2017, [v3.0.0](https://github.com/clarketm/TableExport/releases/tag/v3.3.9) will be superceded by [v4.0.0](https://github.com/clarketm/TableExport/releases/tag/v4.0.0-alpha.4). Althought this is a major version bump, fear not, because all changes will be 100% backwards-compatible.
+> **Notice:** In May 2017, [v3.0.0](https://github.com/clarketm/TableExport/releases/tag/v3.3.9) will be superceded by [v4.0.0](https://github.com/clarketm/TableExport/releases/tag/v4.0.0-alpha.5). Althought this is a major version bump, fear not, because all changes will be 100% backwards-compatible.
 
-> **So why the major version bump you ask?** Well, the rationale for a major version bump is that due to a change in `TableExport`'s dependencies, in [v4.0.0](https://github.com/clarketm/TableExport/releases/tag/v4.0.0-alpha.4) forth, JQuery will no longer be a **required** dependency, instead it will be purely **optional**. So existing implementations *with* jQuery will continue to work unimpeded, now with the added benefit that new projets no longer need to rely on the overhead of such large library, unless of course you prefer jQuery or it is already part of your project. 
+> **So why the major version bump you ask?** Well, the rationale for a major version bump is that due to a change in `TableExport`'s dependencies, in [v4.0.0](https://github.com/clarketm/TableExport/releases/tag/v4.0.0-alpha.5) forth, JQuery will no longer be a **required** dependency, instead it will be purely **optional**. So existing implementations *with* jQuery will continue to work unimpeded, now with the added benefit that new projets no longer need to rely on the overhead of such large library, unless of course you prefer jQuery or it is already part of your project. 
 
 ## Getting Started
 
@@ -120,7 +120,7 @@ $("table").tableExport({
     headings: true,                     // (Boolean), display table headings (th/td elements) in the <thead>
     footers: true,                      // (Boolean), display table footers (th/td elements) in the <tfoot>
     formats: ["xls", "csv", "txt"],     // (String[]), filetype(s) for the export
-    fileName: "id",                     // (id, String), filename for the downloaded file
+    filename: "id",                     // (id, String), filename for the downloaded file
     bootstrap: true,                    // (Boolean), style buttons using bootstrap
     position: "bottom",                 // (top, bottom), position of the caption element relative to table
     ignoreRows: null,                   // (Number, Number[]), row indices to exclude from the exported file(s)
@@ -142,7 +142,7 @@ var tables = $("table").tableExport();
 ```js
 /* update */
 tables.update({
-    fileName: "newFile"     // pass in a new set of properties
+    filename: "newFile"     // pass in a new set of properties
 });
 
 /* reset */
