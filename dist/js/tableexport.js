@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v3.3.10 (https://www.travismclarke.com)
+ * TableExport.js v3.3.11 (https://www.travismclarke.com)
  * Copyright 2017 Travis Clarke
  * Licensed under the MIT license
  */
@@ -37,6 +37,7 @@
             self.selectors = selectors;
 
             var rowD = TableExport.prototype.rowDel,
+                isTrimWhitespace = self.settings.trimWhitespace,
                 ignoreRows = self.settings.ignoreRows instanceof Array ? self.settings.ignoreRows : [self.settings.ignoreRows],
                 ignoreCols = self.settings.ignoreCols instanceof Array ? self.settings.ignoreCols : [self.settings.ignoreCols],
                 ignoreCSS = self.settings.ignoreCSS instanceof Array ? self.settings.ignoreCSS.join(", ") : self.settings.ignoreCSS,
@@ -63,7 +64,7 @@
                     thAdj = self.settings.headings ? $el.find('thead>tr').length : 0,
                     fileName = self.settings.fileName === "id" ? ($el.attr('id') ? $el.attr('id') : TableExport.prototype.defaultFileName) : self.settings.fileName,
                     exporters = {
-                        xlsx: function (rDel, name, target) {
+                        xlsx: function (rDel, name) {
                             var rcMap = {},
                                 dataURL = $rows.map(function (ir, val) {
                                     if (!!~ignoreRows.indexOf(ir - thAdj) || $(val).is(ignoreCSS)) {
@@ -98,13 +99,15 @@
                                                     break;
                                                 }
                                             }
-                                            return new Array(total).push({
-                                                'val': $(val).text(),
-                                                'type': getTypeFromClass($(val))
+                                            return new Array(total).concat({
+                                                v: TableExport.prototype.formatValue(isTrimWhitespace, $(val).text()),
+                                                t: TableExport.prototype.getType($(val).attr('class'))
                                             });
                                         }
-                                        // return formatValue($(val).text());
-                                        return {'val': $(val).text(), 'type': getTypeFromClass($(val))};
+                                        return {
+                                            v: TableExport.prototype.formatValue(isTrimWhitespace, $(val).text()),
+                                            t: TableExport.prototype.getType($(val).attr('class'))
+                                        };
                                     }).get()];
                                 }).get(),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -116,14 +119,9 @@
                                     })),
                                 myContent = TableExport.prototype.xlsx.buttonContent,
                                 myClass = TableExport.prototype.xlsx.defaultClass;
-                            if (target) {
-                                attachExportToButton(dataObject, target);
-                            }
-                            else {
-                                createObjButton(dataObject, myContent, myClass);
-                            }
+                            createObjButton(dataObject, myContent, myClass);
                         },
-                        xlsm: function (rDel, name, target) {
+                        xlsm: function (rDel, name) {
                             var rcMap = {},
                                 dataURL = $rows.map(function (ir, val) {
                                     if (!!~ignoreRows.indexOf(ir - thAdj) || $(val).is(ignoreCSS)) {
@@ -158,13 +156,15 @@
                                                     break;
                                                 }
                                             }
-                                            return new Array(total).push({
-                                                'val': $(val).text(),
-                                                'type': getTypeFromClass($(val))
+                                            return new Array(total).concat({
+                                                v: TableExport.prototype.formatValue(isTrimWhitespace, $(val).text()),
+                                                t: TableExport.prototype.getType($(val).attr('class'))
                                             });
                                         }
-                                        // return formatValue($(val).text());
-                                        return {'val': $(val).text(), 'type': getTypeFromClass($(val))};
+                                        return {
+                                            v: TableExport.prototype.formatValue(isTrimWhitespace, $(val).text()),
+                                            t: TableExport.prototype.getType($(val).attr('class'))
+                                        };
                                     }).get()];
                                 }).get(),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -176,14 +176,9 @@
                                     })),
                                 myContent = TableExport.prototype.xls.buttonContent,
                                 myClass = TableExport.prototype.xls.defaultClass;
-                            if (target) {
-                                attachExportToButton(dataObject, target);
-                            }
-                            else {
-                                createObjButton(dataObject, myContent, myClass);
-                            }
+                            createObjButton(dataObject, myContent, myClass);
                         },
-                        xls: function (rdel, name, target) {
+                        xls: function (rdel, name) {
                             var colD = TableExport.prototype.xls.separator,
                                 dataURL = $rows.map(function (i, val) {
                                     if (!!~ignoreRows.indexOf(i - thAdj) || $(val).is(ignoreCSS)) {
@@ -197,8 +192,10 @@
                                         if ($(val).is(emptyCSS)) {
                                             return " "
                                         }
-                                        // return formatValue($(val).text());
-                                        return {'val': $(val).text(), 'type': getTypeFromClass($(val))};
+                                        return {
+                                            v: TableExport.prototype.formatValue(isTrimWhitespace, $(val).text()),
+                                            t: TableExport.prototype.getType($(val).attr('class'))
+                                        };
                                     }).get().join(colD);
                                 }).get().join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -210,14 +207,9 @@
                                     })),
                                 myContent = TableExport.prototype.xls.buttonContent,
                                 myClass = TableExport.prototype.xls.defaultClass;
-                            if (target) {
-                                attachExportToButton(dataObject, target);
-                            }
-                            else {
-                                createObjButton(dataObject, myContent, myClass);
-                            }
+                            createObjButton(dataObject, myContent, myClass);
                         },
-                        csv: function (rdel, name, target) {
+                        csv: function (rdel, name) {
                             var colD = TableExport.prototype.csv.separator,
                                 dataURL = $rows.map(function (i, val) {
                                     if (!!~ignoreRows.indexOf(i - thAdj) || $(val).is(ignoreCSS)) {
@@ -231,7 +223,7 @@
                                         if ($(val).is(emptyCSS)) {
                                             return " "
                                         }
-                                        return '"' + formatValue($(val).text().replace(/"/g, '""')) + '"';
+                                        return '"' + TableExport.prototype.formatValue(isTrimWhitespace, $(val).text().replace(/"/g, '""')) + '"';
                                     }).get().join(colD);
                                 }).get().join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -243,14 +235,9 @@
                                     })),
                                 myContent = TableExport.prototype.csv.buttonContent,
                                 myClass = TableExport.prototype.csv.defaultClass;
-                            if (target) {
-                                attachExportToButton(dataObject, target);
-                            }
-                            else {
-                                createObjButton(dataObject, myContent, myClass);
-                            }
+                            createObjButton(dataObject, myContent, myClass);
                         },
-                        txt: function (rdel, name, target) {
+                        txt: function (rdel, name) {
                             var colD = TableExport.prototype.txt.separator,
                                 dataURL = $rows.map(function (i, val) {
                                     if (!!~ignoreRows.indexOf(i - thAdj) || $(val).is(ignoreCSS)) {
@@ -264,7 +251,7 @@
                                         if ($(val).is(emptyCSS)) {
                                             return " "
                                         }
-                                        return formatValue($(val).text());
+                                        return TableExport.prototype.formatValue(isTrimWhitespace, $(val).text());
                                     }).get().join(colD);
                                 }).get().join(rdel),
                                 dataObject = TableExport.prototype.escapeHtml(
@@ -276,12 +263,7 @@
                                     })),
                                 myContent = TableExport.prototype.txt.buttonContent,
                                 myClass = TableExport.prototype.txt.defaultClass;
-                            if (target) {
-                                attachExportToButton(dataObject, target);
-                            }
-                            else {
-                                createObjButton(dataObject, myContent, myClass);
-                            }
+                            createObjButton(dataObject, myContent, myClass);
                         }
                     };
 
@@ -289,44 +271,13 @@
                     function (key) {
                         XLSX && key === 'xls' ? key = 'xlsm' : false;
                         !XLSX && key === 'xlsx' ? key = null : false;
-                        var target;
-                        if (self.settings['targets']) {
-                            key in self.settings['targets'] ? target = self.settings['targets'][key] : null;
-                        }
-                        key && exporters[key](rowD, fileName, target);
+                        key && exporters[key](rowD, fileName);
                     }
                 );
-
-                /**
-                 * Removes leading/trailing whitespace from cell string
-                 * @param string {String}
-                 * @returns {String} trimmed string
-                 */
-                function formatValue(string) {
-                    return self.settings.trimWhitespace ? string.trim() : string;
-                }
-
                 /**
                  * Initializes table caption with export buttons
                  * @param exportButton {HTMLButtonElement}
                  */
-                function getTypeFromClass(cell) {
-                    if (cell.hasClass('te-string')) {
-                        return 's';
-                    } else if (cell.hasClass('te-number')) {
-                        return 'n';
-                    } else if (cell.hasClass('te-boolean')) {
-                        return 'b';
-                    } else {
-                        return '';
-                    }
-                }
-
-                function unescapeHtml(string) {
-                    var doc = new DOMParser().parseFromString(string, "text/html");
-                    return doc.documentElement.textContent;
-                }
-
                 function checkCaption(exportButton) {
                     var $caption = $el.find('caption:not(.head)');
                     $caption.length ? $caption.append(exportButton) : $el.prepend('<caption class="' + bootstrapSpacing + self.settings.position + '">' + exportButton + '</caption>');
@@ -342,17 +293,12 @@
                     var exportButton = "<button data-fileblob='" + dataObject + "' class='" + bootstrapClass + bootstrapTheme + myClass + "'>" + myContent + "</button>";
                     checkCaption(exportButton);
                 }
-
-                function attachExportToButton(dataObject, target) {
-                    var exportButton = $(target);
-                    exportButton.attr('data-fileblob', unescapeHtml(dataObject));
-                }
             });
 
             $("button[data-fileblob]")
                 .off("click")
                 .on("click", function () {
-                    var object = JSON.parse($(this).attr('data-fileblob')),
+                    var object = $(this).data("fileblob"),
                         data = object.data,
                         fileName = object.fileName,
                         mimeType = object.mimeType,
@@ -369,7 +315,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: "3.3.10",
+            version: "3.3.11",
             /**
              * Default plugin options.
              * @memberof TableExport.prototype
@@ -461,6 +407,33 @@
                 fileExtension: ".txt"
             },
             /**
+             * Cell-types override and assertion configuration
+             * @memberof TableExport.prototype
+             */
+            types: {
+                string: {
+                    defaultClass: "tableexport-string"
+                },
+                number: {
+                    defaultClass: "tableexport-number",
+                    assert: function (v) {
+                        return !isNaN(v.replace(/,/g, ''));
+                    }
+                },
+                boolean: {
+                    defaultClass: "tableexport-boolean",
+                    assert: function (v) {
+                        return v.toLowerCase() === 'true' || v.toLowerCase() === 'false';
+                    }
+                },
+                date: {
+                    defaultClass: "tableexport-date",
+                    assert: function (v) {
+                        return !isNaN(Date.parse(v))
+                    }
+                }
+            },
+            /**
              * Escapes special characters with HTML entities
              * @memberof TableExport.prototype
              * @param string {String}
@@ -470,6 +443,35 @@
                 return String(string).replace(/[&<>'\/]/g, function (s) {
                     return TableExport.prototype.entityMap[s];
                 });
+            },
+            /**
+             * Removes leading/trailing whitespace from cell string
+             * @param isTrimWhitespace {Boolean}
+             * @param string {String}
+             * @returns {String} trimmed string
+             */
+            formatValue: function (isTrimWhitespace, string) {
+                return isTrimWhitespace ? string.trim() : string;
+            },
+            /**
+             * Get cell data-type
+             * @param string {String}
+             * @returns {String} data-type
+             */
+            getType: function (string) {
+                if (!string) return '';
+                var types = TableExport.prototype.types;
+                if (~string.indexOf(types.string.defaultClass)) {
+                    return 's';
+                } else if (~string.indexOf(types.number.defaultClass)) {
+                    return 'n';
+                } else if (~string.indexOf(types.boolean.defaultClass)) {
+                    return 'b';
+                } else if (~string.indexOf(types.date.defaultClass)) {
+                    return 'd';
+                } else {
+                    return '';
+                }
             },
             /**
              * Formats datetimes for compatibility with Excel
@@ -487,30 +489,32 @@
              * Creates an Excel spreadsheet from a data string
              * @memberof TableExport.prototype
              * @param data {String}
-             * @returns {Number} epoch time
              */
             createSheet: function (data) {
                 var ws = {};
                 var range = {s: {c: 10000000, r: 10000000}, e: {c: 0, r: 0}};
-                for (var R = 0; R != data.length; ++R) {
-                    for (var C = 0; C != data[R].length; ++C) {
+                var types = TableExport.prototype.types;
+                for (var R = 0; R !== data.length; ++R) {
+                    for (var C = 0; C !== data[R].length; ++C) {
                         if (range.s.r > R) range.s.r = R;
                         if (range.s.c > C) range.s.c = C;
                         if (range.e.r < R) range.e.r = R;
                         if (range.e.c < C) range.e.c = C;
-                        var cell = {v: data[R][C]['val'], t: data[R][C]['type']};
-                        if (cell.v == null) continue;
+                        var cell = data[R][C];
+                        if (!cell || !cell.v) continue;
                         var cell_ref = XLSX.utils.encode_cell({c: C, r: R});
 
                         if (!cell.t) {
-                            if (typeof cell.v === 'number') cell.t = 'n';
-                            else if (typeof cell.v === 'boolean') cell.t = 'b';
-                            else if (cell.v instanceof Date) {
-                                cell.t = 'n';
-                                cell.z = XLSX.SSF._table[14];
-                                cell.v = this.dateNum(cell.v);
-                            }
+                            if (types.number.assert(cell.v)) cell.t = 'n';
+                            else if (types.boolean.assert(cell.v)) cell.t = 'b';
+                            else if (types.date.assert(cell.v)) cell.t = 'd';
                             else cell.t = 's';
+                        }
+
+                        if (cell.t === 'd') {
+                            cell.t = 'n';
+                            cell.z = XLSX.SSF._table[14];
+                            cell.v = this.dateNum(cell.v);
                         }
 
                         ws[cell_ref] = cell;
@@ -537,7 +541,7 @@
             string2ArrayBuffer: function (s) {
                 var buf = new ArrayBuffer(s.length);
                 var view = new Uint8Array(buf);
-                for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+                for (var i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
                 return buf;
             },
             /**
@@ -549,7 +553,7 @@
              * @param extension {String} file extension
              */
             export2file: function (data, mime, name, extension) {
-                if (XLSX && extension.substr(0, 4) == (".xls")) {
+                if (XLSX && extension.substr(0, 4) === (".xls")) {
                     var wb = new this.Workbook(),
                         ws = this.createSheet(data);
 
