@@ -258,6 +258,10 @@
                     }
                 );
 
+                /**
+                 * Initializes table caption with export buttons
+                 * @param exportButton {HTMLButtonElement}
+                 */
                 function checkCaption(exportButton) {
                     var caption = el.querySelectorAll('caption:not(.head)');
                     if (caption.length) {
