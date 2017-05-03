@@ -6,7 +6,7 @@ The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, an
 
 > **Notice:** In May 2017, [v3.0.0](https://github.com/clarketm/TableExport/releases/tag/v3.3.9) will be superceded by [v4.0.0](https://github.com/clarketm/TableExport/releases/tag/v4.0.0-alpha.5). Althought this is a major version bump, fear not, because all changes will be 100% backwards-compatible.
 
-### v4.0.0-rc.1 Examples:
+### Examples ([`v4.0.0-rc.1 `](https://github.com/clarketm/TableExport/releases/tag/v4.0.0-rc.1)):
 ##### Property
 * [`bootstrap`](https://www.travismclarke.com/tableexport/examples/bootstrap.html)
 * [`exportButtons`](https://www.travismclarke.com/tableexport/examples/exportButtons.html)
