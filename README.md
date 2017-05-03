@@ -20,7 +20,7 @@ The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, an
 * [`position`](https://www.travismclarke.com/tableexport/examples/position.html)
 * [`whitespace`](https://www.travismclarke.com/tableexport/examples/whitespace.html)
 
-#### Settings
+##### Settings
 * [`ignoreCSS`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
 * [`emptyCSS`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
 
