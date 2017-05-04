@@ -1,4 +1,4 @@
-# [TableExport](https://www.travismclarke.com/tableexport) &nbsp; [![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
+# [TableExport](https://tableexport.v4.travismclarke.com) &nbsp; [![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
 The simple, easy-to-implement library to export HTML tables to xlsx, xls, csv, and txt files
 
 [Examples](#examples) **--** [Demo](https://www.travismclarke.com/tableexport/) **--** [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) skeleton **--** [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) skeleton.
@@ -11,7 +11,7 @@ The simple, easy-to-implement library to export HTML tables to xlsx, xls, csv, a
 ## Getting Started
 
 ### Install manually using `<script>` tags
-To use this library, include the [FileSaver.js](https://github.com/clarketm/FileSaver.js/) library, and [TableExport.js](https://www.travismclarke.com/tableexport) library before the closing `<body>` tag of your HTML document:
+To use this library, include the [FileSaver.js](https://github.com/clarketm/FileSaver.js/) library, and [TableExport](https://tableexport.v4.travismclarke.com) library before the closing `<body>` tag of your HTML document:
 
 ```html
 <script src="FileSaver.js"></script>
@@ -59,7 +59,7 @@ $ npm install tableexport
 * [Bootstrap](http://getbootstrap.com/getting-started/#download) (3.1.0 or higher)
 
 #### Add-Ons:
-In order to provide **Office Open XML SpreadsheetML Format ( `.xlsx` )** support, you must include the following third-party library in your project before both [FileSaver.js](https://github.com/clarketm/FileSaver.js/) and [TableExport.js](https://www.travismclarke.com/tableexport).
+In order to provide **Office Open XML SpreadsheetML Format ( `.xlsx` )** support, you must include the following third-party library in your project before both [FileSaver.js](https://github.com/clarketm/FileSaver.js/) and [TableExport](https://tableexport.v4.travismclarke.com).
 
 * [xlsx.core.js](https://github.com/SheetJS/js-xlsx) by _SheetJS_
 
@@ -90,7 +90,7 @@ To support legacy browsers ( **Chrome** < 20, **Firefox** < 13, **Opera** < 12.1
 
 ### JavaScript
 
-To use this library, simple call the [`TableExport`](https://www.travismclarke.com/tableexport) constructor:
+To use this library, simple call the [`TableExport`](https://tableexport.v4.travismclarke.com) constructor:
 
 ```js
 new TableExport(document.getElementsByTagName("table"));
@@ -140,7 +140,7 @@ TableExport(document.getElementsByTagName("table"), {
 
 ### Methods
 
-TableExport supports additional methods (**getExportData**, **update**, **reset** and **remove**) to control the [`TableExport`](https://www.travismclarke.com/tableexport) instance after creation.
+TableExport supports additional methods (**getExportData**, **update**, **reset** and **remove**) to control the [`TableExport`](https://tableexport.v4.travismclarke.com) instance after creation.
 
 ```js
 /* First, call the `TableExport` constructor and save the return instance to a variable */
@@ -270,7 +270,7 @@ TableExport.prototype.txt = {
 
 ### CSS
 
-[TableExport](https://www.travismclarke.com/tableexport) packages with customized [Bootstrap](http://getbootstrap.com/getting-started/#download) CSS stylesheets to deliver enhanced table and button styling. These styles can be *enabled* by initializing with the `bootstrap` property set to `true`.
+[TableExport](https://tableexport.v4.travismclarke.com) packages with customized [Bootstrap](http://getbootstrap.com/getting-started/#download) CSS stylesheets to deliver enhanced table and button styling. These styles can be *enabled* by initializing with the `bootstrap` property set to `true`.
 
 ```js
 TableExport(document.getElementsByTagName("table"), {
@@ -315,7 +315,7 @@ A live, interactive demo can be found on the **[TableExport](https://www.travism
 * [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) skeleton.
 
 ### License
-[TableExport.js](https://www.travismclarke.com/tableexport) is licensed under the terms of the [MIT](http://opensource.org/licenses/mit-license.php) License
+[TableExport](https://tableexport.v4.travismclarke.com) is licensed under the terms of the [MIT](http://opensource.org/licenses/mit-license.php) License
 
 ### Going Forward
 #### TODOs
