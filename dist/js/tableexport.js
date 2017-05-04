@@ -1,5 +1,5 @@
 /*!
- * TableExport.js 4.0.0-rc.6 (https://www.travismclarke.com)
+ * TableExport.js 4.0.0 (https://www.travismclarke.com)
  * Copyright 2017 Travis Clarke
  * Licensed under the MIT license
  */
@@ -20,7 +20,7 @@
         'use strict';
         // TODO: update typings (def file)
         /**
-         * TableExport main plugin constructor
+         * TableExport main library constructor
          * @param selectors {jQuery} jQuery selector(s)
          * @param options {Object} TableExport configuration options
          * @param isUpdate {Boolean}
@@ -37,7 +37,7 @@
              */
             self.settings = isUpdate ? options : _extend({}, self.defaults, options);
             /**
-             * Selectors (tables) to apply the plugin to
+             * Selectors (tables) to apply the library to
              */
             self.selectors = _nodesArray(selectors);
 
@@ -115,9 +115,9 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '4.0.0-rc.6',
+            version: '4.0.0',
             /**
-             * Default plugin options.
+             * Default library options.
              * @memberof TableExport.prototype
              */
             defaults: {
@@ -705,7 +705,7 @@
                 link.click();
             },
             /**
-             * Updates the plugin instance with new/updated options
+             * Updates the library instance with new/updated options
              * @param options {Object} TableExport configuration options
              * @returns {TableExport} updated TableExport instance
              */
@@ -714,7 +714,7 @@
                 // return new TableExport(this.selectors, $.extend({}, this.settings, options), true);
             },
             /**
-             * Reset the plugin instance to its original state
+             * Reset the library instance to its original state
              * @returns {TableExport} original TableExport instance
              */
             // TODO: implement
