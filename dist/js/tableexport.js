@@ -1,5 +1,5 @@
 /*!
- * TableExport.js 4.0.0-rc.4 (https://www.travismclarke.com)
+ * TableExport.js 4.0.0-rc.5 (https://www.travismclarke.com)
  * Copyright 2017 Travis Clarke
  * Licensed under the MIT license
  */
@@ -45,7 +45,7 @@
             settings.ignoreCSS = self.ignoreCSS instanceof Array ? self.ignoreCSS.join(', ') : self.ignoreCSS;
             settings.emptyCSS = self.emptyCSS instanceof Array ? self.emptyCSS.join(', ') : self.emptyCSS;
             settings.formatValue = self.formatValue.bind(this, settings.trimWhitespace);
-            settings.bootstrapSettings = _getBootstrapSettings(self.bootstrap, self.bootstrapConfig, self.defaultButton);
+            settings.bootstrapSettings = _getBootstrapSettings(settings.bootstrap, self.bootstrapConfig, self.defaultButton);
 
             var _exportData = {};
             self.getExportData = function () {
@@ -113,7 +113,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '4.0.0-rc.4',
+            version: '4.0.0-rc.5',
             /**
              * Default plugin options.
              * @memberof TableExport.prototype
@@ -832,12 +832,12 @@
             return el.classList ? el.classList.contains(cls) : new RegExp('(^| )' + cls + '( |$)', 'gi').test(el.cls);
         }
 
-        function _getBootstrapSettings(bootstrap, boostrapConfig, defaultButton) {
+        function _getBootstrapSettings(bootstrap, bootstrapConfig, defaultButton) {
             var config = {};
             if (bootstrap) {
-                config.bootstrapClass = bootstrap[0] + ' ';
-                config.bootstrapTheme = bootstrap[1] + ' ';
-                config.bootstrapSpacing = bootstrap[2] + ' ';
+                config.bootstrapClass = bootstrapConfig[0] + ' ';
+                config.bootstrapTheme = bootstrapConfig[1] + ' ';
+                config.bootstrapSpacing = bootstrapConfig[2] + ' ';
             } else {
                 config.bootstrapClass = defaultButton + ' ';
                 config.bootstrapTheme = '';
