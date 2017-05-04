@@ -6,7 +6,7 @@ The simple, easy-to-implement library to export HTML tables to xlsx, xls, csv, a
 ## Docs
 * [Migrating from **3.x** to **4.x**?](MIGRATING.md)
 * [`v3` docs](https://www.travismclarke.com/tableexport/) and [README](https://github.com/clarketm/TableExport/tree/3.x.x#getting-started): 
-* [`v4` docs](#getting-started) and [README](https://github.com/clarketm/TableExport/tree/develop#getting-started) (below): 
+* [`v4` docs](https://tableexport.v4.travismclarke.com) and [README](#getting-started) (below): 
 
 ## Getting Started
 
