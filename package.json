@@ -1,10 +1,10 @@
 {
   "name": "tableexport",
-  "version": "4.0.0-rc.6",
+  "version": "4.0.0",
   "authors": [
     "clarketm <travis.m.clarke@gmail.com>"
   ],
-  "description": "The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, and txt files",
+  "description": "The simple, easy-to-implement library to export HTML tables to xlsx, xls, csv, and txt files",
   "main": "dist/js/tableexport.js",
   "typings": "dist/typings/tableexport.d.ts",
   "style": [

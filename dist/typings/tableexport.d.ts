@@ -1,5 +1,5 @@
 /**
- * TableExport main plugin constructor
+ * TableExport main library constructor
  *
  * @class TableExport
  *
@@ -13,7 +13,7 @@ export class TableExport {
     constructor(selectors: NodeList|JQuery, options: Defaults, isUpdate: boolean);
 
     /**
-     * Default plugin options.
+     * Default library options.
      * @memberof TableExport.prototype
      */
     defaults: Defaults;
@@ -24,7 +24,7 @@ export class TableExport {
     settings: any;
 
     /**
-     * selectors (e.g. tables) to apply the plugin to
+     * selectors (e.g. tables) to apply the library to
      */
     selectors: NodeList;
 
@@ -154,14 +154,14 @@ export class TableExport {
     export2file: (data: string, mime: string, name: string, extension: String) => void;
 
     /**
-     * Updates the plugin instance with new/updated options
+     * Updates the library instance with new/updated options
      * @param options {Object} TableExport configuration options
      * @returns {TableExport} updated TableExport instance
      */
     update: (options: any) => TableExport;
 
     /**
-     * Reset the plugin instance to its original state
+     * Reset the library instance to its original state
      * @returns {TableExport} original TableExport instance
      */
     reset: () => TableExport;
@@ -183,7 +183,7 @@ export interface Workbook {
 }
 
 /**
- * Default plugin options.
+ * Default library options.
  * @memberof TableExport.prototype
  */
 export interface Defaults {
@@ -267,7 +267,7 @@ export interface Type {
 interface JQuery {
 
     /**
-     * TableExport main plugin constructor
+     * TableExport main library constructor
      *
      * @param options {Object} TableExport configuration options
      * @param isUpdate {Boolean}
