@@ -6,9 +6,9 @@ The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, an
 
 > **Notice:** In May 2017, [v3.0.0](https://github.com/clarketm/TableExport/releases/tag/v3.3.9) will be superceded by [v4.0.0](https://github.com/clarketm/TableExport/releases/tag/v4.0.0-alpha.5). Althought this is a major version bump, fear not, because all changes will be 100% backwards-compatible.
 
-### [`v4.0.0-rc.1 `](https://github.com/clarketm/TableExport/releases/tag/v4.0.0-rc.1) Release Candidate:
-#### Examples:
-##### Property
+## [`v4.0.0-rc.1 `](https://github.com/clarketm/TableExport/releases/tag/v4.0.0-rc.1) Release Candidate:
+### Examples:
+#### Property
 * [`bootstrap`](https://www.travismclarke.com/tableexport/examples/bootstrap.html)
 * [`exportButtons`](https://www.travismclarke.com/tableexport/examples/exportButtons.html)
 * [`filename`](https://www.travismclarke.com/tableexport/examples/filename.html)
@@ -20,11 +20,11 @@ The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, an
 * [`position`](https://www.travismclarke.com/tableexport/examples/position.html)
 * [`whitespace`](https://www.travismclarke.com/tableexport/examples/whitespace.html)
 
-##### Settings
+#### Settings
 * [`ignoreCSS`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
 * [`emptyCSS`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
 
-##### TODOs
+#### TODOs
 - [ ] Update JSDocs and TypScript definition file.
 - [ ] Allow `ignoreCSS` and `emptyCSS` to work with any `selector|selector[]` instead of solely a single CSS class.
 - [ ] Fix bug with **CSV** and **TXT** `ignoreRows` and `ignoreCols` (rows/cols rendered as empty strings rather than being *removed*).
