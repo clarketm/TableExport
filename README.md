@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
-# [TableExport](https://www.travismclarke.com/tableexport)
+# [TableExport](https://www.travismclarke.com/tableexport) &nbsp; [![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
 The simple, easy-to-implement library to export HTML tables to xlsx, xls, csv, and txt files
 
 [Examples](#examples) **--** [Demo](https://www.travismclarke.com/tableexport/) **--** [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) skeleton **--** [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) skeleton.

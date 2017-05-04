@@ -1,26 +1,24 @@
----
-T: The simple, easy-to-implement library to export HTML tables to xlsx, xls, csv, and txt files
----
+
+* [TableExport](README.md)
 
 ## Docs
 * [Migrating from **3.x** to **4.x**?](MIGRATING.md)
 * [`v3` docs](READMEv3.md) 
-* [`v4` docs](README.md)
+* [`v4` docs](READMEv4.md)
 
-### Getting Started
+## Getting Started
 * [Install manually using script tags](README.md#install-manually-using-script-tags)
 * [Install with Bower](README.md#install-with-bower)
 * [Install with npm](README.md#install-with-npm)
 * [CDN](README.md#cdn)
 
-### Dependencies
+## Dependencies
 * [Required](README.md#required)
 * [Optional](README.md#optional)
 * [Add-Ons](README.md#add-ons)
 * [Older Browsers](README.md#older-browsers)
 
-
-### Usage
+## Usage
 * [JavaScript](README.md#javascript)
     * [Properties](README.md#properties)
     * [Methods](README.md#methods)
@@ -28,7 +26,7 @@ T: The simple, easy-to-implement library to export HTML tables to xlsx, xls, csv
 * [CSS](README.md)
 * [Browser Support](README.md#browser-support)
 
-### Examples
+## Examples
 * [Customizing Properties](README.md#customizing-properties)
 * [Customizing Properties](README.md#customizing-settings)
 * [Skeletons](README.md#skeletons)
