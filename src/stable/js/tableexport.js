@@ -14,6 +14,7 @@
     }
 }(this || window, function (exports, $, Blob, saveAs, XLSX) {
         'use strict';
+        // TODO: update typings (def file)
         /**
          * TableExport main plugin constructor
          * @param selectors {jQuery} jQuery selector(s)
@@ -857,10 +858,12 @@
 
             // alias the TableExport prototype
             for (var prop in TableExport.prototype) {
+                // TODO: check compat
                 $.fn.tableExport[prop] = TableExport.prototype[prop];
             }
         }
 
+        //TODO: force window object (bc localStorage)
         return exports.default = exports.TableExport = TableExport;
 
     }
