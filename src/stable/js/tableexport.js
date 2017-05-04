@@ -226,7 +226,7 @@
                 number: {
                     defaultClass: 'tableexport-number',
                     assert: function (v) {
-                        return !isNaN(v.replace(/,/g, ''));
+                        return !isNaN(v);
                     }
                 },
                 boolean: {
@@ -238,7 +238,7 @@
                 date: {
                     defaultClass: 'tableexport-date',
                     assert: function (v) {
-                        return !isNaN(Date.parse(v))
+                        return !(/.*%/.test(v)) && !isNaN(Date.parse(v))
                     }
                 }
             },
