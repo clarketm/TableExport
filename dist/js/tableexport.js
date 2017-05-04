@@ -4,16 +4,21 @@
  * Licensed under the MIT license
  */
 
+
 ;(function (root, factory) {
+    // AMD
     if (typeof define === 'function' && define.amd) {
-        define(['exports', 'jquery', 'blobjs', 'file-saverjs', 'xlsx-js'], factory); // AMD
+        define(['exports', 'jquery', 'blobjs', 'file-saverjs', 'xlsx'], factory);
     } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
-        factory(exports, require('jquery'), require('blobjs'), require('file-saverjs'), require('xlsx-js')); // CommonJS
+        // CommonJS
+        factory(exports, require('jquery'), require('blobjs'), require('file-saverjs'), require('xlsx'));
     } else {
-        factory(root, root.jQuery, root.Blob, root.saveAs, root.XLSX); // Browser globals
+        // Browser globals
+        factory(root, root.jQuery, root.Blob, root.saveAs, root.XLSX);
     }
 }(this || window, function (exports, $, Blob, saveAs, XLSX) {
         'use strict';
+        // TODO: update typings (def file)
         /**
          * TableExport main plugin constructor
          * @param selectors {jQuery} jQuery selector(s)
@@ -726,8 +731,7 @@
              * @constructor
              */
             LocalStorage: function () {
-                this.type = 'localStorage';
-                this.store = exports[this.type];
+                this.store = localStorage;
                 this.namespace = 'te-';
                 this.getKey = function (key) {
                     return this.namespace + key;
@@ -857,11 +861,14 @@
 
             // alias the TableExport prototype
             for (var prop in TableExport.prototype) {
+                // TODO: check compat
                 $.fn.tableExport[prop] = TableExport.prototype[prop];
             }
         }
 
-        return exports.default = exports.TableExport = TableExport;
+        exports.default = exports.TableExport = TableExport;
+
+        return exports;
 
     }
 ));
