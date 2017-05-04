@@ -1,5 +1,5 @@
 /*!
- * TableExport.js 4.0.0-rc.5 (https://www.travismclarke.com)
+ * TableExport.js 4.0.0-rc.6 (https://www.travismclarke.com)
  * Copyright 2017 Travis Clarke
  * Licensed under the MIT license
  */
@@ -95,8 +95,8 @@
 
                 settings.formats.forEach(
                     function (key) {
-                        XLSX && key === 'xls' ? key = 'xlsm' : false;
-                        !XLSX && key === 'xlsx' ? key = null : false;
+                        XLSX && !isMobile && key === 'xls' ? key = 'xlsm' : false;
+                        !XLSX || isMobile && key === 'xlsx' ? key = null : false;
                         key && context.setExportData(self.exporters[key].call(self, context));
                     }
                 );
@@ -113,7 +113,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '4.0.0-rc.5',
+            version: '4.0.0-rc.6',
             /**
              * Default plugin options.
              * @memberof TableExport.prototype
@@ -226,7 +226,7 @@
                 number: {
                     defaultClass: 'tableexport-number',
                     assert: function (v) {
-                        return !isNaN(v.replace(/,/g, ''));
+                        return !isNaN(v);
                     }
                 },
                 boolean: {
@@ -238,7 +238,7 @@
                 date: {
                     defaultClass: 'tableexport-date',
                     assert: function (v) {
-                        return !isNaN(Date.parse(v))
+                        return !(/.*%/.test(v)) && !isNaN(Date.parse(v))
                     }
                 }
             },
@@ -543,8 +543,10 @@
                 return String(string).replace(/[&<>'\/]/g, function (s) {
                     return TableExport.prototype.entityMap[s];
                 });
-            }
-            ,
+            },
+            translateMimeType: function (string) {
+                return String(string).replace(/&#47;/, '/').replace(this.xls.mimeType, this.csv.mimeType);
+            },
             /**
              * Removes leading/trailing whitespace from cell string
              * @param isTrimWhitespace {Boolean}
@@ -553,8 +555,7 @@
              */
             formatValue: function (isTrimWhitespace, string) {
                 return isTrimWhitespace ? string.trim() : string;
-            }
-            ,
+            },
             /**
              * Get cell data-type
              * @param string {String}
@@ -574,8 +575,7 @@
                 } else {
                     return '';
                 }
-            }
-            ,
+            },
             /**
              * Formats datetimes for compatibility with Excel
              * @memberof TableExport.prototype
@@ -587,8 +587,7 @@
                 if (date1904) v += 1462;
                 var epoch = Date.parse(v);
                 return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
-            }
-            ,
+            },
             /**
              * Creates an Excel spreadsheet from a data string
              * @memberof TableExport.prototype
@@ -626,8 +625,7 @@
                 }
                 if (range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
                 return ws;
-            }
-            ,
+            },
             /**
              * Click handler for export button "download"
              * @memberof TableExport.prototype
@@ -640,8 +638,7 @@
                     mimeType = object.mimeType,
                     fileExtension = object.fileExtension;
                 this.export2file(data, mimeType, filename, fileExtension);
-            }
-            ,
+            },
             /**
              * Excel Workbook constructor
              * @memberof TableExport.prototype
@@ -650,8 +647,7 @@
             Workbook: function () {
                 this.SheetNames = [];
                 this.Sheets = {};
-            }
-            ,
+            },
             /**
              * Converts a string to an arraybuffer
              * @param s {String}
@@ -663,8 +659,7 @@
                 var view = new Uint8Array(buf);
                 for (var i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
                 return buf;
-            }
-            ,
+            },
             /**
              * Exports and downloads the file
              * @memberof TableExport.prototype
@@ -674,7 +669,7 @@
              * @param extension {String} file extension
              */
             export2file: function (data, mime, name, extension) {
-                if (XLSX && extension.substr(0, 4) === ('.xls')) {
+                if (XLSX && !isMobile && extension.substr(0, 4) === ('.xls')) {
                     var wb = new this.Workbook(),
                         ws = this.createSheet(data);
 
@@ -689,11 +684,24 @@
 
                     data = this.string2ArrayBuffer(wbout);
                 }
-                saveAs(new Blob([data],
-                    {type: mime + ';' + this.charset}),
-                    name + extension, true);
-            }
-            ,
+
+                if (isMobile) {
+                    var dataURI = 'data:' + this.translateMimeType(mime) + ';' + this.charset + ',' + data;
+                    this.downloadDataURI(dataURI, name, extension);
+                } else {
+                    saveAs(new Blob([data],
+                        {type: mime + ';' + this.charset}),
+                        name + extension, true);
+                }
+            },
+            downloadDataURI: function (dataURI, name, extension) {
+                var encodedUri = encodeURI(dataURI);
+                var link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", name + extension);
+                document.body.appendChild(link);
+                link.click();
+            },
             /**
              * Updates the plugin instance with new/updated options
              * @param options {Object} TableExport configuration options
@@ -702,8 +710,7 @@
             // TODO: implement
             update: function (options) {
                 // return new TableExport(this.selectors, $.extend({}, this.settings, options), true);
-            }
-            ,
+            },
             /**
              * Reset the plugin instance to its original state
              * @returns {TableExport} original TableExport instance
@@ -711,8 +718,7 @@
             // TODO: implement
             reset: function () {
                 // return new TableExport(this.selectors, this.settings, true);
-            }
-            ,
+            },
             /**
              * Remove the instance (i.e. caption containing the export buttons)
              */
@@ -721,8 +727,7 @@
                 // this.selectors.each(function () {
                 //     $(this).find('caption:not(.head)').remove();
                 // });
-            }
-            ,
+            },
             /**
              * LocalStorage main interface constructor
              * @memberof TableExport.prototype
@@ -845,6 +850,10 @@
             }
             return config;
         }
+
+        var isMobile = (function isMobile(ua) {
+            return /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(ua) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(ua.substr(0, 4))
+        })(navigator.userAgent || navigator.vendor || window.opera);
 
         if ($) {
             /**
