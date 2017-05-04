@@ -1,5 +1,5 @@
 /*!
- * TableExport.js 4.0.0-rc.3 (https://www.travismclarke.com)
+ * TableExport.js 4.0.0-rc.4 (https://www.travismclarke.com)
  * Copyright 2017 Travis Clarke
  * Licensed under the MIT license
  */
@@ -113,7 +113,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '4.0.0-rc.3',
+            version: '4.0.0-rc.4',
             /**
              * Default plugin options.
              * @memberof TableExport.prototype
@@ -409,14 +409,10 @@
                                 if (_hasClass(val, settings.emptyCSS)) {
                                     return ' '
                                 }
-                                return {
-                                    v: settings.formatValue(val.textContent),
-                                    t: self.getType(val.className)
-                                };
+
+                                return val.textContent;
                             }).join(colD);
-                        }).join(self).map(function (val) {
-                            return [].concat.apply([], val);
-                        }),
+                        }).join(self.rowDel),
                         dataObject = TableExport.prototype.escapeHtml(
                             JSON.stringify({
                                 data: dataURL,
