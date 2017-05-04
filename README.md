@@ -260,7 +260,7 @@ $.fn.tableExport.rowDel = "\r\n";
 | **Mac OSX**|    &#10003;   |    &#10003;    | - |   &#10003;  |   &#10003;    |
 | **Windows** |    &#10003;   |    &#10003;    | &#10003; |   &#10003;   |   &#10003;    |
 
-*only _partial_ support for `xls` and `xlsx`: requires third-party dependency ([Blob.js](https://github.com/clarketm/Blob.js/))
+> a full list of browser support can be found on the [FileSaver.js](https://github.com/clarketm/FileSaver.js) [README](https://github.com/clarketm/FileSaver.js#supported-browsers). Some [legacy browsers]((https://github.com/clarketm/FileSaver.js#supported-browsers)) may require an additional third-party dependency ([Blob.js](https://github.com/clarketm/Blob.js/))
 
 ### Live Demo 
 A live, interactive demo can be found on the **[TableExport](https://www.travismclarke.com/tableexport/#live-demo)** webpage. 
