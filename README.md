@@ -34,8 +34,7 @@ The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, an
 - [ ] Ensure (via testing) full consistency and backwards-compatibility for jQuery.
 - [ ] Make jQuery as *peer dependency* and ensure proper **TableExport** rendering in broswser, AMD, and CommonJS environments. 
 
-## [`v3.3.12`](https://github.com/clarketm/TableExport/releases/tag/v3.3.12) Latest Stable:
-## Getting Started
+## Getting Started ([`v3.3.12`](https://github.com/clarketm/TableExport/releases/tag/v3.3.12) LTS)
 
 ### Download and Setup
 
