@@ -239,7 +239,7 @@ Below are additional defaults to support the functionality of the plugin that.
 $.fn.tableExport.charset = "charset=utf-8";
 
 /* default filename if "id" attribute is set and undefined */
-$.fn.tableExport.defaultFileName = "myDownload";
+$.fn.tableExport.defaultFilename = "myDownload";
 
 /* default class to style buttons when not using bootstrap  */
 $.fn.tableExport.defaultButton = "button-default";
