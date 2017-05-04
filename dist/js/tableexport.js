@@ -1,5 +1,5 @@
 /*!
- * TableExport.js 4.0.0-rc.1 (https://www.travismclarke.com)
+ * TableExport.js 4.0.0-rc.2 (https://www.travismclarke.com)
  * Copyright 2017 Travis Clarke
  * Licensed under the MIT license
  */
@@ -27,7 +27,7 @@
          * @constructor
          */
         var TableExport = function (selectors, options, isUpdate) {
-            if (!selectors) return new Error('selector is required');
+            if (!selectors) return new Error('"selectors" is required');
 
             var self = this;
             /**
@@ -113,7 +113,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '4.0.0-rc.1',
+            version: '4.0.0-rc.2',
             /**
              * Default plugin options.
              * @memberof TableExport.prototype
