@@ -5,6 +5,7 @@
 /index.html
 /search
 /test
+/module
 .jshintrc
 .DS_store
 *.ico
