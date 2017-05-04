@@ -4,9 +4,9 @@ The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, an
 
 [TableExport](https://www.travismclarke.com/tableexport/) demo **--** [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) skeleton **--** [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) skeleton.
 
-> **Notice:** In May 2017, [v3.0.0](https://github.com/clarketm/TableExport/releases/tag/v3.3.9) will be superceded by [v4.0.0](https://github.com/clarketm/TableExport/releases/tag/v4.0.0-alpha.5). Althought this is a major version bump, fear not, because all changes will be 100% backwards-compatible.
 
 ## [`v4.0.0-rc.1 `](https://github.com/clarketm/TableExport/releases/tag/v4.0.0-rc.1) Release Candidate:
+> **Notice:** In May 2017, [v3.0.0](https://github.com/clarketm/TableExport/releases/tag/v3.3.9) will be superceded by [v4.0.0](https://github.com/clarketm/TableExport/releases/tag/v4.0.0-alpha.5). Althought this is a major version bump, fear not, because all changes will be 100% backwards-compatible.
 ### Examples:
 #### Property
 * [`bootstrap`](https://www.travismclarke.com/tableexport/examples/bootstrap.html)
