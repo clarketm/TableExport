@@ -5,7 +5,7 @@ The simple, easy-to-implement library to export HTML tables to xlsx, xls, csv, a
 [Examples](#examples) **--** [Demo](https://www.travismclarke.com/tableexport/) **--** [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) skeleton **--** [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) skeleton.
 
 ## Docs
-* [Migrating from **3.x** to **4.x**?](https://github.com/clarketm/TableExport/blob/develop/MIGRATING.md)
+* [Migrating from **3.x** to **4.x**?](MIGRATING.md)
 * [`v3` docs](https://www.travismclarke.com/tableexport/) and [README](https://github.com/clarketm/TableExport/tree/3.x.x#getting-started): 
 * [`v4` docs](#getting-started) and [README](https://github.com/clarketm/TableExport/tree/develop#getting-started) (below): 
 
@@ -31,7 +31,8 @@ $ bower install tableexport.js
 $ npm install tableexport
 ```
 
-### [CDNjs](https://cdnjs.com/libraries/TableExport)
+### CDN
+#### [CDNjs](https://cdnjs.com/libraries/TableExport)
 |          | uncompressed | compressed |
 | :------: | :----------: | :--------: |
 |  __CSS__ |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.0/css/tableexport.css)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.0/css/tableexport.min.css)      |
@@ -39,7 +40,7 @@ $ npm install tableexport
 |  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.0/img/xlsx.svg)[🔗<sup>xls</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.0/img/xls.svg)[🔗<sup>csv</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.0/img/csv.svg)[🔗<sup>txt</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.0/img/txt.svg)  |
 
 
-### [unpkg](https://unpkg.com/#/)
+#### [unpkg](https://unpkg.com/#/)
 |          | uncompressed | compressed |
 | :------: | :----------: | :--------: |
 |  __CSS__ |   [🔗](https://unpkg.com/tableexport/dist/css/tableexport.css)     |  [🔗](https://unpkg.com/tableexport/dist/css/tableexport.min.css)      |
@@ -293,7 +294,7 @@ When used alongside Bootstrap, there are four custom classes **`.xlsx`, `.xls`, 
 
 ### Examples
 
-#### Property
+#### Customizing Properties
 * [`headers`](https://www.travismclarke.com/tableexport/examples/headers_footers.html)
 * [`footers`](https://www.travismclarke.com/tableexport/examples/headers_footers.html)
 * [`formats`](https://www.travismclarke.com/tableexport/examples/formats-xlsx-xls-csv-txt.html)
@@ -305,11 +306,11 @@ When used alongside Bootstrap, there are four custom classes **`.xlsx`, `.xls`, 
 * [`ignoreCols`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
 * [`trimWhitespace`](https://www.travismclarke.com/tableexport/examples/whitespace.html)
 
-#### Settings
+#### Customizing Settings
 * [`ignoreCSS`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
 * [`emptyCSS`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
 
-### Live Demo 
+#### Skeletons 
 A live, interactive demo can be found on the **[TableExport](https://www.travismclarke.com/tableexport/#live-demo)** webpage. 
 * [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) skeleton.
 * [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) skeleton.
