@@ -6,17 +6,17 @@
 
 
 ;(function (root, factory) {
-    // AMD
     if (typeof define === 'function' && define.amd) {
-        define(['exports', 'jquery', 'blobjs', 'file-saverjs', 'xlsx'], factory);
+        // AMD
+        define(['jquery', 'blobjs', 'file-saverjs', 'xlsx'], factory);
     } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
         // CommonJS
-        factory(exports, require('jquery'), require('blobjs'), require('file-saverjs'), require('xlsx'));
+        module.exports = factory(require('jquery'), require('blobjs'), require('file-saverjs'), require('xlsx'));
     } else {
         // Browser globals
-        factory(root, root.jQuery, root.Blob, root.saveAs, root.XLSX);
+        root.TableExport = factory(root.jQuery, root.Blob, root.saveAs, root.XLSX);
     }
-}(this || window, function (exports, $, Blob, saveAs, XLSX) {
+}(this, function ($, Blob, saveAs, XLSX) {
         'use strict';
         // TODO: update typings (def file)
         /**
@@ -27,6 +27,8 @@
          * @constructor
          */
         var TableExport = function (selectors, options, isUpdate) {
+            if (!selectors) return new Error('selector is required');
+
             var self = this;
             /**
              * TableExport configuration options (user-defined w/ default fallback)
@@ -866,9 +868,6 @@
             }
         }
 
-        exports.default = exports.TableExport = TableExport;
-
-        return exports;
-
+        return TableExport;
     }
 ));
