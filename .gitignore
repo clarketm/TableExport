@@ -8,6 +8,7 @@
 /module
 /docs/_book
 book.json
+gitbook.css
 .jshintrc
 .DS_store
 *.ico
