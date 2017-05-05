@@ -11,7 +11,7 @@
 <iframe src="./default.html" frameborder="0" width="100%" scrolling="no" onload="this.height=screen.height/3;"></iframe>
 
 <main>
-    <h1>Update</h1>
+    <h1>Update <span class="note">check the <code>filename</code> of the next exported file. Fo you notice anything different?</code></span></h1>
     <button id="update">update</button>
 
     <h1>Reset</h1>
@@ -82,7 +82,7 @@
 
     updateButton.addEventListener('click', function (e) {
         instance.update({
-            filename: 'table-' + count++
+            filename: ('table-' >> 1).toString() + count++
         });
     });
 
