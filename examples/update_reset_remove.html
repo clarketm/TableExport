@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Headers / Footers</title>
+    <title>Update / Reset / Remove</title>
     <link href="../dist/css/tableexport.min.css" rel="stylesheet">
     <link href="./examples.css" rel="stylesheet">
 </head>
@@ -11,58 +11,16 @@
 <iframe src="./default.html" frameborder="0" width="100%" scrolling="no" onload="this.height=screen.height/3;"></iframe>
 
 <main>
-    <h1>Headers
-        <code class="small">headers: false</code>
-    </h1>
-    <table id="headers-table">
-        <thead class="target">
-        <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Age</th>
-            <th>Salary</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Thor Walton</td>
-            <td>Regional Director</td>
-            <td>45</td>
-            <td>$98,540</td>
-        </tr>
-        <tr>
-            <td>Travis Clarke</td>
-            <td>Software Engineer</td>
-            <td>30</td>
-            <td>$275,000</td>
-        </tr>
-        <tr>
-            <td>Suki Burks</td>
-            <td>Office Manager</td>
-            <td>22</td>
-            <td>$67,670</td>
-        </tr>
-        </tbody>
-        <tfoot>
-        <tr>
-            <td class="disabled"></td>
-            <td class="disabled"></td>
-            <td class="disabled"></td>
-            <th>$441,210</th>
-        </tr>
-        </tfoot>
-    </table>
+    <h1>Update</h1>
+    <button id="update">update</button>
 
-    <p class="info">export the table to <code>.xls</code> and look at the contents of the <span class="target">yellow</span> row. Compared to the export from the <b>defaults</b> table above, you will notice that <code>headers: false</code> <i>removes the <code>thead</code> elements from the file</i>.</p>
-</main>
+    <h1>Reset</h1>
+    <button id="reset">reset</button>
 
-<br>
+    <h1>Remove</h1>
+    <button id="remove">remove</button>
 
-<main>
-    <h1>Footers
-        <code class="small">footers: false</code>
-    </h1>
-    <table id="footers-table">
+    <table id="table">
         <thead>
         <tr>
             <th>Name</th>
@@ -92,7 +50,7 @@
         </tr>
         </tbody>
         <tfoot>
-        <tr class="target">
+        <tr>
             <td class="disabled"></td>
             <td class="disabled"></td>
             <td class="disabled"></td>
@@ -100,8 +58,6 @@
         </tr>
         </tfoot>
     </table>
-
-    <p class="info">export the table to <code>.xls</code> and look at the contents of the <span class="target">yellow</span> row. Compared to the export from the <b>defaults</b> table above, you will notice that <code>footers: false</code> <i>removes the <code>tfoot</code> elements from the file</i>.</p>
 </main>
 
 <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -109,28 +65,32 @@
 <script type="text/javascript" src="../bower_components/blobjs/Blob.min.js"></script>
 <script type="text/javascript" src="../bower_components/file-saverjs/FileSaver.min.js"></script>
 <script type="text/javascript" src="../dist/js/tableexport.min.js"></script>
+<script type="text/javascript" src="../src/stable/js/tableexport.js"></script>
 <script>
 
-    var HeaderTable = document.getElementById('headers-table');
-    new TableExport(HeaderTable, {
-        headers: false
-    });
-    // **** jQuery **************************
-    //    $(HeaderTable).tableExport({
-    //        headers: false
-    //    });
-    // **************************************
+    var count = 1;
 
+    var Table = document.getElementById('table');
+    var instance = TableExport(Table);
 
-    var FooterTable = document.getElementById('footers-table');
-    new TableExport(FooterTable, {
-        footers: false
+    var updateButton = document.getElementById('update');
+    var resetButton = document.getElementById('reset');
+    var removeButton = document.getElementById('remove');
+
+    updateButton.addEventListener('click', function (e) {
+        instance.update({
+            filename: 'table-' + count++
+        });
     });
-    // **** jQuery **************************
-    //    $(FooterTable).tableExport({
-    //        footers: false
-    //    });
-    // **************************************
+
+    resetButton.addEventListener('click', function (e) {
+        instance.reset();
+    });
+
+    removeButton.addEventListener('click', function (e) {
+        instance.remove();
+    });
+
 
 </script>
 
