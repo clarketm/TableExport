@@ -862,14 +862,7 @@
         }
 
         function _nodesArray(els) {
-            var result;
-            try {
-                result = [].slice.call(els);
-                if (!result.length) throw Error();
-            } catch (e) {
-                result = [].concat(els);
-            }
-            return result;
+            return (typeof els.length === 'undefined') ? [].concat(els) : [].slice.call(els);
         }
 
         function _hasClass(el, cls) {
