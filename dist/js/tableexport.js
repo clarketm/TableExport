@@ -18,7 +18,7 @@
     }
 }(this, function ($, Blob, saveAs, XLSX) {
         'use strict';
-        // TODO: update typings (def file)
+        // TODO: update TS `definition` file
         /**
          * TableExport main library constructor
          * @param selectors {jQuery} jQuery selector(s)
@@ -90,12 +90,26 @@
                     };
                 })();
 
+                var formatMap = {};
+                for (var type in _type) {
+                    formatMap[type] = 0;
+                }
 
                 settings.formats.forEach(
                     function (key) {
-                        XLSX && !isMobile && key === 'xls' ? key = 'xlsm' : false;
-                        !XLSX || isMobile && key === 'xlsx' ? key = null : false;
-                        key && context.setExportData(self.exporters[key].call(self, context));
+                        var before = key;
+                        (XLSX && !isMobile) && key === _type.xls
+                            ? key = _type.xlsm
+                            : false;
+
+                        (!XLSX || isMobile) && key === _type.xlsx
+                            ? key = _type.xls
+                            : false;
+
+                        if (!formatMap[key]) {
+                            context.setExportData(self.exporters[key].call(self, context));
+                            formatMap[key]++;
+                        }
                     }
                 );
             });
@@ -288,12 +302,12 @@
                                     t: self.getType(val.className)
                                 };
                             }).filter(function (val) {
-                                return val;
+                                return typeof val !== 'undefined';
                             });
                         }).map(function (val) {
                             return val && [].concat.apply([], val);
                         }).filter(function (val) {
-                            return val;
+                            return typeof val !== 'undefined';
                         }),
                         dataObject = TableExport.prototype.escapeHtml(
                             JSON.stringify({
@@ -304,7 +318,7 @@
                             })),
                         myContent = TableExport.prototype.xlsx.buttonContent,
                         myClass = TableExport.prototype.xlsx.defaultClass,
-                        hashKey = _hashCode({uuid: context.uuid, type: 'xlsx'}),
+                        hashKey = _hashCode({uuid: context.uuid, type: _type.xlsx}),
                         exportButton = settings.exportButtons && TableExport.prototype.createObjButton(
                                 hashKey,
                                 dataObject,
@@ -363,12 +377,12 @@
                                     t: self.getType(val.className)
                                 };
                             }).filter(function (val) {
-                                return val;
+                                return typeof val !== 'undefined';
                             });
                         }).map(function (val) {
                             return val && [].concat.apply([], val);
                         }).filter(function (val) {
-                            return val;
+                            return typeof val !== 'undefined';
                         }),
                         dataObject = TableExport.prototype.escapeHtml(
                             JSON.stringify({
@@ -379,7 +393,7 @@
                             })),
                         myContent = TableExport.prototype.xls.buttonContent,
                         myClass = TableExport.prototype.xls.defaultClass,
-                        hashKey = _hashCode({uuid: context.uuid, type: 'xls'}),
+                        hashKey = _hashCode({uuid: context.uuid, type: _type.xls}),
                         exportButton = settings.exportButtons && TableExport.prototype.createObjButton(
                                 hashKey,
                                 dataObject,
@@ -407,9 +421,12 @@
                                 if (_hasClass(val, settings.emptyCSS)) {
                                     return ' '
                                 }
-
                                 return val.textContent;
+                            }).filter(function (val) {
+                                return typeof val !== 'undefined';
                             }).join(colD);
+                        }).filter(function (val) {
+                            return typeof val !== 'undefined';
                         }).join(self.rowDel),
                         dataObject = TableExport.prototype.escapeHtml(
                             JSON.stringify({
@@ -420,7 +437,7 @@
                             })),
                         myContent = TableExport.prototype.xls.buttonContent,
                         myClass = TableExport.prototype.xls.defaultClass,
-                        hashKey = _hashCode({uuid: context.uuid, type: 'xls'}),
+                        hashKey = _hashCode({uuid: context.uuid, type: _type.xls}),
                         exportButton = settings.exportButtons && TableExport.prototype.createObjButton(
                                 hashKey,
                                 dataObject,
@@ -450,7 +467,11 @@
                                     return ' '
                                 }
                                 return '"' + settings.formatValue(val.textContent.replace(/"/g, '""')) + '"';
+                            }).filter(function (val) {
+                                return typeof val !== 'undefined';
                             }).join(colD);
+                        }).filter(function (val) {
+                            return typeof val !== 'undefined';
                         }).join(self.rowDel),
                         dataObject = TableExport.prototype.escapeHtml(
                             JSON.stringify({
@@ -461,7 +482,7 @@
                             })),
                         myContent = TableExport.prototype.csv.buttonContent,
                         myClass = TableExport.prototype.csv.defaultClass,
-                        hashKey = _hashCode({uuid: context.uuid, type: 'csv'}),
+                        hashKey = _hashCode({uuid: context.uuid, type: _type.csv}),
                         exportButton = settings.exportButtons && TableExport.prototype.createObjButton(
                                 hashKey,
                                 dataObject,
@@ -473,7 +494,6 @@
                     _store.getInstance().setItem(hashKey, dataObject, true);
                     return hashKey;
                 },
-                // TODO: bug with `txt` ignoreRows and ignoreCols
                 txt: function (context) {
                     var self = this;
                     var settings = self.settings;
@@ -491,7 +511,11 @@
                                     return ' '
                                 }
                                 return settings.formatValue(val.textContent);
+                            }).filter(function (val) {
+                                return typeof val !== 'undefined';
                             }).join(colD);
+                        }).filter(function (val) {
+                            return typeof val !== 'undefined';
                         }).join(self.rowDel),
                         dataObject = TableExport.prototype.escapeHtml(
                             JSON.stringify({
@@ -502,7 +526,7 @@
                             })),
                         myContent = TableExport.prototype.txt.buttonContent,
                         myClass = TableExport.prototype.txt.defaultClass,
-                        hashKey = _hashCode({uuid: context.uuid, type: 'txt'}),
+                        hashKey = _hashCode({uuid: context.uuid, type: _type.txt}),
                         exportButton = settings.exportButtons && TableExport.prototype.createObjButton(
                                 hashKey,
                                 dataObject,
@@ -787,6 +811,17 @@
             };
         })();
 
+        var _type = (function () {
+            return {
+                xlsx: 'xlsx',
+                xlsm: 'xlsm',
+                xls: 'xls',
+                csv: 'csv',
+                txt: 'txt'
+            };
+        })();
+
+
         var _hashCode = (function () {
             var hash = 0, i, char;
 
@@ -827,8 +862,14 @@
         }
 
         function _nodesArray(els) {
-            if (!(els instanceof NodeList) && (!$ || !(els instanceof $))) return [].concat(els);
-            return [].slice.call(els)
+            var result;
+            try {
+                result = [].slice.call(els);
+                if (!result.length) throw Error();
+            } catch (e) {
+                result = [].concat(els);
+            }
+            return result;
         }
 
         function _hasClass(el, cls) {
@@ -866,7 +907,6 @@
 
             // alias the TableExport prototype
             for (var prop in TableExport.prototype) {
-                // TODO: check compat
                 $.fn.tableExport[prop] = TableExport.prototype[prop];
             }
         }
