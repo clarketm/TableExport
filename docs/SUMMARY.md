@@ -35,4 +35,4 @@
 
 * [License](README.md#license)
 * [Going Forward](README.md#going-forward)
-* [Credits](README.md#license#credits)
+* [Credits](README.md#credits)
