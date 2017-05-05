@@ -326,7 +326,7 @@ A live, interactive demo can be found on the **[TableExport](https://www.travism
 - [ ] Ensure (via testing) full consistency and backwards-compatibility for jQuery.
 - [ ] Make jQuery as *peer dependency* and ensure proper **TableExport** rendering in broswser, AMD, and CommonJS environments.
 
-### :star: Credits
+### Credits
 Special thanks the the following contributors: 
 * [SheetJS](https://github.com/SheetJS) - js-xlsx 
 * [Eli Grey](https://github.com/eligrey) - FileSaver.js & Blob.js
