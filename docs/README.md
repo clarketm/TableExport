@@ -169,7 +169,7 @@ var exportData = table.getExportData();     // useful for creating custom export
 */
 ```
 
-#### [`update`](https://www.travismclarke.com/tableexport/#methods)
+#### [`update`](https://www.travismclarke.com/tableexport/examples/update_reset_remove.html)
 ```js
 /* update */
 table.update({
@@ -177,13 +177,13 @@ table.update({
 });
 ```
 
-#### [`reset`](https://www.travismclarke.com/tableexport/#methods)
+#### [`reset`](https://www.travismclarke.com/tableexport/examples/update_reset_remove.html)
 ```js
 /* reset */
 table.reset();             // useful for a dynamically altered table
 ```
 
-#### [`remove`](https://www.travismclarke.com/tableexport/#methods)
+#### [`remove`](https://www.travismclarke.com/tableexport/examples/update_reset_remove.html)
 ```js
 /* remove */
 table.remove();            // removes caption and buttons
