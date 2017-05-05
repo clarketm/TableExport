@@ -5,6 +5,8 @@
 /index.html
 /search
 /test
+/module
+/docs/_book
 .jshintrc
 .DS_store
 *.ico
