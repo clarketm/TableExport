@@ -7,6 +7,7 @@
 /test
 /module
 /docs/_book
+book.json
 .jshintrc
 .DS_store
 *.ico
