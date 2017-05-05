@@ -23,19 +23,18 @@
          * TableExport main library constructor
          * @param selectors {jQuery} jQuery selector(s)
          * @param options {Object} TableExport configuration options
-         * @param isUpdate {Boolean}
          * @constructor
          */
-        var TableExport = function (selectors, options, isUpdate) {
+        var TableExport = function (selectors, options) {
             var self = this;
 
             if (!selectors) return new Error('"selectors" is required');
-            if (!self) return new TableExport(selectors, options, isUpdate);
+            if (!self) return new TableExport(selectors, options);
 
             /**
              * TableExport configuration options (user-defined w/ default fallback)
              */
-            self.settings = isUpdate ? options : _extend({}, self.defaults, options);
+            self.settings = _extend({}, self.defaults, options);
             /**
              * Selectors (tables) to apply the library to
              */
@@ -57,9 +56,6 @@
             self.selectors.forEach(function (el) {
                 var context = {};
 
-                var caption = el.querySelectorAll('caption:not(.head)');
-                isUpdate && caption.parentNode.removeChild(caption);
-
                 context.rows = _nodesArray(el.querySelectorAll('tbody > tr'));
                 context.rows = settings.headers ? _nodesArray(el.querySelectorAll('thead > tr')).concat(context.rows) : context.rows;
                 context.rows = settings.footers ? context.rows.concat(_nodesArray(el.querySelectorAll('tfoot > tr'))) : context.rows;
@@ -74,12 +70,12 @@
                  * @param exportButton {HTMLButtonElement}
                  */
                 context.checkCaption = function (exportButton) {
-                    var caption = el.querySelectorAll('caption:not(.head)');
+                    var caption = el.querySelectorAll('caption.tableexport-caption');
                     if (caption.length) {
                         caption[0].appendChild(exportButton);
                     } else {
                         caption = document.createElement('caption');
-                        caption.className = settings.bootstrapSettings.bootstrapSpacing + settings.position;
+                        caption.className = settings.bootstrapSettings.bootstrapSpacing + settings.position + ' ' + 'tableexport-caption';
                         caption.appendChild(exportButton);
                         el.insertBefore(caption, el.firstChild);
                     }
@@ -709,26 +705,26 @@
              * @param options {Object} TableExport configuration options
              * @returns {TableExport} updated TableExport instance
              */
-            // TODO: implement
             update: function (options) {
-                // return new TableExport(this.selectors, $.extend({}, this.settings, options), true);
+                TableExport.prototype.remove.call(this);
+                return new TableExport(this.selectors, _extend({}, this.defaults, options));
             },
             /**
              * Reset the library instance to its original state
              * @returns {TableExport} original TableExport instance
              */
-            // TODO: implement
             reset: function () {
-                // return new TableExport(this.selectors, this.settings, true);
+                TableExport.prototype.remove.call(this);
+                return new TableExport(this.selectors, this.settings);
             },
             /**
              * Remove the instance (i.e. caption containing the export buttons)
              */
-            // TODO: implement
             remove: function () {
-                // this.selectors.each(function () {
-                //     $(this).find('caption:not(.head)').remove();
-                // });
+                this.selectors.forEach(function (el) {
+                    var caption = el.querySelector('caption.tableexport-caption');
+                    caption && el.removeChild(caption);
+                });
             },
             /**
              * LocalStorage main interface constructor
@@ -862,11 +858,10 @@
             /**
              * jQuery TableExport wrapper
              * @param options {Object} TableExport configuration options
-             * @param isUpdate {Boolean}
              * @returns {TableExport} TableExport instance
              */
-            $.fn.tableExport = function (options, isUpdate) {
-                return new TableExport(this, options, isUpdate);
+            $.fn.tableExport = function (options) {
+                return new TableExport(this, options);
             };
 
             // alias the TableExport prototype
