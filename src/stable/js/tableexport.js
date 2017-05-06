@@ -1,5 +1,5 @@
 /*!
- * TableExport.js 4.0.0 (https://www.travismclarke.com)
+ * TableExport.js v4.0.1 (https://www.travismclarke.com)
  * Copyright 2017 Travis Clarke
  * Licensed under the MIT license
  */
@@ -99,7 +99,7 @@
                     function (key) {
                         var before = key;
                         (XLSX && !isMobile) && key === _type.xls
-                            ? key = _type.xlsm
+                            ? key = _type.biff2
                             : false;
 
                         (!XLSX || isMobile) && key === _type.xlsx
@@ -125,7 +125,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '4.0.0',
+            version: '4.0.1',
             /**
              * Default library options.
              * @memberof TableExport.prototype
@@ -330,7 +330,7 @@
                     _store.getInstance().setItem(hashKey, dataObject, true);
                     return hashKey;
                 },
-                xlsm: function (context) {
+                biff2: function (context) {
                     var self = this;
                     var settings = self.settings;
                     var rcMap = {},
@@ -691,14 +691,15 @@
              * @param extension {String} file extension
              */
             export2file: function (data, mime, name, extension) {
-                if (XLSX && !isMobile && extension.substr(0, 4) === ('.xls')) {
+                if (XLSX && !isMobile && extension.substr(0, 4) === '.xls') {
                     var wb = new this.Workbook(),
-                        ws = this.createSheet(data);
+                        ws = this.createSheet(data),
+                        bookType = extension.substr(1) === _type.xls ? _type.biff2 : _type.xlsx;
 
                     wb.SheetNames.push(name);
                     wb.Sheets[name] = ws;
                     var wopts = {
-                            bookType: extension.substr(1, 3) + (extension.substr(4) || 'm'),
+                            bookType: bookType,
                             bookSST: false,
                             type: 'binary'
                         },
@@ -814,7 +815,7 @@
         var _type = (function () {
             return {
                 xlsx: 'xlsx',
-                xlsm: 'xlsm',
+                biff2: 'biff2',
                 xls: 'xls',
                 csv: 'csv',
                 txt: 'txt'
