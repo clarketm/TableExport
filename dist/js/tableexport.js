@@ -1,5 +1,5 @@
 /*!
- * TableExport.js 4.0.0 (https://www.travismclarke.com)
+ * TableExport.js v4.0.1 (https://www.travismclarke.com)
  * Copyright 2017 Travis Clarke
  * Licensed under the MIT license
  */
@@ -125,7 +125,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '4.0.0',
+            version: '4.0.1',
             /**
              * Default library options.
              * @memberof TableExport.prototype
