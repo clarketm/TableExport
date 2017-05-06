@@ -566,6 +566,19 @@
                     return TableExport.prototype.entityMap[s];
                 });
             },
+            /**
+             * Unescapes HTML entities to special characters
+             * @memberof TableExport.prototype
+             * @param string {String}
+             * @returns {String} unescaped string
+             */
+            unescapeHtml: function (string) {
+                var str = String(string);
+                for (var key in this.entityMap) {
+                    str = str.replace(RegExp(this.entityMap[key], 'g'), key);
+                }
+                return str;
+            },
             translateMimeType: function (string) {
                 return String(string).replace(/&#47;/, '/').replace(this.xls.mimeType, this.csv.mimeType);
             },
