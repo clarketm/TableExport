@@ -54,7 +54,7 @@
     "jasmine": "^2.4.1"
   },
   "license": "MIT",
-  "homepage": "https://www.travismclarke.com/tableexport/",
+  "homepage": "https://tableexport.v4.travismclarke.com/",
   "ignore": [
     "**/.*",
     "node_modules",
