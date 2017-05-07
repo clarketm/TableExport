@@ -44,7 +44,7 @@ gulp.task('bump-js', function () {
         .pipe(replace(/(v\d+\.\d+\.)(\d+)/g, function (matches, match1, match2) {
             return match1 + (Number(match2)+1);
         }))
-        .pipe(replace(/(version: "\d+\.\d+\.)(\d+)/g, function (matches, match1, match2) {
+        .pipe(replace(/(version: ["']\d+\.\d+\.)(\d+)/g, function (matches, match1, match2) {
             return match1 + (Number(match2)+1);
         }))
         .pipe(gulp.dest('src/stable/js/'))

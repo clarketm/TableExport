@@ -124,21 +124,6 @@ XLSbutton.addEventListener('click', function (e) {
     //                                        // "id" of selector   // format
     var exportData = instance.getExportData()['export-buttons-table']['xls'];
 
-
-    var ed = {
-        "export-buttons-table": {
-            xls: {
-                data: "...",
-                fileExtension: ".xls",
-                filename: "export-buttons-table",
-                mimeType: "application/vnd.ms-excel"
-            }
-        }
-    };
-
-
-    console.log(instance.getExportData());
-
     var XLSbutton = document.getElementById('customXLSButton');
     XLSbutton.addEventListener('click', function (e) {
         //                   // data          // mime              // name              // extension

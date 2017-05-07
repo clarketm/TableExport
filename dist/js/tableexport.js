@@ -1,5 +1,5 @@
 /*!
- * TableExport.js 4.0.0 (https://www.travismclarke.com)
+ * TableExport.js v4.0.1 (https://www.travismclarke.com)
  * Copyright 2017 Travis Clarke
  * Licensed under the MIT license
  */
@@ -99,7 +99,7 @@
                     function (key) {
                         var before = key;
                         (XLSX && !isMobile) && key === _type.xls
-                            ? key = _type.xlsm
+                            ? key = _type.biff2
                             : false;
 
                         (!XLSX || isMobile) && key === _type.xlsx
@@ -125,7 +125,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '4.0.0',
+            version: '4.0.1',
             /**
              * Default library options.
              * @memberof TableExport.prototype
@@ -309,13 +309,12 @@
                         }).filter(function (val) {
                             return typeof val !== 'undefined';
                         }),
-                        dataObject = TableExport.prototype.escapeHtml(
-                            JSON.stringify({
-                                data: dataURL,
-                                filename: context.filename,
-                                mimeType: TableExport.prototype.xlsx.mimeType,
-                                fileExtension: TableExport.prototype.xlsx.fileExtension
-                            })),
+                        dataObject = JSON.stringify({
+                            data: dataURL,
+                            filename: context.filename,
+                            mimeType: TableExport.prototype.xlsx.mimeType,
+                            fileExtension: TableExport.prototype.xlsx.fileExtension
+                        }),
                         myContent = TableExport.prototype.xlsx.buttonContent,
                         myClass = TableExport.prototype.xlsx.defaultClass,
                         hashKey = _hashCode({uuid: context.uuid, type: _type.xlsx}),
@@ -330,7 +329,7 @@
                     _store.getInstance().setItem(hashKey, dataObject, true);
                     return hashKey;
                 },
-                xlsm: function (context) {
+                biff2: function (context) {
                     var self = this;
                     var settings = self.settings;
                     var rcMap = {},
@@ -384,13 +383,12 @@
                         }).filter(function (val) {
                             return typeof val !== 'undefined';
                         }),
-                        dataObject = TableExport.prototype.escapeHtml(
-                            JSON.stringify({
-                                data: dataURL,
-                                filename: context.filename,
-                                mimeType: TableExport.prototype.xls.mimeType,
-                                fileExtension: TableExport.prototype.xls.fileExtension
-                            })),
+                        dataObject = JSON.stringify({
+                            data: dataURL,
+                            filename: context.filename,
+                            mimeType: TableExport.prototype.xls.mimeType,
+                            fileExtension: TableExport.prototype.xls.fileExtension
+                        }),
                         myContent = TableExport.prototype.xls.buttonContent,
                         myClass = TableExport.prototype.xls.defaultClass,
                         hashKey = _hashCode({uuid: context.uuid, type: _type.xls}),
@@ -428,13 +426,12 @@
                         }).filter(function (val) {
                             return typeof val !== 'undefined';
                         }).join(self.rowDel),
-                        dataObject = TableExport.prototype.escapeHtml(
-                            JSON.stringify({
-                                data: dataURL,
-                                filename: context.filename,
-                                mimeType: TableExport.prototype.xls.mimeType,
-                                fileExtension: TableExport.prototype.xls.fileExtension
-                            })),
+                        dataObject = JSON.stringify({
+                            data: dataURL,
+                            filename: context.filename,
+                            mimeType: TableExport.prototype.xls.mimeType,
+                            fileExtension: TableExport.prototype.xls.fileExtension
+                        }),
                         myContent = TableExport.prototype.xls.buttonContent,
                         myClass = TableExport.prototype.xls.defaultClass,
                         hashKey = _hashCode({uuid: context.uuid, type: _type.xls}),
@@ -473,13 +470,12 @@
                         }).filter(function (val) {
                             return typeof val !== 'undefined';
                         }).join(self.rowDel),
-                        dataObject = TableExport.prototype.escapeHtml(
-                            JSON.stringify({
-                                data: dataURL,
-                                filename: context.filename,
-                                mimeType: TableExport.prototype.csv.mimeType,
-                                fileExtension: TableExport.prototype.csv.fileExtension
-                            })),
+                        dataObject = JSON.stringify({
+                            data: dataURL,
+                            filename: context.filename,
+                            mimeType: TableExport.prototype.csv.mimeType,
+                            fileExtension: TableExport.prototype.csv.fileExtension
+                        }),
                         myContent = TableExport.prototype.csv.buttonContent,
                         myClass = TableExport.prototype.csv.defaultClass,
                         hashKey = _hashCode({uuid: context.uuid, type: _type.csv}),
@@ -517,13 +513,12 @@
                         }).filter(function (val) {
                             return typeof val !== 'undefined';
                         }).join(self.rowDel),
-                        dataObject = TableExport.prototype.escapeHtml(
-                            JSON.stringify({
-                                data: dataURL,
-                                filename: context.filename,
-                                mimeType: TableExport.prototype.txt.mimeType,
-                                fileExtension: TableExport.prototype.txt.fileExtension
-                            })),
+                        dataObject = JSON.stringify({
+                            data: dataURL,
+                            filename: context.filename,
+                            mimeType: TableExport.prototype.txt.mimeType,
+                            fileExtension: TableExport.prototype.txt.fileExtension
+                        }),
                         myContent = TableExport.prototype.txt.buttonContent,
                         myClass = TableExport.prototype.txt.defaultClass,
                         hashKey = _hashCode({uuid: context.uuid, type: _type.txt}),
@@ -566,8 +561,18 @@
                     return TableExport.prototype.entityMap[s];
                 });
             },
-            translateMimeType: function (string) {
-                return String(string).replace(/&#47;/, '/').replace(this.xls.mimeType, this.csv.mimeType);
+            /**
+             * Unescapes HTML entities to special characters
+             * @memberof TableExport.prototype
+             * @param string {String}
+             * @returns {String} unescaped string
+             */
+            unescapeHtml: function (string) {
+                var str = String(string);
+                for (var key in this.entityMap) {
+                    str = str.replace(RegExp(this.entityMap[key], 'g'), key);
+                }
+                return str;
             },
             /**
              * Removes leading/trailing whitespace from cell string
@@ -691,14 +696,15 @@
              * @param extension {String} file extension
              */
             export2file: function (data, mime, name, extension) {
-                if (XLSX && !isMobile && extension.substr(0, 4) === ('.xls')) {
+                if (XLSX && !isMobile && extension.substr(0, 4) === '.xls') {
                     var wb = new this.Workbook(),
-                        ws = this.createSheet(data);
+                        ws = this.createSheet(data),
+                        bookType = extension.substr(1) === _type.xls ? _type.biff2 : _type.xlsx;
 
                     wb.SheetNames.push(name);
                     wb.Sheets[name] = ws;
                     var wopts = {
-                            bookType: extension.substr(1, 3) + (extension.substr(4) || 'm'),
+                            bookType: bookType,
                             bookSST: false,
                             type: 'binary'
                         },
@@ -708,7 +714,7 @@
                 }
 
                 if (isMobile) {
-                    var dataURI = 'data:' + this.translateMimeType(mime) + ';' + this.charset + ',' + data;
+                    var dataURI = 'data:' + mime + ';' + this.charset + ',' + data;
                     this.downloadDataURI(dataURI, name, extension);
                 } else {
                     saveAs(new Blob([data],
@@ -814,7 +820,7 @@
         var _type = (function () {
             return {
                 xlsx: 'xlsx',
-                xlsm: 'xlsm',
+                biff2: 'biff2',
                 xls: 'xls',
                 csv: 'csv',
                 txt: 'txt'
