@@ -1,4 +1,4 @@
 {
   "name": "tableexport",
-  "main": "dist/typings/tableexport.d.ts"
+  "main": "dist/tableexport.d.ts"
 }

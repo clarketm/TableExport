@@ -30,7 +30,7 @@ gulp.task('js', ['clean'], function () {
 
 gulp.task('typings', ['clean'], function () {
     return gulp.src('./src/stable/typings/*.ts')
-        .pipe(gulp.dest('./dist/typings/'));
+        .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('bump', ['bump-js', 'bump-css'], function(){
