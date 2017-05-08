@@ -28,11 +28,6 @@ gulp.task('js', ['clean'], function () {
         .pipe(gulp.dest('./src/stable/js/'));
 });
 
-gulp.task('typings', ['clean'], function () {
-    return gulp.src('./src/stable/typings/*.ts')
-        .pipe(gulp.dest('./dist/'));
-});
-
 gulp.task('bump', ['bump-js', 'bump-css'], function(){
     return gulp.src(['./bower.json', './package.json'])
         .pipe(bump())
@@ -68,7 +63,7 @@ gulp.task('clean', function () {
     return del(['dist/js']);
 });
 
-gulp.task('build', ['css', 'js', 'typings']);
+gulp.task('build', ['css', 'js']);
 
 gulp.task('default', ['build']);
 

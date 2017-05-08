@@ -7,6 +7,7 @@
 /test
 /module
 /docs/_book
+rollup.config.js
 book.json
 gitbook.css
 .jshintrc
