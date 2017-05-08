@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v4.0.1 (https://www.travismclarke.com)
+ * TableExport.js v4.0.2 (https://www.travismclarke.com)
  * Copyright 2017 Travis Clarke
  * Licensed under the MIT license
  */
@@ -18,7 +18,6 @@
     }
 }(this, function ($, Blob, saveAs, XLSX) {
         'use strict';
-        // TODO: update TS `definition` file
         /**
          * TableExport main library constructor
          * @param selectors {jQuery} jQuery selector(s)
@@ -125,7 +124,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '4.0.1',
+            version: '4.0.2',
             /**
              * Default library options.
              * @memberof TableExport.prototype
@@ -446,7 +445,6 @@
                     _store.getInstance().setItem(hashKey, dataObject, true);
                     return hashKey;
                 },
-                // TODO: bug with `csv` ignoreRows and ignoreCols
                 csv: function (context) {
                     var self = this;
                     var settings = self.settings;
