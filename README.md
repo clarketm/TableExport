@@ -309,6 +309,9 @@ When used alongside Bootstrap, there are four custom classes **`.xlsx`, `.xls`, 
 * [`ignoreCSS`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
 * [`emptyCSS`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
 
+#### Miscellaneous
+* [`Arabic`](https://www.travismclarke.com/tableexport/examples/arabic-language.html)
+
 #### Skeletons 
 A live, interactive demo can be found on the **[TableExport](https://www.travismclarke.com/tableexport/#live-demo)** webpage. 
 * [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) skeleton.
