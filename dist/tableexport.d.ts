@@ -8,7 +8,7 @@
  * @class TableExport
  * @constructor
  */
-export class TableExport {
+export declare class TableExport {
 
     constructor(selectors: Node | NodeList | JQuery, options?: Defaults);
 
