@@ -8,7 +8,7 @@
  * @class TableExport
  * @constructor
  */
-export default class TableExport {
+export class TableExport {
 
     constructor(selectors: Node | NodeList | JQuery, options?: Defaults);
 
@@ -235,9 +235,13 @@ interface Type {
     assert: (v: any) => boolean;
 }
 
-interface JQuery {
-    /**
-     * TableExport main library constructor
-     */
-    tableExport(options?: Defaults): TableExport;
+declare global {
+
+    interface JQuery {
+        /**
+         * TableExport main library constructor
+         */
+        tableExport(options?: Defaults): TableExport;
+    }
+    
 }
