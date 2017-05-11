@@ -15,3 +15,4 @@ gitbook.css
 *.ico
 bower_components
 node_modules
+dist/**/*

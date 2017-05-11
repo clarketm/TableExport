@@ -6,26 +6,38 @@ var gulp = require('gulp'),
     css = require('gulp-clean-css');
     js = require('gulp-uglify');
 
-gulp.task('css', ['clean'], function () {
-    return gulp.src('./src/stable/css/tableexport.css')
-        .pipe(gulp.dest('./dist/css/'))
+gulp.task('copy:img', ['clean:img'], function () {
+    return gulp.src(['./src/stable/img/**'])
+        .pipe(gulp.dest('./dist/img'))
+});
+
+gulp.task('copy:dts', ['clean:dts'], function () {
+    return gulp.src(['./src/stable/tableexport.d.ts'])
+        .pipe(gulp.dest('./dist'))
+});
+
+gulp.task('css', ['clean:css'], function () {
+    return gulp.src('./src/stable/tableexport.css')
+        .pipe(gulp.dest('./dist'))
         .pipe(css())
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(gulp.dest('./dist/css/'))
-        .pipe(gulp.dest('./src/stable/css/'));
+        .pipe(gulp.dest('./dist'))
+        //.pipe(gulp.dest('./src/stable/css/'))
+        ;
 });
 
-gulp.task('js', ['clean'], function () {
-    return gulp.src('./src/stable/js/tableexport.js')
-        .pipe(gulp.dest('./dist/js/'))
+gulp.task('js', ['clean:js'], function () {
+    return gulp.src('./src/stable/tableexport.js')
+        .pipe(gulp.dest('./dist'))
         .pipe(js({output: {comments: /^!|@preserve|@license|@cc_on/i}}))
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(gulp.dest('./dist/js/'))
-        .pipe(gulp.dest('./src/stable/js/'));
+        .pipe(gulp.dest('./dist'))
+        //.pipe(gulp.dest('./src/stable/js/'))
+        ;
 });
 
 gulp.task('bump', ['bump-js', 'bump-css'], function(){
@@ -35,14 +47,14 @@ gulp.task('bump', ['bump-js', 'bump-css'], function(){
 });
 
 gulp.task('bump-js', function () {
-    return gulp.src(['src/stable/js/tableexport.js'])
+    return gulp.src(['src/stable/tableexport.js'])
         .pipe(replace(/(v\d+\.\d+\.)(\d+)/g, function (matches, match1, match2) {
             return match1 + (Number(match2)+1);
         }))
         .pipe(replace(/(version: ["']\d+\.\d+\.)(\d+)/g, function (matches, match1, match2) {
             return match1 + (Number(match2)+1);
         }))
-        .pipe(gulp.dest('src/stable/js/'))
+        .pipe(gulp.dest('src/stable'))
         .on('end', function () {
             gulp.start('js');
         });
@@ -53,17 +65,31 @@ gulp.task('bump-css', function () {
         .pipe(replace(/(v\d+\.\d+\.)(\d+)/g, function (matches, match1, match2) {
             return match1 + (Number(match2) + 1);
         }))
-        .pipe(gulp.dest('src/stable/css/'))
+        .pipe(gulp.dest('src/stable'))
         .on('end', function () {
             gulp.start('css');
         });
 });
 
-gulp.task('clean', function () {
-    return del(['dist/js']);
+gulp.task('clean:img', function () {
+    return del(['dist/img']);
 });
 
-gulp.task('build', ['css', 'js']);
+gulp.task('clean:dts', function () {
+    return del(['dist/tableexport.d.ts']);
+});
+
+gulp.task('clean:css', function () {
+    return del(['dist/*.css']);
+});
+
+gulp.task('clean:js', function () {
+    return del(['dist/*.js']);
+});
+
+gulp.task('copy', ['copy:img', 'copy:dts']);
+
+gulp.task('build', ['css', 'js', 'copy']);
 
 gulp.task('default', ['build']);
 
