@@ -5,10 +5,10 @@
     "clarketm <travis.m.clarke@gmail.com>"
   ],
   "description": "The simple, easy-to-implement library to export HTML tables to xlsx, xls, csv, and txt files",
-  "main": "dist/js/tableexport.js",
-  "typings": "dist/tableexport.d.ts",
+  "main": "tableexport.js",
+  "types": "tableexport.d.ts",
   "style": [
-    "dist/css/tableexport.css"
+    "tableexport.css"
   ],
   "keywords": [
     "table",
