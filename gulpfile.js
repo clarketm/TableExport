@@ -16,11 +16,6 @@ gulp.task('copy:dts', ['clean:dts'], function () {
         .pipe(gulp.dest('./dist'))
 });
 
-/*gulp.task('copy:index', ['clean:index'], function () {
-    return gulp.src(['./src/stable/index.js'])
-        .pipe(gulp.dest('./dist'))
-});*/
-
 gulp.task('css', ['clean:css'], function () {
     return gulp.src('./src/stable/tableexport.css')
         .pipe(gulp.dest('./dist'))
@@ -83,10 +78,6 @@ gulp.task('clean:img', function () {
 gulp.task('clean:dts', function () {
     return del(['dist/tableexport.d.ts']);
 });
-
-/*gulp.task('clean:index', function () {
-    return del(['dist/index.js']);
-});*/
 
 gulp.task('clean:css', function () {
     return del(['dist/*.css']);
