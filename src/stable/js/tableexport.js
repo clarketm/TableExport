@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v4.0.2 (https://www.travismclarke.com)
+ * TableExport.js v4.0.4 (https://www.travismclarke.com)
  * Copyright 2017 Travis Clarke
  * Licensed under the MIT license
  */
@@ -124,7 +124,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '4.0.2',
+            version: '4.0.4',
             /**
              * Default library options.
              * @memberof TableExport.prototype
@@ -694,22 +694,7 @@
              * @param extension {String} file extension
              */
             export2file: function (data, mime, name, extension) {
-                if (XLSX && !isMobile && extension.substr(0, 4) === '.xls') {
-                    var wb = new this.Workbook(),
-                        ws = this.createSheet(data),
-                        bookType = extension.substr(1) === _type.xls ? _type.biff2 : _type.xlsx;
-
-                    wb.SheetNames.push(name);
-                    wb.Sheets[name] = ws;
-                    var wopts = {
-                            bookType: bookType,
-                            bookSST: false,
-                            type: 'binary'
-                        },
-                        wbout = XLSX.write(wb, wopts);
-
-                    data = this.string2ArrayBuffer(wbout);
-                }
+                data = this.getBinaryData(data, extension, name);
 
                 if (isMobile) {
                     var dataURI = 'data:' + mime + ';' + this.charset + ',' + data;
@@ -727,6 +712,26 @@
                 link.setAttribute("download", name + extension);
                 document.body.appendChild(link);
                 link.click();
+            },
+            getBinaryData: function (data, extension, name) {
+                if (XLSX && !isMobile && extension.substr(0, 4) === '.xls') {
+                    var wb = new this.Workbook(),
+                        ws = this.createSheet(data),
+                        bookType = extension.substr(1) === _type.xls ? _type.biff2 : _type.xlsx;
+
+                    name = name || '';
+                    wb.SheetNames.push(name);
+                    wb.Sheets[name] = ws;
+                    var wopts = {
+                            bookType: bookType,
+                            bookSST: false,
+                            type: 'binary'
+                        },
+                        wbout = XLSX.write(wb, wopts);
+
+                    data = this.string2ArrayBuffer(wbout);
+                }
+                return data;
             },
             /**
              * Updates the library instance with new/updated options

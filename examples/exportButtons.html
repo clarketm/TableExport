@@ -100,6 +100,19 @@ XLSbutton.addEventListener('click', function (e) {
 </pre>
     </div>
 
+    <br>
+
+    <div class="info">Additionally, the raw binary data (and byte length) can be retrieved using the <code>getBinaryData</code> prototype method.
+    <div class="info code nested">
+<pre>
+// get raw binary data (i.e. filesize)
+var bytes = TableExport.prototype.getBinaryData(exportData.data, exportData.fileExtension);
+var byteLength = bytes.byteLength;
+</pre>
+    </div>
+    </div>
+
+
 </main>
 
 <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -125,6 +138,11 @@ XLSbutton.addEventListener('click', function (e) {
 
     //                                        // "id" of selector   // format
     var exportData = instance.getExportData()['export-buttons-table']['xls'];
+
+    // get raw binary data (i.e. filesize)
+    var bytes = TableExport.prototype.getBinaryData(exportData.data, exportData.fileExtension).byteLength;
+
+    console.log('filesize:', bytes + 'B');
 
     var XLSbutton = document.getElementById('customXLSButton');
     XLSbutton.addEventListener('click', function (e) {
