@@ -1,4 +1,4 @@
-// Type definitions for TableExport v4.0.3
+// Type definitions for TableExport v4.0.4
 // Project: https://tableexport.v4.travismclarke.com
 // Definitions by: Travis Clarke <https://github.com/clarketm>
 
@@ -8,7 +8,7 @@
  * @class TableExport
  * @constructor
  */
-export default class TableExport {
+export declare class TableExport {
 
     constructor(selectors: Node | NodeList | JQuery, options?: Defaults);
 
@@ -235,9 +235,13 @@ interface Type {
     assert: (v: any) => boolean;
 }
 
-interface JQuery {
-    /**
-     * TableExport main library constructor
-     */
-    tableExport(options?: Defaults): TableExport;
+declare global {
+
+    interface JQuery {
+        /**
+         * TableExport main library constructor
+         */
+        tableExport(options?: Defaults): TableExport;
+    }
+    
 }

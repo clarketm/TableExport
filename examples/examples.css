@@ -57,6 +57,9 @@ code {
 .info.code {
   font-size: 80%;
 }
+.info.code.nested {
+  width: auto;
+}
 .target {
   background: yellow;
   font-weight: bold;
