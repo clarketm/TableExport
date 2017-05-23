@@ -8,10 +8,12 @@
 ;(function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD
-        define(['jquery', 'blobjs', 'file-saverjs', 'xlsx'], factory);
+        var $; try { define(['jquery'], function(_) { $ = _ }) } catch (e) {}
+        define(['blobjs', 'file-saverjs', 'xlsx'], factory.bind(this, $));
     } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
         // CommonJS
-        module.exports = factory(require('jquery'), require('blobjs'), require('file-saverjs'), require('xlsx'));
+        var $; try { $ = require('jquery') } catch (e) {}
+        module.exports = factory($, require('blobjs'), require('file-saverjs'), require('xlsx'));
     } else {
         // Browser globals
         root.TableExport = factory(root.jQuery, root.Blob, root.saveAs, root.XLSX);
