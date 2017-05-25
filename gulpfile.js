@@ -3,7 +3,7 @@ var gulp = require('gulp'),
     bump = require("gulp-bump"),
     rename = require("gulp-rename"),
     del = require('del'),
-    css = require('gulp-clean-css');
+    css = require('gulp-clean-css'),
     js = require('gulp-uglify');
 
 gulp.task('css', ['clean'], function () {
@@ -57,6 +57,14 @@ gulp.task('bump-css', function () {
         .on('end', function () {
             gulp.start('css');
         });
+});
+
+gulp.task('bump-typings', function () {
+    gulp.src(['dist/tableexport.d.ts'])
+        .pipe(replace(/(v\d+\.\d+\.)(\d+)/g, function (matches, match1, match2) {
+            return match1 + (Number(match2) + 1);
+        }))
+        .pipe(gulp.dest('dist/'))
 });
 
 gulp.task('clean', function () {

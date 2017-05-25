@@ -1,4 +1,4 @@
-// Type definitions for TableExport v4.0.2
+// Type definitions for TableExport v4.0.4
 // Project: https://tableexport.v4.travismclarke.com
 // Definitions by: Travis Clarke <https://github.com/clarketm>
 
