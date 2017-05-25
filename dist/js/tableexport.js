@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v4.0.4 (https://www.travismclarke.com)
+ * TableExport.js v4.0.5 (https://www.travismclarke.com)
  * Copyright 2017 Travis Clarke
  * Licensed under the MIT license
  */
@@ -126,7 +126,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '4.0.4',
+            version: '4.0.5',
             /**
              * Default library options.
              * @memberof TableExport.prototype
@@ -613,7 +613,8 @@
             dateNum: function (v, date1904) {
                 if (date1904) v += 1462;
                 var epoch = Date.parse(v);
-                return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
+                var result = (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
+                return Math.floor(result);
             },
             /**
              * Creates an Excel spreadsheet from a data string

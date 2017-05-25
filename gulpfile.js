@@ -28,7 +28,7 @@ gulp.task('js', ['clean'], function () {
         .pipe(gulp.dest('./src/stable/js/'));
 });
 
-gulp.task('bump', ['bump-js', 'bump-css'], function(){
+gulp.task('bump', ['bump-js', 'bump-css', 'bump-typings'], function(){
     return gulp.src(['./bower.json', './package.json'])
         .pipe(bump())
         .pipe(gulp.dest('./'));
