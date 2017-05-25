@@ -323,11 +323,13 @@ A live, interactive demo can be found on the **[TableExport](https://www.travism
 ### Going Forward
 #### TODOs
 - [x] Update JSDocs and TypScript definition file.
-- [ ] Allow `ignoreCSS` and `emptyCSS` to work with any `selector|selector[]` instead of solely a single CSS class.
 - [x] Fix bug with **CSV** and **TXT** `ignoreRows` and `ignoreCols` (rows/cols rendered as empty strings rather than being *removed*).
 - [x] Reimplement and test the `update`, `reset`, and `remove` **TableExport** prototype properties without requiring jQuery.
-- [ ] Ensure (via testing) full consistency and backwards-compatibility for jQuery.
 - [x] Make jQuery as *peer dependency* and ensure proper **TableExport** rendering in browser, AMD, and CommonJS environments.
+- [x] Force jQuery to be an optionally loaded module.
+- [ ] Allow `ignoreCSS` and `emptyCSS` to work with any `selector|selector[]` instead of solely a single CSS class.
+- [ ] Ensure (via testing) full consistency and backwards-compatibility for jQuery.
+- [ ] Add **Export as PDF** support.
 
 ### Credits
 Special thanks the the following contributors: 
