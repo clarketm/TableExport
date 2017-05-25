@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v4.0.5 (https://www.travismclarke.com)
+ * TableExport.js v4.0.6 (https://www.travismclarke.com)
  * Copyright 2017 Travis Clarke
  * Licensed under the MIT license
  */
@@ -8,8 +8,10 @@
 ;(function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD
-        var $; try { define(['jquery'], function(_) { $ = _ }) } catch (e) {}
-        define(['blobjs', 'file-saverjs', 'xlsx'], factory.bind(this, $));
+        define(function (require) {
+            var $; try { $ = require('jquery') } catch (e) {}
+            return factory($, require('blobjs'), require('file-saverjs'), require('xlsx'));
+        });
     } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
         // CommonJS
         var $; try { $ = require('jquery') } catch (e) {}
@@ -126,7 +128,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '4.0.5',
+            version: '4.0.6',
             /**
              * Default library options.
              * @memberof TableExport.prototype
