@@ -3,7 +3,7 @@ var gulp = require('gulp'),
     bump = require("gulp-bump"),
     rename = require("gulp-rename"),
     del = require('del'),
-    css = require('gulp-clean-css');
+    css = require('gulp-clean-css'),
     js = require('gulp-uglify');
 
 gulp.task('css', ['clean'], function () {
@@ -28,12 +28,9 @@ gulp.task('js', ['clean'], function () {
         .pipe(gulp.dest('./src/stable/js/'));
 });
 
-gulp.task('typings', ['clean'], function () {
-    return gulp.src('./src/stable/typings/*.ts')
-        .pipe(gulp.dest('./dist/typings/'));
-});
+gulp.task('bump-all', ['bump', 'bump-js', 'bump-css', 'bump-typings', 'bump-readme']);
 
-gulp.task('bump', ['bump-js', 'bump-css'], function(){
+gulp.task('bump', function(){
     return gulp.src(['./bower.json', './package.json'])
         .pipe(bump())
         .pipe(gulp.dest('./'));
@@ -44,7 +41,7 @@ gulp.task('bump-js', function () {
         .pipe(replace(/(v\d+\.\d+\.)(\d+)/g, function (matches, match1, match2) {
             return match1 + (Number(match2)+1);
         }))
-        .pipe(replace(/(version: "\d+\.\d+\.)(\d+)/g, function (matches, match1, match2) {
+        .pipe(replace(/(version: ["']\d+\.\d+\.)(\d+)/g, function (matches, match1, match2) {
             return match1 + (Number(match2)+1);
         }))
         .pipe(gulp.dest('src/stable/js/'))
@@ -64,11 +61,27 @@ gulp.task('bump-css', function () {
         });
 });
 
+gulp.task('bump-typings', function () {
+    gulp.src(['src/stable/typings/tableexport.d.ts'])
+        .pipe(replace(/(v\d+\.\d+\.)(\d+)/g, function (matches, match1, match2) {
+            return match1 + (Number(match2) + 1);
+        }))
+        .pipe(gulp.dest('src/stable/typings/'))
+});
+
+gulp.task('bump-readme', function () {
+    gulp.src(['gitbook/READMEv3.md'])
+        .pipe(replace(/(v[124567890]\d*\.\d+\.)(\d+)/g, function (matches, match1, match2) {
+            return match1 + (Number(match2) + 1);
+        }))
+        .pipe(gulp.dest('gitbook/'))
+});
+
 gulp.task('clean', function () {
     return del(['dist/js']);
 });
 
-gulp.task('build', ['css', 'js', 'typings']);
+gulp.task('build', ['css', 'js']);
 
 gulp.task('default', ['build']);
 

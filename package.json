@@ -1,6 +1,6 @@
 {
   "name": "tableexport",
-  "version": "3.3.12",
+  "version": "3.3.13",
   "authors": [
     "clarketm <travis.m.clarke@gmail.com>"
   ],
@@ -51,7 +51,7 @@
     "gulp-uglify": "^1.5.3",
     "jasmine": "^2.4.1"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "homepage": "https://www.travismclarke.com/tableexport/",
   "ignore": [
     "**/.*",
