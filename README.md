@@ -318,7 +318,7 @@ A live, interactive demo can be found on the **[TableExport](https://www.travism
 * [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) skeleton.
 
 ### License
-[TableExport](https://tableexport.v4.travismclarke.com) is licensed under the terms of the [MIT](http://opensource.org/licenses/mit-license.php) License
+[TableExport](https://tableexport.v4.travismclarke.com) is licensed under the terms of the [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0.html) License
 
 ### Going Forward
 #### TODOs

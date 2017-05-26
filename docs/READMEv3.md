@@ -4,9 +4,9 @@ The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, an
 
 [TableExport](https://www.travismclarke.com/tableexport/) demo **--** [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) skeleton **--** [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) skeleton **--** [TableExport + Webpack 1](https://github.com/clarketm/tableexport_webpack-v1_app) **--** [TableExport + Angular 4 + Webpack 2](https://github.com/clarketm/tableexport_angular4_webpack2_app).
 
-> **Notice:** In May 2017, [v3.3](https://github.com/clarketm/TableExport/releases/tag/v3.3.12) will be superceded by [v4.0.8](https://github.com/clarketm/TableExport/releases/tag/v4.0.8). Althought this is a major version bump, fear not, because all changes will be 100% backwards-compatible.
+> **Notice:** In May 2017, [v3.3](https://github.com/clarketm/TableExport/releases/tag/v3.3.13) will be superceded by [v4.0.9](https://github.com/clarketm/TableExport/releases/tag/v4.0.9). Althought this is a major version bump, fear not, because all changes will be 100% backwards-compatible.
 
-### [`v4.0.8`](https://github.com/clarketm/TableExport/releases/tag/v4.0.8) Release Candidate:
+### [`v4.0.9`](https://github.com/clarketm/TableExport/releases/tag/v4.0.9) Release Candidate:
 #### Examples:
 ##### Property
 * [`bootstrap`](https://www.travismclarke.com/tableexport/examples/bootstrap.html)
@@ -24,7 +24,7 @@ The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, an
 * [`ignoreCSS`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
 * [`emptyCSS`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
 
-> **So why the major version bump you ask?** Well, the rationale for a major version bump is that due to a change in `TableExport`'s dependencies, in [v4.0.8](https://github.com/clarketm/TableExport/releases/tag/v4.0.8) forth, JQuery will no longer be a **required** dependency, instead it will be purely **optional**. So existing implementations *with* jQuery will continue to work unimpeded, now with the added benefit that new projets no longer need to rely on the overhead of such large library, unless of course you prefer jQuery or it is already part of your project.
+> **So why the major version bump you ask?** Well, the rationale for a major version bump is that due to a change in `TableExport`'s dependencies, in [v4.0.9](https://github.com/clarketm/TableExport/releases/tag/v4.0.9) forth, JQuery will no longer be a **required** dependency, instead it will be purely **optional**. So existing implementations *with* jQuery will continue to work unimpeded, now with the added benefit that new projets no longer need to rely on the overhead of such large library, unless of course you prefer jQuery or it is already part of your project.
 
 ## Getting Started
 
@@ -73,7 +73,7 @@ $ npm install tableexport
 * [jQuery](https://jquery.com) (1.2.1 or higher) `*`
 * [FileSaver.js](https://github.com/clarketm/FileSaver.js/)
 
-> `*` jQuery dependency requirement is removed as of [v4.0.8](https://github.com/clarketm/TableExport/tree/v4.0.8)
+> `*` jQuery dependency requirement is removed as of [v4.0.9](https://github.com/clarketm/TableExport/tree/v4.0.9)
 
 #### Optional / Theming:
 
@@ -260,7 +260,7 @@ A live, interactive demo can be found on the **[TableExport](https://www.travism
 * [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) skeleton.
 
 ### License
-[TableExport.js](https://www.travismclarke.com/tableexport) is licensed under the terms of the [MIT](http://opensource.org/licenses/mit-license.php) License
+[TableExport.js](https://www.travismclarke.com/tableexport) is licensed under the terms of the [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0.html) License
 
 ### :star: Credits
 Special thanks the the following contributors: 
