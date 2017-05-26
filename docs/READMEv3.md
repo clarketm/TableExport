@@ -258,6 +258,8 @@ $.fn.tableExport.rowDel = "\r\n";
 A live, interactive demo can be found on the **[TableExport](https://www.travismclarke.com/tableexport/#live-demo)** webpage. 
 * [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) skeleton.
 * [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) skeleton.
+* [TableExport + Webpack 1](https://github.com/clarketm/tableexport_webpack-v1_app) skeleton.
+* [TableExport + Angular 4 + Webpack 2](https://github.com/clarketm/tableexport_angular4_webpack2_app) skeleton.
 
 ### License
 [TableExport.js](https://www.travismclarke.com/tableexport) is licensed under the terms of the [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0.html) License
