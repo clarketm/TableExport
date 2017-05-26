@@ -1,7 +1,7 @@
 # [TableExport](https://tableexport.v4.travismclarke.com) &nbsp; [![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
 The simple, easy-to-implement library to export HTML tables to xlsx, xls, csv, and txt files
 
-[Examples](#examples) **--** [Demo](https://www.travismclarke.com/tableexport/) **--** [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) **--** [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) **--** [TableExport + Webpack 1](https://github.com/clarketm/tableexport_webpack-v1_app).
+[Examples](#examples) **--** [Demo](https://www.travismclarke.com/tableexport/) **--** [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) **--** [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) **--** [TableExport + Webpack 1](https://github.com/clarketm/tableexport_webpack-v1_app) **--** [TableExport + Angular 4 + Webpack 2](https://github.com/clarketm/tableexport_angular4_webpack2_app).
 
 ## Docs
 * [Migrating from **3.x** to **4.x**?](MIGRATING.md)
