@@ -1,4 +1,4 @@
-// Type definitions for TableExport v4.0.7
+// Type definitions for TableExport v4.0.8
 // Project: https://tableexport.v4.travismclarke.com
 // Definitions by: Travis Clarke <https://github.com/clarketm>
 
@@ -161,16 +161,16 @@ interface Workbook {
  * Default library options.
  */
 interface Defaults {
-    headers: boolean;
-    footers: boolean;
-    formats: string[];
-    filename: string;
-    bootstrap: boolean;
-    exportButtons: boolean;
-    position: string;
-    ignoreRows: number[];
-    ignoreCols: number[];
-    trimWhitespace: boolean;
+    headers?: boolean;
+    footers?: boolean;
+    formats?: string[];
+    filename?: string;
+    bootstrap?: boolean;
+    exportButtons?: boolean;
+    position?: string;
+    ignoreRows?: number[];
+    ignoreCols?: number[];
+    trimWhitespace?: boolean;
 }
 
 /**
