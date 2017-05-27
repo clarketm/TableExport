@@ -70,8 +70,8 @@ gulp.task('bump-typings', function () {
 });
 
 gulp.task('bump-readme', function () {
-    gulp.src(['gitbook/READMEv3.md'])
-        .pipe(replace(/(v[124567890]\d*\.\d+\.)(\d+)/g, function (matches, match1, match2) {
+    gulp.src(['gitbook/README.md', 'gitbook/READMEv3.md'])
+        .pipe(replace(/([/\[`]v?[124567890]\d*\.\d+\.)(\d+)/g, function (matches, match1, match2) {
             return match1 + (Number(match2) + 1);
         }))
         .pipe(gulp.dest('gitbook/'))
