@@ -1,9 +1,9 @@
-// Type definitions for TableExport v4.0.9
+// Type definitions for TableExport v4.0.10
 // Project: https://tableexport.v4.travismclarke.com
 // Definitions by: Travis Clarke <https://github.com/clarketm>
 
 /*!
- * TableExport.js v4.0.9 (https://www.travismclarke.com)
+ * TableExport.js v4.0.10 (https://www.travismclarke.com)
  *
  * Copyright (c) 2017 - Travis Clarke - https://www.travismclarke.com
  *

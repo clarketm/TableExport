@@ -1,6 +1,6 @@
 {
   "name": "tableexport",
-  "version": "4.0.9",
+  "version": "4.0.10",
   "authors": [
     "clarketm <travis.m.clarke@gmail.com>"
   ],
@@ -11,8 +11,7 @@
     "dist/css/tableexport.css"
   ],
   "keywords": [
-    "table",
-    "export",
+    "tableexport",
     "table",
     "export",
     "Excel",
