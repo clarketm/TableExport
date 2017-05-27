@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Cell Types</title>
+    <title>Cell data types</title>
     <link href="../dist/css/tableexport.min.css" rel="stylesheet">
     <link href="./examples.css" rel="stylesheet">
 </head>
@@ -12,7 +12,7 @@
 <iframe src="./default.html" frameborder="0" width="100%" scrolling="no" onload="this.height=screen.height/3;"></iframe>
 
 <main>
-    <h1>Cell Type</h1>
+    <h1>Cell data type</h1>
     <table id="cell-type-table">
         <thead>
         <tr>
@@ -32,7 +32,7 @@
         <tr>
             <td>Travis Clarke</td>
             <td>Software Engineer</td>
-            <td class="tableexport-date">4/11/1975</td>
+            <td class="tableexport-date target">4/11/1975</td>
             <td>$275,000</td>
         </tr>
         <tr>
@@ -51,8 +51,6 @@
         </tr>
         </tfoot>
     </table>
-
-    <p class="info">export the table to <code>.xls</code> and look at the filename of the downloaded file. Compared to the export from the <b>defaults</b> table above, you will notice that, <code>filename: 'super-secret-data'</code><i>creates a download with the same name as the provided string </i>(<b>super-secret-data</b>.xls)<i> instead of the table element's</i> <code>id</code>.</p>
 </main>
 
 <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Emoji</title>
+    <link href="../dist/css/tableexport.min.css" rel="stylesheet">
+    <link href="./examples.css" rel="stylesheet">
+</head>
+<body>
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TL44T9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<iframe src="./default.html" frameborder="0" width="100%" scrolling="no" onload="this.height=screen.height/3;"></iframe>
+
+<main>
+    <h1>Emoji</h1>
+    <table id="emoji-table">
+        <tbody>
+        <tr>
+            <td>👐</td>
+            <td>👎</td>
+            <td>👊</td>
+            <td>✊</td>
+        </tr>
+        <tr>
+            <td>⛹</td>
+            <td>🤾</td>
+            <td>🏌</td>
+            <td>🏄</td>
+        </tr>
+        <tr>
+            <td>👥</td>
+            <td>💋</td>
+            <td>😃</td>
+            <td>💂</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../bower_components/js-xlsx/dist/xlsx.core.min.js"></script>
+<script type="text/javascript" src="../bower_components/blobjs/Blob.min.js"></script>
+<script type="text/javascript" src="../bower_components/file-saverjs/FileSaver.min.js"></script>
+<script type="text/javascript" src="../dist/js/tableexport.min.js"></script>
+<script type="text/javascript" src="../assets/js/analytics.js"></script>
+<script>
+    
+    var EmojiTable = document.getElementById('emoji-table');
+    new TableExport(EmojiTable, {
+        formats: ['xlsx']
+    });
+    // **** jQuery **************************
+    //    $(EmojiTable).tableExport({
+    //      formats: ['xlsx']
+    //    });
+    // **************************************
+    
+</script>
+
+</body>
+</html>
