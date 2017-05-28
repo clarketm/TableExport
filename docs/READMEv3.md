@@ -28,7 +28,7 @@ The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, an
 #### Miscellaneous
 * [`Arabic`](https://www.travismclarke.com/tableexport/examples/arabic-language.html)
 * [`emoji`](https://www.travismclarke.com/tableexport/examples/unicode-emoji.html)
-* [`cell types`](https://www.travismclarke.com/tableexport/examples/cell-data-types.html)
+* [`cell data types`](https://www.travismclarke.com/tableexport/examples/cell-data-types.html) (`string`, `number`, `boolean`, `date`)
 
 > **So why the major version bump you ask?** Well, the rationale for a major version bump is that due to a change in `TableExport`'s dependencies, in [v4.0.10](https://github.com/clarketm/TableExport/releases/tag/v4.0.10) forth, JQuery will no longer be a **required** dependency, instead it will be purely **optional**. So existing implementations *with* jQuery will continue to work unimpeded, now with the added benefit that new projets no longer need to rely on the overhead of such large library, unless of course you prefer jQuery or it is already part of your project.
 
