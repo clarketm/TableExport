@@ -8,21 +8,27 @@ The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, an
 
 # Go to [`v4.0.10`](https://github.com/clarketm/TableExport/releases/tag/v4.0.10):
 #### Examples:
-##### Property
-* [`bootstrap`](https://www.travismclarke.com/tableexport/examples/bootstrap.html)
-* [`exportButtons`](https://www.travismclarke.com/tableexport/examples/exportButtons.html)
-* [`filename`](https://www.travismclarke.com/tableexport/examples/filename.html)
-* [`formats`](https://www.travismclarke.com/tableexport/examples/formats-xlsx-xls-csv-txt.html)
+
+#### Customizing Properties
 * [`headers`](https://www.travismclarke.com/tableexport/examples/headers_footers.html)
 * [`footers`](https://www.travismclarke.com/tableexport/examples/headers_footers.html)
+* [`formats`](https://www.travismclarke.com/tableexport/examples/formats-xlsx-xls-csv-txt.html)
+* [`filename`](https://www.travismclarke.com/tableexport/examples/filename.html)
+* [`bootstrap`](https://www.travismclarke.com/tableexport/examples/bootstrap.html)
+* [`exportButtons`](https://www.travismclarke.com/tableexport/examples/exportButtons.html)
+* [`position`](https://www.travismclarke.com/tableexport/examples/position.html)
 * [`ignoreRows`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
 * [`ignoreCols`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
-* [`position`](https://www.travismclarke.com/tableexport/examples/position.html)
-* [`whitespace`](https://www.travismclarke.com/tableexport/examples/whitespace.html)
+* [`trimWhitespace`](https://www.travismclarke.com/tableexport/examples/whitespace.html)
 
-##### Settings
+#### Customizing Settings
 * [`ignoreCSS`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
 * [`emptyCSS`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
+
+#### Miscellaneous
+* [`Arabic`](https://www.travismclarke.com/tableexport/examples/arabic-language.html)
+* [`emoji`](https://www.travismclarke.com/tableexport/examples/unicode-emoji.html)
+* [`cell types`](https://www.travismclarke.com/tableexport/examples/cell-data-types.html)
 
 > **So why the major version bump you ask?** Well, the rationale for a major version bump is that due to a change in `TableExport`'s dependencies, in [v4.0.10](https://github.com/clarketm/TableExport/releases/tag/v4.0.10) forth, JQuery will no longer be a **required** dependency, instead it will be purely **optional**. So existing implementations *with* jQuery will continue to work unimpeded, now with the added benefit that new projets no longer need to rely on the overhead of such large library, unless of course you prefer jQuery or it is already part of your project.
 
