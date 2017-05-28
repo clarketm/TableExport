@@ -20,6 +20,11 @@
     <div>
         <button id="customXLSButton">I am a BIG custom XLS button</button>
     </div>
+    <br>
+    <div>
+        <button id="customCSVButton">I am a SMALL custom CSV button</button>
+    </div>
+    <br>
 
     <table id="export-buttons-table">
         <thead>
@@ -123,10 +128,11 @@ var byteLength = bytes.byteLength;
 <script type="text/javascript" src="../assets/js/analytics.js"></script>
 <script>
 
-    var ExportButtons = document.getElementById('export-buttons-table');
+    var tableId = 'export-buttons-table';
+    var ExportButtons = document.getElementById(tableId);
 
     var instance = new TableExport(ExportButtons, {
-        formats: ['xls'],
+        formats: ['xls', 'csv'],
         exportButtons: false
     });
     // **** jQuery **************************
@@ -136,18 +142,30 @@ var byteLength = bytes.byteLength;
     //    });
     // **************************************
 
-    //                                        // "id" of selector   // format
-    var exportData = instance.getExportData()['export-buttons-table']['xls'];
+    var XLS = instance.CONSTANTS.FORMAT.XLS;
+    var CSV = instance.CONSTANTS.FORMAT.CSV;
 
-    // get raw binary data (i.e. filesize)
-    var bytes = TableExport.prototype.getBinaryData(exportData.data, exportData.fileExtension).byteLength;
+    //                                          // "id"  // format
+    var exportDataXLS = instance.getExportData()[tableId][XLS];
+    var exportDataCSV = instance.getExportData()[tableId][CSV];
 
-    console.log('filesize:', bytes + 'B');
+    // get filesize
+    var bytesXLS = instance.getFileSize(exportDataXLS.data, exportDataXLS.fileExtension);
+    var bytesCSV = instance.getFileSize(exportDataCSV.data, exportDataCSV.fileExtension);
+
+    console.log('filesize (XLS):', bytesXLS + 'B');
+    console.log('filesize (CSV):', bytesCSV + 'B');
 
     var XLSbutton = document.getElementById('customXLSButton');
     XLSbutton.addEventListener('click', function (e) {
-        //                   // data          // mime              // name              // extension
-        instance.export2file(exportData.data, exportData.mimeType, exportData.filename, exportData.fileExtension);
+        //                   // data             // mime                 // name                 // extension
+        instance.export2file(exportDataXLS.data, exportDataXLS.mimeType, exportDataXLS.filename, exportDataXLS.fileExtension);
+    });
+
+    var CSVbutton = document.getElementById('customCSVButton');
+    CSVbutton.addEventListener('click', function (e) {
+        //                   // data             // mime                 // name                 // extension
+        instance.export2file(exportDataCSV.data, exportDataCSV.mimeType, exportDataCSV.filename, exportDataCSV.fileExtension);
     });
 
 </script>

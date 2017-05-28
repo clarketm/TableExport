@@ -101,3 +101,7 @@ span.note {
   background: lightgreen;
   font-size: 200%;
 }
+#customCSVButton {
+  background: lightblue;
+  font-size: 100%;
+}
