@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ExportButtons</title>
+    <title>Rowspan / Colspan</title>
     <link href="../dist/css/tableexport.min.css" rel="stylesheet">
     <link href="./examples.css" rel="stylesheet">
 </head>
@@ -12,162 +12,23 @@
 <iframe src="./default.html" frameborder="0" width="100%" scrolling="no" onload="this.height=screen.height/3;"></iframe>
 
 <main>
-    <h1>ExportButtons
-        <code class="small">exportButtons: false</code>
-    </h1>
+    <h1>Rowspan / Colspan</h1>
 
-
-    <div>
-        <button id="customXLSButton">I am a BIG custom XLS button</button>
-    </div>
-
-    <table id="export-buttons-table">
+    <table id="rowspan-colspan-table">
         <tbody>
-        <tr>
-            <td>[0, 0]</td>
+        <tr style="background: lightblue">
+            <td rowspan="3">[0, 0]</td>
+            <td>[0, 3]</td>
+        </tr>
+        <tr style="background: lightgoldenrodyellow">
             <td>[1, 0]</td>
+        </tr>
+        <tr style="background: lightcoral">
             <td>[2, 0]</td>
-            <td>[3, 0]</td>
-        </tr>
-        <tr>
-            <td class="tableexport-empty">[0, 1]</td>
-            <td>[1, 1]</td>
-            <td>[2, 1]</td>
-            <td>[3, 1]</td>
-        </tr>
-        <tr>
-            <td>[0, 2]</td>
-            <td class="tableexport-ignore">[1, 2]</td>
-            <td colspan="2">[2, 2]</td>
-            <!--<td>[3, 2]</td>-->
         </tr>
         </tbody>
+
     </table>
-
-    <!--<table id="export-buttons-table">-->
-        <!--&lt;!&ndash;<thead>&ndash;&gt;-->
-        <!--&lt;!&ndash;<tr>&ndash;&gt;-->
-            <!--&lt;!&ndash;<th>A</th>&ndash;&gt;-->
-            <!--&lt;!&ndash;<th>B</th>&ndash;&gt;-->
-            <!--&lt;!&ndash;<th>C</th>&ndash;&gt;-->
-            <!--&lt;!&ndash;<th>D</th>&ndash;&gt;-->
-            <!--&lt;!&ndash;<th>E</th>&ndash;&gt;-->
-            <!--&lt;!&ndash;<th>F</th>&ndash;&gt;-->
-            <!--&lt;!&ndash;<th>G</th>&ndash;&gt;-->
-            <!--&lt;!&ndash;<th>H</th>&ndash;&gt;-->
-        <!--&lt;!&ndash;</tr>&ndash;&gt;-->
-        <!--&lt;!&ndash;</thead>&ndash;&gt;-->
-        <!--<tbody>-->
-        <!--<tr>-->
-            <!--<td rowspan="2">-->
-
-                <!--2016-11-15-->
-
-            <!--</td>-->
-            <!--<td>会员卡</td>-->
-            <!--<td rowspan="3">办卡</td>-->
-            <!--<td rowspan="2">两年卡</td>-->
-            <!--<td rowspan="6">12345678901</td>-->
-            <!--<td rowspan="3" colspan="3">刷卡支付</td>-->
-            <!--&lt;!&ndash;<td rowspan="2">刷卡支付</td>&ndash;&gt;-->
-            <!--&lt;!&ndash;<td>李欢</td>&ndash;&gt;-->
-            <!--&lt;!&ndash;<td class="te-number">1000</td>&ndash;&gt;-->
-        <!--</tr>-->
-        <!--<tr>-->
-            <!--<td>现金</td>-->
-            <!--&lt;!&ndash;<td>1980</td>&ndash;&gt;-->
-            <!--&lt;!&ndash;<td>1980</td>&ndash;&gt;-->
-        <!--</tr>-->
-        <!--<tr>-->
-            <!--<td rowspan="1">2016-11-15</td>-->
-            <!--<td rowspan="1">会员卡</td>-->
-            <!--<td rowspan="1">两年卡</td>-->
-            <!--&lt;!&ndash;<td rowspan="1">Treating myself</td>&ndash;&gt;-->
-            <!--&lt;!&ndash;<td rowspan="1">13858060001</td>&ndash;&gt;-->
-            <!--&lt;!&ndash;<td>刷卡支付</td>&ndash;&gt;-->
-        <!--</tr>-->
-        <!--<tr>-->
-            <!--<td rowspan="1">2016-11-15</td>-->
-            <!--&lt;!&ndash;<td class="tableexport-empty" rowspan="1">2016-11-15</td>&ndash;&gt;-->
-            <!--<td rowspan="1">会员卡</td>-->
-            <!--<td rowspan="1">两年卡</td>-->
-            <!--<td rowspan="1">Treating myself</td>-->
-            <!--<td rowspan="1">13858060001</td>-->
-            <!--<td>刷卡支付</td>-->
-            <!--<td class="te-number">10</td>-->
-        <!--</tr>-->
-        <!--<tr>-->
-            <!--<td>1</td>-->
-            <!--<td>2</td>-->
-            <!--<td>3</td>-->
-            <!--<td>4</td>-->
-            <!--<td>5</td>-->
-            <!--<td>6</td>-->
-            <!--<td>7</td>-->
-        <!--</tr>-->
-        <!--</tbody>-->
-        <!--&lt;!&ndash;<tfoot>&ndash;&gt;-->
-        <!--&lt;!&ndash;<tr>&ndash;&gt;-->
-            <!--&lt;!&ndash;<td class="disabled"></td>&ndash;&gt;-->
-            <!--&lt;!&ndash;<td class="disabled"></td>&ndash;&gt;-->
-            <!--&lt;!&ndash;<td te-ref="abc"><input type="text" name="address"></td>&ndash;&gt;-->
-            <!--&lt;!&ndash;<th>$441,210</th>&ndash;&gt;-->
-        <!--&lt;!&ndash;</tr>&ndash;&gt;-->
-        <!--&lt;!&ndash;</tfoot>&ndash;&gt;-->
-    <!--</table>-->
-
-    <br>
-
-    <div class="info">
-        Your own custom export button can be easily created by simply capturing the <i>TableExport</i> instance.
-        <ol>
-            <li>First, save the TableExport <b>instance</b> to a variable.</li>
-            <li>Second, call <code>getExportData()</code> on the instance from <b>step 1</b>. The return value will be
-                an object literal with keys corresponding to the table selector(s) <code>id</code> attribute (or a
-                unique <i>uuid</i> generated by TableExport if an <code>id</code> is not provided).
-            </li>
-            <li>Lastly, call <code>export2file(data, mimeType, filename, fileExtension)</code>. The arguments correspond
-                to the keys of the Object returned from <b>step 2</b> above.
-            </li>
-        </ol>
-        First, in a variable
-    </div>
-
-    <br>
-
-    <div class="info code">
-<pre>
-var ExportButtons = document.getElementById('export-buttons-table');
-
-var instance = new TableExport(ExportButtons, {
-    formats: ['xls'],
-    exportButtons: false
-});
-
-//                                        // "id" of selector    // format
-var exportData = instance.getExportData()['export-buttons-table']['xls'];
-
-var XLSbutton = document.getElementById('customXLSButton');
-
-XLSbutton.addEventListener('click', function (e) {
-    //                   // data          // mime              // name              // extension
-    instance.export2file(exportData.data, exportData.mimeType, exportData.filename, exportData.fileExtension);
-});
-</pre>
-    </div>
-
-    <br>
-
-    <div class="info">Additionally, the raw binary data (and byte length) can be retrieved using the <code>getBinaryData</code> prototype method.
-    <div class="info code nested">
-<pre>
-// get raw binary data (i.e. filesize)
-var bytes = TableExport.prototype.getBinaryData(exportData.data, exportData.fileExtension);
-var byteLength = bytes.byteLength;
-</pre>
-    </div>
-    </div>
-
 
 </main>
 
@@ -175,46 +36,19 @@ var byteLength = bytes.byteLength;
 <script type="text/javascript" src="../bower_components/js-xlsx/dist/xlsx.core.min.js"></script>
 <script type="text/javascript" src="../bower_components/blobjs/Blob.min.js"></script>
 <script type="text/javascript" src="../bower_components/file-saverjs/FileSaver.min.js"></script>
-<!--<script type="text/javascript" src="../dist/js/tableexport.min.js"></script>-->
-<script type="text/javascript" src="../src/stable/js/tableexport.js"></script>
+<script type="text/javascript" src="../dist/js/tableexport.min.js"></script>
 <script type="text/javascript" src="../assets/js/analytics.js"></script>
 <script>
 
-    var ExportButtons = document.getElementById('export-buttons-table');
+    var RowColButtons = document.getElementById('rowspan-colspan-table');
 
-    var instance = new TableExport(ExportButtons, {
-        formats: ['xlsx'],
-        ignoreRows: [1],
-        ignoreCols: [1],
-        exportButtons: false
+    new TableExport(RowColButtons, {
+        formats: ['xlsx']
     });
+
     // **** jQuery **************************
-    //    $(ExportButtons).tableExport({
-    //        formats: ['xls'],
-    //        exportButtons: false
-    //    });
+    //    $(RowColButtons).tableExport();
     // **************************************
-
-    //                                        // "id" of selector   // format
-//    var exportData = instance.getExportData()['export-buttons-table'][instance.CONSTANTS.FORMAT.XLSX];
-    var exportData = instance.getExportData()['export-buttons-table']['xlsx'];
-
-    // get raw binary data (i.e. filesize)
-    var bytes = TableExport.prototype.getBinaryData(exportData.data, exportData.fileExtension).byteLength;
-
-//    console.log(exportData);
-
-    function extractInputData(data) {
-//        data[4][2].t = instance.CONSTANTS.TYPE.STRING;
-//        data[4][2].v = document.querySelector('[name=address]').value;
-        return data;
-    }
-
-    var XLSbutton = document.getElementById('customXLSButton');
-    XLSbutton.addEventListener('click', function (e) {
-        //                   // data          // mime              // name              // extension
-        instance.export2file(extractInputData(exportData.data), exportData.mimeType, exportData.filename, exportData.fileExtension);
-    });
 
 </script>
 
