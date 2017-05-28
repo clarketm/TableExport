@@ -34,9 +34,9 @@ $ npm install tableexport
 #### [CDNjs](https://cdnjs.com/libraries/TableExport)
 |          | uncompressed | compressed |
 | :------: | :----------: | :--------: |
-|  __CSS__ |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.3/css/tableexport.css)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.3/css/tableexport.min.css)      |
-|  __JS__  |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.3/js/tableexport.js)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.3/js/tableexport.min.js)      |
-|  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.3/img/xlsx.svg)[🔗<sup>xls</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.3/img/xls.svg)[🔗<sup>csv</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.3/img/csv.svg)[🔗<sup>txt</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.3/img/txt.svg)  |
+|  __CSS__ |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.10/css/tableexport.css)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.10/css/tableexport.min.css)      |
+|  __JS__  |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.10/js/tableexport.js)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.10/js/tableexport.min.js)      |
+|  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.10/img/xlsx.svg)[🔗<sup>xls</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.10/img/xls.svg)[🔗<sup>csv</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.10/img/csv.svg)[🔗<sup>txt</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.10/img/txt.svg)  |
 
 
 #### [unpkg](https://unpkg.com/#/)
@@ -311,14 +311,18 @@ When used alongside Bootstrap, there are four custom classes **`.xlsx`, `.xls`, 
 
 #### Miscellaneous
 * [`Arabic`](https://www.travismclarke.com/tableexport/examples/arabic-language.html)
+* [`emoji`](https://www.travismclarke.com/tableexport/examples/unicode-emoji.html)
+* [`cell data types`](https://www.travismclarke.com/tableexport/examples/cell-data-types.html) (`string`, `number`, `boolean`, `date`)
 
 #### Skeletons 
 A live, interactive demo can be found on the **[TableExport](https://www.travismclarke.com/tableexport/#live-demo)** webpage. 
 * [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) skeleton.
 * [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) skeleton.
+* [TableExport + Webpack 1](https://github.com/clarketm/tableexport_webpack-v1_app) skeleton.
+* [TableExport + Angular 4 + Webpack 2](https://github.com/clarketm/tableexport_angular4_webpack2_app) skeleton.
 
 ### License
-[TableExport](https://tableexport.v4.travismclarke.com) is licensed under the terms of the [MIT](http://opensource.org/licenses/mit-license.php) License
+[TableExport](https://tableexport.v4.travismclarke.com) is licensed under the terms of the [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0.html) License
 
 ### Going Forward
 #### TODOs

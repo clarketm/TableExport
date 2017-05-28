@@ -28,7 +28,9 @@ gulp.task('js', ['clean'], function () {
         .pipe(gulp.dest('./src/stable/js/'));
 });
 
-gulp.task('bump', ['bump-js', 'bump-css', 'bump-typings'], function(){
+gulp.task('bump-all', ['bump', 'bump-js', 'bump-css', 'bump-typings', 'bump-readme']);
+
+gulp.task('bump', function(){
     return gulp.src(['./bower.json', './package.json'])
         .pipe(bump())
         .pipe(gulp.dest('./'));
@@ -65,6 +67,14 @@ gulp.task('bump-typings', function () {
             return match1 + (Number(match2) + 1);
         }))
         .pipe(gulp.dest('dist/'))
+});
+
+gulp.task('bump-readme', function () {
+    gulp.src(['gitbook/README.md', 'gitbook/READMEv3.md'])
+        .pipe(replace(/([/\[`]v?[124567890]\d*\.\d+\.)(\d+)/g, function (matches, match1, match2) {
+            return match1 + (Number(match2) + 1);
+        }))
+        .pipe(gulp.dest('gitbook/'))
 });
 
 gulp.task('clean', function () {

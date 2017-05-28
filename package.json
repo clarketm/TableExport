@@ -11,8 +11,7 @@
     "dist/css/tableexport.css"
   ],
   "keywords": [
-    "table",
-    "export",
+    "tableexport",
     "table",
     "export",
     "Excel",
@@ -53,7 +52,7 @@
     "gulp-uglify": "^1.5.3",
     "jasmine": "^2.4.1"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "homepage": "https://tableexport.v4.travismclarke.com/",
   "ignore": [
     "**/.*",
