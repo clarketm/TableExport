@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rowspan / Colspan</title>
+    <link href="../dist/css/tableexport.min.css" rel="stylesheet">
+    <link href="./examples.css" rel="stylesheet">
+</head>
+<body>
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TL44T9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<iframe src="./default.html" frameborder="0" width="100%" scrolling="no" onload="this.height=screen.height/3;"></iframe>
+
+<main>
+    <h1>Rowspan / Colspan</h1>
+
+    <table id="rowspan-colspan-table">
+        <tbody>
+        <tr style="background: lightblue">
+            <td rowspan="3">[0, 0]</td>
+            <td>[0, 3]</td>
+        </tr>
+        <tr style="background: lightgoldenrodyellow">
+            <td>[1, 0]</td>
+        </tr>
+        <tr style="background: lightcoral">
+            <td>[2, 0]</td>
+        </tr>
+        </tbody>
+
+    </table>
+
+</main>
+
+<script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../bower_components/js-xlsx/dist/xlsx.core.min.js"></script>
+<script type="text/javascript" src="../bower_components/blobjs/Blob.min.js"></script>
+<script type="text/javascript" src="../bower_components/file-saverjs/FileSaver.min.js"></script>
+<script type="text/javascript" src="../dist/js/tableexport.min.js"></script>
+<script type="text/javascript" src="../assets/js/analytics.js"></script>
+<script>
+
+    var RowColButtons = document.getElementById('rowspan-colspan-table');
+
+    new TableExport(RowColButtons, {
+        formats: ['xlsx']
+    });
+
+    // **** jQuery **************************
+    //    $(RowColButtons).tableExport();
+    // **************************************
+
+</script>
+
+</body>
+</html>
