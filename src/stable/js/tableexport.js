@@ -844,7 +844,9 @@
                         total = 0,
                         count = 0,
                         skip = null,
-                        max = Math.max.apply(Math, this.rcMap[ir]);
+                        max = Math.max.apply(Math,
+                            Object.keys(this.rcMap[ir]).filter(_numeric)
+                        );
 
                     for (var _col = 0; _col <= max; _col++) {
                         skip = this.rcMap[ir][_col];
@@ -1040,6 +1042,10 @@
 
         function _hasClass(el, cls) {
             return el.classList ? el.classList.contains(cls) : new RegExp('(^| )' + cls + '( |$)', 'gi').test(el.cls);
+        }
+
+        function _numeric(val) {
+            return !isNaN(val);
         }
 
         function _defined(val) {
