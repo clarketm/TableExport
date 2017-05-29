@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v4.1.0-rc.1 (https://www.travismclarke.com)
+ * TableExport.js v5.0.0-rc.1 (https://www.travismclarke.com)
  *
  * Copyright (c) 2017 - Travis Clarke - https://www.travismclarke.com
  *
@@ -22,12 +22,12 @@
     if (typeof define === 'function' && define.amd) {
         // AMD
         define(function (require) {
-            var $; try { $ = require('jquery') } catch(e) {}
+            var $; try { $ = require('jquery') } catch (e) {}
             return factory($, require('blobjs'), require('file-saverjs'), require('xlsx'));
         });
     } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
         // CommonJS
-        var $; try { $ = require('jquery') } catch(e) {}
+        var $; try { $ = require('jquery') } catch (e) {}
         module.exports = factory($, require('blobjs'), require('file-saverjs'), require('xlsx'));
     } else {
         // Browser globals
@@ -106,7 +106,6 @@
                     };
                 })();
 
-                // TODO: fix logic for: rowspan, colspan
                 context.rcMap = new RowColMap().build.call(self, context);
 
                 var formatMap = {};
@@ -143,7 +142,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '4.1.0-rc.1',
+            version: '5.0.0-rc.1',
             /**
              * Default library options.
              * @memberof TableExport.prototype
