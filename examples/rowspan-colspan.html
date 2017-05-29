@@ -19,14 +19,16 @@
     <table id="rowspan-colspan-table-1">
         <tbody>
         <tr style="background: lightblue">
-            <td rowspan="3">[0, 0]</td>
-            <td>[0, 3]</td>
+            <td rowspan="3">[0, 0] / [1, 0] / [2, 0]</td>
+            <td colspan="2">[0, 1] / [0, 2]</td>
         </tr>
         <tr style="background: lightgoldenrodyellow">
-            <td>[1, 0]</td>
+            <td>[1, 1]</td>
+            <td>[1, 2]</td>
         </tr>
         <tr style="background: lightcoral">
-            <td>[2, 0]</td>
+            <td>[2, 1]</td>
+            <td>[2, 2]</td>
         </tr>
         </tbody>
     </table>
@@ -35,7 +37,7 @@
 <br>
 
 <main>
-    <h1>Rowspan / Colspan</h1>
+    <h1>Rowspan</h1>
     <table id="rowspan-colspan-table-2">
         <tbody>
         <tr>
@@ -88,6 +90,30 @@
     </table>
 </main>
 
+<br>
+
+<main>
+    <h1>Colspan</h1>
+    <table id="rowspan-colspan-table-3">
+        <tbody>
+        <tr>
+            <td>刷卡支付</td>
+            <td>1000</td>
+            <td>1001</td>
+            <td>1002</td>
+        </tr>
+        <tr>
+            <td colspan="2">现金</td>
+            <td>1980</td>
+            <td>1981</td>
+        </tr>
+        <tr>
+            <td colspan="4">会员卡</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
 <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="../bower_components/js-xlsx/dist/xlsx.core.min.js"></script>
 <script type="text/javascript" src="../bower_components/blobjs/Blob.min.js"></script>
@@ -100,7 +126,6 @@
     new TableExport(RowColSpan1, {
         formats: ['xlsx', 'xls', 'csv', 'txt']
     });
-
     // **** jQuery **************************
     //    $(RowColSpan1).tableExport({
     //        formats: ['xlsx', 'xls', 'csv', 'txt']
@@ -114,6 +139,17 @@
     });
     // **** jQuery **************************
     //    $(RowColSpan2).tableExport({
+    //        formats: ['xlsx', 'xls', 'csv', 'txt']
+    //    });
+    // **************************************
+
+
+    var RowColSpan3 = document.getElementById('rowspan-colspan-table-3');
+    new TableExport(RowColSpan3, {
+        formats: ['xlsx', 'xls', 'csv', 'txt']
+    });
+    // **** jQuery **************************
+    //    $(RowColSpan3).tableExport({
     //        formats: ['xlsx', 'xls', 'csv', 'txt']
     //    });
     // **************************************
