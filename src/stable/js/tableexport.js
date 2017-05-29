@@ -894,11 +894,6 @@
 
                 var OFFSET = 1;
 
-                // var rowLength = context.rows.length;
-                // var colLength = Math.max.apply(null, _nodesArray(context.rows).map(function (val) {
-                //     return val.querySelectorAll('th, td').length;
-                // }));
-
                 var _RowColMap = new RowColMap();
 
                 var handleIgnoreRow = function (ir) {
@@ -913,9 +908,12 @@
                 };
                 var handleRowSpan = function (val, ir, ic) {
                     var rowSpan = val.getAttribute('rowspan');
+                    var hasColSpan = val.hasAttribute('colspan');
+                    hasColSpan && handleColSpan(val, ir, ic);
                     for (var _row = 1; _row < rowSpan; _row++) {
                         _RowColMap.setRowColMapProp(_row + ir, undefined, _RowColMap.TYPE.SPAN, true);
                         _RowColMap.setRowColMapProp(_row + ir, ic, undefined, 1);
+                        hasColSpan && handleColSpan(val, _row + ir, ic);
                     }
                 };
                 var handleColSpan = function (val, ir, ic) {
@@ -923,37 +921,6 @@
                     _RowColMap.setRowColMapProp(ir, undefined, _RowColMap.TYPE.SPAN, true);
                     _RowColMap.setRowColMapProp(ir, ic + OFFSET, undefined, colSpan - OFFSET);
                 };
-                // var handleRowSpan = function (val, ir, ic) {
-                //     var rowSpan = val.getAttribute('rowspan');
-                //     var hasColSpan = val.hasAttribute('colspan');
-                //
-                //     var _row = ir + OFFSET;
-                //     handleColSpan(val, _row - OFFSET, ic);
-                //     while (rowSpan > OFFSET) {
-                //         if (_row > rowLength) {
-                //             break;
-                //         }
-                //         if (hasColSpan) {
-                //             handleColSpan(val, _row, ic);
-                //         }
-                //         _RowColMap.setRowColMapProp(_row, ic, _RowColMap.TYPE.EMPTY, true);
-                //         rowSpan--;
-                //         _row++;
-                //     }
-                // };
-                // var handleColSpan = function (val, ir, ic) {
-                //     var colSpan = val.getAttribute('colspan');
-                //
-                //     var _col = ic + OFFSET;
-                //     while (colSpan > OFFSET) {
-                //         if (_col > colLength) {
-                //             break;
-                //         }
-                //         _RowColMap.setRowColMapProp(ir, _col, _RowColMap.TYPE.EMPTY, true);
-                //         colSpan--;
-                //         _col++;
-                //     }
-                // };
 
                 _nodesArray(context.rows).map(function (val, ir) {
                     if (!!~settings.ignoreRows.indexOf(ir - context.thAdj) || _hasClass(val, settings.ignoreCSS)) {
@@ -969,8 +936,7 @@
                         }
                         if (val.hasAttribute('rowspan')) {
                             handleRowSpan(val, ir, ic);
-                        }
-                        if (val.hasAttribute('colspan')) {
+                        } else if (val.hasAttribute('colspan')) {
                             handleColSpan(val, ir, ic);
                         }
                     });
