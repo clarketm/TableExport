@@ -920,6 +920,7 @@
                 };
                 var handleColSpan = function (val, ir, ic) {
                     var colSpan = val.getAttribute('colspan');
+                    _RowColMap.setRowColMapProp(ir, undefined, _RowColMap.TYPE.SPAN, true);
                     _RowColMap.setRowColMapProp(ir, ic + OFFSET, undefined, colSpan - OFFSET);
                 };
                 // var handleRowSpan = function (val, ir, ic) {
