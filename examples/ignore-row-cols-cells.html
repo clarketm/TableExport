@@ -62,7 +62,7 @@
     </p>
 
     <p class="half">
-        <b>NOTE:</b> reference <a href="#ignore"><code>.tableexport-ignore</code></a>, <a href="#empty"><code>.tableexport-empty</code></a> if you want to customize the removal of <code>tbody</code> rows, columns, or cells.
+        <b>NOTE:</b> reference <a href="#ignore"><code>.tableexport-ignore</code></a>, <a href="#empty"><code>.tableexport-empty</code></a> if you want to customize the removal of <code>table</code> rows, columns, or cells.
     </p>
 
     <br>
@@ -78,7 +78,7 @@
         <thead>
         <tr>
             <th>Name</th>
-            <th>Position</th>
+            <th class="target">Position</th>
             <th>Age</th>
             <th>Salary</th>
         </tr>
@@ -106,7 +106,7 @@
         <tfoot>
         <tr>
             <td class="disabled"></td>
-            <td class="disabled target"></td>
+            <td class="target"></td>
             <td class="disabled"></td>
             <th>$441,210</th>
         </tr>
@@ -116,11 +116,7 @@
     <p class="info">export the table to <code>.xls</code> and look at the contents of the <span class="target">yellow</span> column. Compared to the export from the <b>defaults</b> table above, you will notice that <code>ignoreCols: 1</code> <i>removes the <code>tbody</code> column at index <b>one(1)</b></i>.</p>
 
     <p class="half">
-        <b>NOTE:</b> reference <a href="./headers_footers.html#headers-table"><code>headers</code></a> and <a href="./headers_footers.html#footers-table"><code>footers</code></a> if you want to remove <code>thead</code> or <code>tfoot</code> rows.
-    </p>
-
-    <p class="half">
-        <b>NOTE:</b> reference <a href="#ignore"><code>.tableexport-ignore</code></a>, <a href="#empty"><code>.tableexport-empty</code></a> if you want to customize the removal of <code>tbody</code> rows, columns, or cells.
+        <b>NOTE:</b> reference <a href="#ignore"><code>.tableexport-ignore</code></a>, <a href="#empty"><code>.tableexport-empty</code></a> if you want to customize the removal of <code>table</code> rows, columns, or cells.
     </p>
 
     <br>
@@ -140,7 +136,7 @@
     <table id="ignore-cell-table">
         <thead>
         <tr>
-            <th>Name</th>
+            <th class="tableexport-empty">Name</th>
             <th>Position</th>
             <th>Age</th>
             <th>Salary</th>
@@ -156,7 +152,7 @@
         <tr>
             <td>Travis Clarke</td>
             <td class="tableexport-empty">Software Engineer</td>
-            <td>30</td>
+            <td class="tableexport-ignore">31</td>
             <td>$275,000</td>
         </tr>
         <tr>
@@ -169,7 +165,7 @@
         <tfoot>
         <tr>
             <td class="disabled"></td>
-            <td class="disabled target"></td>
+            <td class="disabled"></td>
             <td class="disabled"></td>
             <th class="tableexport-ignore">$441,210</th>
         </tr>
