@@ -19,15 +19,22 @@
 
 
 ;(function (root, factory) {
+    var get$ = function (require) {
+        try {
+            require.resolve('jquery');
+        } catch (e) {
+        }
+        return require('jquery');
+    };
     if (typeof define === 'function' && define.amd) {
         // AMD
         define(function (require) {
-            var $; try { $ = require('jquery') } catch (e) {}
+            var $ = get$();
             return factory($, require('blobjs'), require('file-saverjs'), require('xlsx'));
         });
     } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
         // CommonJS
-        var $; try { $ = require('jquery') } catch (e) {}
+        var $ = get$();
         module.exports = factory($, require('blobjs'), require('file-saverjs'), require('xlsx'));
     } else {
         // Browser globals
@@ -107,11 +114,11 @@
                 })();
 
                 // TODO: fix logic for: rowspan, colspan
-                // context.rcMap = new RowColMap().build.call(self, context);
+                context.rcMap = new RowColMap().build.call(self, context);
 
                 var formatMap = {};
                 for (var type in _FORMAT) {
-                    formatMap[type] = 0;
+                    formatMap[_FORMAT[type]] = 0;
                 }
 
                 settings.formats.forEach(
@@ -301,302 +308,25 @@
                 xlsx: function (context) {
                     var self = this;
                     var settings = self.settings;
-                    var rcMap = {},
-                        dataURL = _nodesArray(context.rows).map(function (val, ir) {
-                            if (!!~settings.ignoreRows.indexOf(ir - context.thAdj) || _hasClass(val, settings.ignoreCSS)) {
-                                return;
-                            }
-                            var cols = val.querySelectorAll('th, td');
-                            return _nodesArray(cols).map(function (val, ic) {
-                                if (!!~settings.ignoreCols.indexOf(ic) || _hasClass(val, settings.ignoreCSS)) {
-                                    return;
-                                }
-                                if (_hasClass(val, settings.emptyCSS)) {
-                                    return ' '
-                                }
-                                if (val.hasAttribute('colspan')) {
-                                    rcMap[ir] = rcMap[ir] || {};
-                                    rcMap[ir][ic + 1] = val.getAttribute('colspan') - 1
-                                }
-                                if (val.hasAttribute('rowspan')) {
-                                    for (var i = 1; i < val.getAttribute('rowspan'); i++) {
-                                        rcMap[ir + i] = rcMap[ir + i] || {};
-                                        rcMap[ir + i][ic] = 1
-                                    }
-                                }
-                                if (rcMap[ir]) {
-                                    var threshold = ic + 1,
-                                        total = 0,
-                                        count = 0;
-
-                                    for (var i = 0; i <= Math.max.apply(Math, Object.keys(rcMap[ir])); i++) {
-                                        (!rcMap[ir][i]) ? count++ : total = count >= ic ? total + rcMap[ir][i] : total;
-                                        if (count === threshold) {
-                                            break;
-                                        }
-                                    }
-                                    return new Array(total).concat({
-                                        v: settings.formatValue(val.textContent),
-                                        t: self.getType(val.className)
-                                    });
-                                }
-                                return {
-                                    v: settings.formatValue(val.textContent),
-                                    t: self.getType(val.className)
-                                };
-                            }).filter(function (val) {
-                                return typeof val !== 'undefined';
-                            });
-                        }).map(function (val) {
-                            return val && [].concat.apply([], val);
-                        }).filter(function (val) {
-                            return typeof val !== 'undefined';
-                        }),
-                        dataObject = JSON.stringify({
-                            data: dataURL,
-                            filename: context.filename,
-                            mimeType: TableExport.prototype.xlsx.mimeType,
-                            fileExtension: TableExport.prototype.xlsx.fileExtension
-                        }),
-                        myContent = TableExport.prototype.xlsx.buttonContent,
-                        myClass = TableExport.prototype.xlsx.defaultClass,
-                        hashKey = _hashCode({uuid: context.uuid, type: _type.xlsx}),
-                        exportButton = settings.exportButtons && TableExport.prototype.createObjButton(
-                                hashKey,
-                                dataObject,
-                                myContent,
-                                myClass,
-                                settings.bootstrapSettings
-                            );
-                    exportButton && context.checkCaption(exportButton);
-                    _store.getInstance().setItem(hashKey, dataObject, true);
-                    return hashKey;
-                },
-                biff2: function (context) {
-                    var self = this;
-                    var settings = self.settings;
-                    var rcMap = {},
-                        dataURL = _nodesArray(context.rows).map(function (val, ir) {
-                            if (!!~settings.ignoreRows.indexOf(ir - context.thAdj) || _hasClass(val, settings.ignoreCSS)) {
-                                return;
-                            }
-                            var cols = val.querySelectorAll('th, td');
-                            return _nodesArray(cols).map(function (val, ic) {
-                                if (!!~settings.ignoreCols.indexOf(ic) || _hasClass(val, settings.ignoreCSS)) {
-                                    return;
-                                }
-                                if (_hasClass(val, settings.emptyCSS)) {
-                                    return ' '
-                                }
-                                if (val.hasAttribute('colspan')) {
-                                    rcMap[ir] = rcMap[ir] || {};
-                                    rcMap[ir][ic + 1] = val.getAttribute('colspan') - 1
-                                }
-                                if (val.hasAttribute('rowspan')) {
-                                    for (var i = 1; i < val.getAttribute('rowspan'); i++) {
-                                        rcMap[ir + i] = rcMap[ir + i] || {};
-                                        rcMap[ir + i][ic] = 1
-                                    }
-                                }
-                                if (rcMap[ir]) {
-                                    var threshold = ic + 1,
-                                        total = 0,
-                                        count = 0;
-
-                                    for (var i = 0; i <= Math.max.apply(Math, Object.keys(rcMap[ir])); i++) {
-                                        (!rcMap[ir][i]) ? count++ : total = count >= ic ? total + rcMap[ir][i] : total;
-                                        if (count === threshold) {
-                                            break;
-                                        }
-                                    }
-                                    return new Array(total).concat({
-                                        v: settings.formatValue(val.textContent),
-                                        t: self.getType(val.className)
-                                    });
-                                }
-                                return {
-                                    v: settings.formatValue(val.textContent),
-                                    t: self.getType(val.className)
-                                };
-                            }).filter(function (val) {
-                                return typeof val !== 'undefined';
-                            });
-                        }).map(function (val) {
-                            return val && [].concat.apply([], val);
-                        }).filter(function (val) {
-                            return typeof val !== 'undefined';
-                        }),
-                        dataObject = JSON.stringify({
-                            data: dataURL,
-                            filename: context.filename,
-                            mimeType: TableExport.prototype.xls.mimeType,
-                            fileExtension: TableExport.prototype.xls.fileExtension
-                        }),
-                        myContent = TableExport.prototype.xls.buttonContent,
-                        myClass = TableExport.prototype.xls.defaultClass,
-                        hashKey = _hashCode({uuid: context.uuid, type: _type.xls}),
-                        exportButton = settings.exportButtons && TableExport.prototype.createObjButton(
-                                hashKey,
-                                dataObject,
-                                myContent,
-                                myClass,
-                                settings.bootstrapSettings
-                            );
-                    exportButton && context.checkCaption(exportButton);
-                    _store.getInstance().setItem(hashKey, dataObject, true);
-                    return hashKey;
-                },
-                xls: function (context) {
-                    var self = this;
-                    var settings = self.settings;
-                    var colD = TableExport.prototype.xls.separator,
-                        dataURL = _nodesArray(context.rows).map(function (val, i) {
-                            if (!!~settings.ignoreRows.indexOf(i - context.thAdj) || _hasClass(val, settings.ignoreCSS)) {
-                                return;
-                            }
-                            var cols = val.querySelectorAll('th, td');
-                            return _nodesArray(cols).map(function (val, i) {
-                                if (!!~settings.ignoreCols.indexOf(i) || _hasClass(val, settings.ignoreCSS)) {
-                                    return;
-                                }
-                                if (_hasClass(val, settings.emptyCSS)) {
-                                    return ' '
-                                }
-                                return val.textContent;
-                            }).filter(function (val) {
-                                return typeof val !== 'undefined';
-                            }).join(colD);
-                        }).filter(function (val) {
-                            return typeof val !== 'undefined';
-                        }).join(self.rowDel),
-                        dataObject = JSON.stringify({
-                            data: dataURL,
-                            filename: context.filename,
-                            mimeType: TableExport.prototype.xls.mimeType,
-                            fileExtension: TableExport.prototype.xls.fileExtension
-                        }),
-                        myContent = TableExport.prototype.xls.buttonContent,
-                        myClass = TableExport.prototype.xls.defaultClass,
-                        hashKey = _hashCode({uuid: context.uuid, type: _type.xls}),
-                        exportButton = settings.exportButtons && TableExport.prototype.createObjButton(
-                                hashKey,
-                                dataObject,
-                                myContent,
-                                myClass,
-                                settings.bootstrapSettings
-                            );
-                    exportButton && context.checkCaption(exportButton);
-                    _store.getInstance().setItem(hashKey, dataObject, true);
-                    return hashKey;
-                },
-                csv: function (context) {
-                    var self = this;
-                    var settings = self.settings;
-                    var colD = TableExport.prototype.csv.separator,
-                        dataURL = _nodesArray(context.rows).map(function (val, i) {
-                            if (!!~settings.ignoreRows.indexOf(i - context.thAdj) || _hasClass(val, settings.ignoreCSS)) {
-                                return;
-                            }
-                            var cols = val.querySelectorAll('th, td');
-                            return _nodesArray(cols).map(function (val, i) {
-                                if (!!~settings.ignoreCols.indexOf(i) || _hasClass(val, settings.ignoreCSS)) {
-                                    return;
-                                }
-                                if (_hasClass(val, settings.emptyCSS)) {
-                                    return ' '
-                                }
-                                return '"' + settings.formatValue(val.textContent.replace(/"/g, '""')) + '"';
-                            }).filter(function (val) {
-                                return typeof val !== 'undefined';
-                            }).join(colD);
-                        }).filter(function (val) {
-                            return typeof val !== 'undefined';
-                        }).join(self.rowDel),
-                        dataObject = JSON.stringify({
-                            data: dataURL,
-                            filename: context.filename,
-                            mimeType: TableExport.prototype.csv.mimeType,
-                            fileExtension: TableExport.prototype.csv.fileExtension
-                        }),
-                        myContent = TableExport.prototype.csv.buttonContent,
-                        myClass = TableExport.prototype.csv.defaultClass,
-                        hashKey = _hashCode({uuid: context.uuid, type: _type.csv}),
-                        exportButton = settings.exportButtons && TableExport.prototype.createObjButton(
-                                hashKey,
-                                dataObject,
-                                myContent,
-                                myClass,
-                                settings.bootstrapSettings
-                            );
-                    exportButton && context.checkCaption(exportButton);
-                    _store.getInstance().setItem(hashKey, dataObject, true);
-                    return hashKey;
-                },
-                txt: function (context) {
-                    var self = this;
-                    var settings = self.settings;
-                    var colD = TableExport.prototype.txt.separator,
-                        dataURL = _nodesArray(context.rows).map(function (val, i) {
-                            if (!!~settings.ignoreRows.indexOf(i - context.thAdj) || _hasClass(val, settings.ignoreCSS)) {
-                                return;
-                            }
-                            var cols = val.querySelectorAll('th, td');
-                            return _nodesArray(cols).map(function (val, i) {
-                                if (!!~settings.ignoreCols.indexOf(i) || _hasClass(val, settings.ignoreCSS)) {
-                                    return;
-                                }
-                                if (_hasClass(val, settings.emptyCSS)) {
-                                    return ' '
-                                }
-                                return settings.formatValue(val.textContent);
-                            }).filter(function (val) {
-                                return typeof val !== 'undefined';
-                            }).join(colD);
-                        }).filter(function (val) {
-                            return typeof val !== 'undefined';
-                        }).join(self.rowDel),
-                        dataObject = JSON.stringify({
-                            data: dataURL,
-                            filename: context.filename,
-                            mimeType: TableExport.prototype.txt.mimeType,
-                            fileExtension: TableExport.prototype.txt.fileExtension
-                        }),
-                        myContent = TableExport.prototype.txt.buttonContent,
-                        myClass = TableExport.prototype.txt.defaultClass,
-                        hashKey = _hashCode({uuid: context.uuid, type: _type.txt}),
-                        exportButton = settings.exportButtons && TableExport.prototype.createObjButton(
-                                hashKey,
-                                dataObject,
-                                myContent,
-                                myClass,
-                                settings.bootstrapSettings
-                            );
-                    exportButton && context.checkCaption(exportButton);
-                    _store.getInstance().setItem(hashKey, dataObject, true);
-                    return hashKey;
-                }
-            },
-            _exporters: {
-                xlsx: function (context) {
-                    var self = this;
-                    var settings = self.settings;
                     var format = TableExport.prototype.formatConfig[_FORMAT.XLSX];
                     var rcMap = context.rcMap,
+
                         dataURL = _nodesArray(context.rows).map(function (val, ir) {
                             if (rcMap.isIgnore(ir)) {
                                 return rcMap.handleRowColMapProp(rcMap.TYPE.IGNORE);
                             }
                             var cols = val.querySelectorAll('th, td');
                             return _nodesArray(cols).map(function (val, ic) {
+                                var _return = {
+                                    v: settings.formatValue(val.textContent),
+                                    t: self.getType(val.className)
+                                };
                                 if (rcMap.isIgnore(ir, ic)) {
                                     return rcMap.handleRowColMapProp(rcMap.TYPE.IGNORE);
                                 } else if (rcMap.isEmpty(ir, ic)) {
                                     return rcMap.handleRowColMapProp(rcMap.TYPE.EMPTY);
                                 } else {
-                                    return {
-                                        v: settings.formatValue(val.textContent),
-                                        t: self.getType(val.className)
-                                    };
+                                    return rcMap.handleRowColMapProp(rcMap.TYPE.DEFAULT, ir, ic, _return);
                                 }
                             }).filter(_defined);
                         }).map(_toArray).filter(_defined),
@@ -623,21 +353,23 @@
                     var settings = self.settings;
                     var format = TableExport.prototype.formatConfig[_FORMAT.XLS];
                     var rcMap = context.rcMap,
+
                         dataURL = _nodesArray(context.rows).map(function (val, ir) {
                             if (rcMap.isIgnore(ir)) {
                                 return rcMap.handleRowColMapProp(rcMap.TYPE.IGNORE);
                             }
                             var cols = val.querySelectorAll('th, td');
                             return _nodesArray(cols).map(function (val, ic) {
+                                var _return = {
+                                    v: settings.formatValue(val.textContent),
+                                    t: self.getType(val.className)
+                                };
                                 if (rcMap.isIgnore(ir, ic)) {
                                     return rcMap.handleRowColMapProp(rcMap.TYPE.IGNORE);
                                 } else if (rcMap.isEmpty(ir, ic)) {
                                     return rcMap.handleRowColMapProp(rcMap.TYPE.EMPTY);
                                 } else {
-                                    return {
-                                        v: settings.formatValue(val.textContent),
-                                        t: self.getType(val.className)
-                                    };
+                                    return rcMap.handleRowColMapProp(rcMap.TYPE.DEFAULT, ir, ic, _return);
                                 }
                             }).filter(_defined);
                         }).map(_toArray).filter(_defined),
@@ -663,20 +395,22 @@
                     var self = this;
                     var settings = self.settings;
                     var format = TableExport.prototype.formatConfig[_FORMAT.XLS];
-                    var rcMap = context.rcMap;
-                    var colDel = format.separator,
+                    var colDel = format.separator;
+                    var rcMap = context.rcMap,
+
                         dataURL = _nodesArray(context.rows).map(function (val, ir) {
                             if (rcMap.isIgnore(ir)) {
                                 return rcMap.handleRowColMapProp(rcMap.TYPE.IGNORE);
                             }
                             var cols = val.querySelectorAll('th, td');
                             return _nodesArray(cols).map(function (val, ic) {
+                                var _return = settings.formatValue(val.textContent);
                                 if (rcMap.isIgnore(ir, ic)) {
                                     return rcMap.handleRowColMapProp(rcMap.TYPE.IGNORE);
                                 } else if (rcMap.isEmpty(ir, ic)) {
                                     return rcMap.handleRowColMapProp(rcMap.TYPE.EMPTY);
                                 } else {
-                                    return val.textContent
+                                    return rcMap.handleRowColMapProp(rcMap.TYPE.DEFAULT, ir, ic, _return, colDel);
                                 }
                             }).filter(_defined).join(colDel);
                         }).filter(_defined).join(self.rowDel),
@@ -702,20 +436,22 @@
                     var self = this;
                     var settings = self.settings;
                     var format = TableExport.prototype.formatConfig[_FORMAT.CSV];
-                    var rcMap = context.rcMap;
-                    var colDel = format.separator,
+                    var colDel = format.separator;
+                    var rcMap = context.rcMap,
+
                         dataURL = _nodesArray(context.rows).map(function (val, ir) {
                             if (rcMap.isIgnore(ir)) {
                                 return rcMap.handleRowColMapProp(rcMap.TYPE.IGNORE);
                             }
                             var cols = val.querySelectorAll('th, td');
                             return _nodesArray(cols).map(function (val, ic) {
+                                var _return = '"' + settings.formatValue(val.textContent.replace(/"/g, '""')) + '"';
                                 if (rcMap.isIgnore(ir, ic)) {
                                     return rcMap.handleRowColMapProp(rcMap.TYPE.IGNORE);
                                 } else if (rcMap.isEmpty(ir, ic)) {
                                     return rcMap.handleRowColMapProp(rcMap.TYPE.EMPTY);
                                 } else {
-                                    return '"' + settings.formatValue(val.textContent.replace(/"/g, '""')) + '"';
+                                    return rcMap.handleRowColMapProp(rcMap.TYPE.DEFAULT, ir, ic, _return, colDel);
                                 }
                             }).filter(_defined).join(colDel);
                         }).filter(_defined).join(self.rowDel),
@@ -741,20 +477,22 @@
                     var self = this;
                     var settings = self.settings;
                     var format = TableExport.prototype.formatConfig[_FORMAT.TXT];
-                    var rcMap = context.rcMap;
-                    var colDel = format.separator,
+                    var colDel = format.separator;
+                    var rcMap = context.rcMap,
+
                         dataURL = _nodesArray(context.rows).map(function (val, ir) {
                             if (rcMap.isIgnore(ir)) {
                                 return rcMap.handleRowColMapProp(rcMap.TYPE.IGNORE);
                             }
                             var cols = val.querySelectorAll('th, td');
                             return _nodesArray(cols).map(function (val, ic) {
+                                var _return = settings.formatValue(val.textContent);
                                 if (rcMap.isIgnore(ir, ic)) {
                                     return rcMap.handleRowColMapProp(rcMap.TYPE.IGNORE);
                                 } else if (rcMap.isEmpty(ir, ic)) {
                                     return rcMap.handleRowColMapProp(rcMap.TYPE.EMPTY);
                                 } else {
-                                    return settings.formatValue(val.textContent);
+                                    return rcMap.handleRowColMapProp(rcMap.TYPE.DEFAULT, ir, ic, _return, colDel);
                                 }
                             }).filter(_defined).join(colDel);
                         }).filter(_defined).join(self.rowDel),
@@ -1065,7 +803,7 @@
          * @constructor
          */
         var RowColMap = function () {
-            this.rcMap = {};
+            this.rcMap = [];
 
             this.isIgnore = function (ir, ic) {
                 var _ignore = RowColMap.prototype.TYPE.IGNORE;
@@ -1074,6 +812,10 @@
             this.isEmpty = function (ir, ic) {
                 var _empty = RowColMap.prototype.TYPE.EMPTY;
                 return this.getRowColMapProp(ir, ic, _empty);
+            };
+            this.isSpan = function (ir) {
+                var _span = RowColMap.prototype.TYPE.SPAN;
+                return this.getRowColMapProp(ir, undefined, _span);
             };
             this.getRowColMapProp = function (ir, ic, key) {
                 if (this.rcMap[ir]) {
@@ -1086,27 +828,63 @@
                 return false;
             };
             this.setRowColMapProp = function (ir, ic, key, value) {
-                this.rcMap[ir] = this.rcMap[ir] || {};
-                if (typeof ic === 'undefined') {
+                this.rcMap[ir] = this.rcMap[ir] || [];
+                if (typeof key === 'undefined') {
+                    this.rcMap[ir][ic] = value;
+                } else if (typeof ic === 'undefined') {
                     this.rcMap[ir][key] = value;
                 } else {
-                    this.rcMap[ir][ic] = this.rcMap[ir][ic] || {};
+                    this.rcMap[ir][ic] = this.rcMap[ir][ic] || [];
                     this.rcMap[ir][ic][key] = value;
                 }
             };
-            this.handleRowColMapProp = function (type) {
+            this.convertSpanToArray = function (ir, ic, _return, colDel) {
+                if (this.rcMap[ir] && this.isSpan(ir)) {
+                    var threshold = ic + RowColMap.prototype.OFFSET,
+                        total = 0,
+                        count = 0,
+                        skip = null,
+                        max = Math.max.apply(Math, this.rcMap[ir]);
+
+                    for (var _col = 0; _col <= max; _col++) {
+                        skip = this.rcMap[ir][_col];
+
+                        if (!skip) {
+                            count++
+                        } else {
+                            total = (count >= ic)
+                                ? total + skip
+                                : total
+                        }
+                        if (count === threshold) {
+                            break;
+                        }
+                    }
+                    return (typeof colDel !== 'undefined')
+                        ? new Array(total).concat(_return).join(colDel)
+                        : new Array(total).concat(_return);
+                }
+                return _return;
+            };
+            this.handleRowColMapProp = function (type, ir, ic, _return, colDel) {
                 switch (type) {
                     case RowColMap.prototype.TYPE.IGNORE:
                         return;
                     case RowColMap.prototype.TYPE.EMPTY:
                         return ' ';
+                    case RowColMap.prototype.TYPE.DEFAULT:
+                    default:
+                        return this.convertSpanToArray(ir, ic, _return, colDel);
                 }
             };
         };
         RowColMap.prototype = {
+            OFFSET: 1,
             TYPE: {
                 IGNORE: 'ignore',
-                EMPTY: 'empty'
+                EMPTY: 'empty',
+                SPAN: 'span',
+                DEFAULT: 'default'
             },
             build: function (context) {
                 var self = this;
@@ -1114,10 +892,10 @@
 
                 var OFFSET = 1;
 
-                var rowLength = context.rows.length;
-                var colLength = Math.max.apply(null, _nodesArray(context.rows).map(function (val) {
-                    return val.querySelectorAll('th, td').length;
-                }));
+                // var rowLength = context.rows.length;
+                // var colLength = Math.max.apply(null, _nodesArray(context.rows).map(function (val) {
+                //     return val.querySelectorAll('th, td').length;
+                // }));
 
                 var _RowColMap = new RowColMap();
 
@@ -1133,35 +911,46 @@
                 };
                 var handleRowSpan = function (val, ir, ic) {
                     var rowSpan = val.getAttribute('rowspan');
-                    var hasColSpan = val.hasAttribute('colspan');
-
-                    var _row = ir + OFFSET;
-                    handleColSpan(val, _row - OFFSET, ic);
-                    while (rowSpan > OFFSET) {
-                        if (_row > rowLength) {
-                            break;
-                        }
-                        if (hasColSpan) {
-                            handleColSpan(val, _row, ic);
-                        }
-                        _RowColMap.setRowColMapProp(_row, ic, _RowColMap.TYPE.EMPTY, true);
-                        rowSpan--;
-                        _row++;
+                    for (var _row = 1; _row < rowSpan; _row++) {
+                        _RowColMap.setRowColMapProp(_row + ir, undefined, _RowColMap.TYPE.SPAN, true);
+                        _RowColMap.setRowColMapProp(_row + ir, ic, undefined, 1);
                     }
                 };
                 var handleColSpan = function (val, ir, ic) {
                     var colSpan = val.getAttribute('colspan');
-
-                    var _col = ic + OFFSET;
-                    while (colSpan > OFFSET) {
-                        if (_col > colLength) {
-                            break;
-                        }
-                        _RowColMap.setRowColMapProp(ir, _col, _RowColMap.TYPE.EMPTY, true);
-                        colSpan--;
-                        _col++;
-                    }
+                    _RowColMap.setRowColMapProp(ir, ic + OFFSET, undefined, colSpan - OFFSET);
                 };
+                // var handleRowSpan = function (val, ir, ic) {
+                //     var rowSpan = val.getAttribute('rowspan');
+                //     var hasColSpan = val.hasAttribute('colspan');
+                //
+                //     var _row = ir + OFFSET;
+                //     handleColSpan(val, _row - OFFSET, ic);
+                //     while (rowSpan > OFFSET) {
+                //         if (_row > rowLength) {
+                //             break;
+                //         }
+                //         if (hasColSpan) {
+                //             handleColSpan(val, _row, ic);
+                //         }
+                //         _RowColMap.setRowColMapProp(_row, ic, _RowColMap.TYPE.EMPTY, true);
+                //         rowSpan--;
+                //         _row++;
+                //     }
+                // };
+                // var handleColSpan = function (val, ir, ic) {
+                //     var colSpan = val.getAttribute('colspan');
+                //
+                //     var _col = ic + OFFSET;
+                //     while (colSpan > OFFSET) {
+                //         if (_col > colLength) {
+                //             break;
+                //         }
+                //         _RowColMap.setRowColMapProp(ir, _col, _RowColMap.TYPE.EMPTY, true);
+                //         colSpan--;
+                //         _col++;
+                //     }
+                // };
 
                 _nodesArray(context.rows).map(function (val, ir) {
                     if (!!~settings.ignoreRows.indexOf(ir - context.thAdj) || _hasClass(val, settings.ignoreCSS)) {
