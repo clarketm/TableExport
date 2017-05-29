@@ -19,22 +19,15 @@
 
 
 ;(function (root, factory) {
-    var get$ = function (require) {
-        try {
-            require.resolve('jquery');
-        } catch (e) {
-        }
-        return require('jquery');
-    };
     if (typeof define === 'function' && define.amd) {
         // AMD
         define(function (require) {
-            var $ = get$(require);
+            var $; try { $ = require('jquery') } catch(e) {}
             return factory($, require('blobjs'), require('file-saverjs'), require('xlsx'));
         });
     } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
         // CommonJS
-        var $ = get$(require);
+        var $; try { $ = require('jquery') } catch(e) {}
         module.exports = factory($, require('blobjs'), require('file-saverjs'), require('xlsx'));
     } else {
         // Browser globals
