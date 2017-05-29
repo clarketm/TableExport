@@ -969,7 +969,8 @@
                         }
                         if (val.hasAttribute('rowspan')) {
                             handleRowSpan(val, ir, ic);
-                        } else if (val.hasAttribute('colspan')) {
+                        }
+                        if (val.hasAttribute('colspan')) {
                             handleColSpan(val, ir, ic);
                         }
                     });

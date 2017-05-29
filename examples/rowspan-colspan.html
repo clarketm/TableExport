@@ -11,7 +11,7 @@
     <iframe src="//www.googletagmanager.com/ns.html?id=GTM-TL44T9" height="0" width="0" style="display:none;visibility:hidden"></iframe>
 </noscript>
 
-<iframe src="./default.html" frameborder="0" width="100%" scrolling="no" onload="this.height=screen.height/3;"></iframe>
+<!--<iframe src="./default.html" frameborder="0" width="100%" scrolling="no" onload="this.height=screen.height/3;"></iframe>-->
 
 <main>
     <h1>Rowspan / Colspan</h1>
@@ -19,8 +19,9 @@
     <table id="rowspan-colspan-table-1">
         <tbody>
         <tr style="background: lightblue">
-            <td rowspan="3">[0, 0] / [1, 0] / [2, 0]</td>
-            <td colspan="2">[0, 1] / [0, 2]</td>
+            <td rowspan="2" colspan="2">[0, 0] / [1, 0] / [2, 0]</td>
+            <td>[0, 1] / [0, 2]</td>
+            <td>[0, 1] / [0, 2]</td>
         </tr>
         <tr style="background: lightgoldenrodyellow">
             <td>[1, 1]</td>
@@ -29,12 +30,14 @@
         <tr style="background: lightcoral">
             <td>[2, 1]</td>
             <td>[2, 2]</td>
+            <td>[2, 2]</td>
+            <td>[2, 2]</td>
         </tr>
         </tbody>
     </table>
 </main>
 
-<br>
+<!--<br>
 
 <main>
     <h1>Rowspan</h1>
@@ -112,13 +115,14 @@
         </tr>
         </tbody>
     </table>
-</main>
+</main>-->
 
 <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="../bower_components/js-xlsx/dist/xlsx.core.min.js"></script>
 <script type="text/javascript" src="../bower_components/blobjs/Blob.min.js"></script>
 <script type="text/javascript" src="../bower_components/file-saverjs/FileSaver.min.js"></script>
-<script type="text/javascript" src="../dist/js/tableexport.min.js"></script>
+<!--<script type="text/javascript" src="../dist/js/tableexport.min.js"></script>-->
+<script type="text/javascript" src="../src/stable/js/tableexport.js"></script>
 <script type="text/javascript" src="../assets/js/analytics.js"></script>
 <script>
 
@@ -133,7 +137,7 @@
     // **************************************
 
 
-    var RowColSpan2 = document.getElementById('rowspan-colspan-table-2');
+/*    var RowColSpan2 = document.getElementById('rowspan-colspan-table-2');
     new TableExport(RowColSpan2, {
         formats: ['xlsx', 'xls', 'csv', 'txt']
     });
@@ -152,7 +156,7 @@
     //    $(RowColSpan3).tableExport({
     //        formats: ['xlsx', 'xls', 'csv', 'txt']
     //    });
-    // **************************************
+    // ***************************************/
 
 </script>
 
