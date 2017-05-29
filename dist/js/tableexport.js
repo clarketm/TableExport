@@ -29,12 +29,12 @@
     if (typeof define === 'function' && define.amd) {
         // AMD
         define(function (require) {
-            var $ = get$();
+            var $ = get$(require);
             return factory($, require('blobjs'), require('file-saverjs'), require('xlsx'));
         });
     } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
         // CommonJS
-        var $ = get$();
+        var $ = get$(require);
         module.exports = factory($, require('blobjs'), require('file-saverjs'), require('xlsx'));
     } else {
         // Browser globals
