@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v5.0.0-rc.1 (https://www.travismclarke.com)
+ * TableExport.js v5.0.0-rc.2 (https://www.travismclarke.com)
  *
  * Copyright (c) 2017 - Travis Clarke - https://www.travismclarke.com
  *
@@ -142,7 +142,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '5.0.0-rc.1',
+            version: '5.0.0-rc.2',
             /**
              * Default library options.
              * @memberof TableExport.prototype
@@ -150,7 +150,7 @@
             defaults: {
                 headers: true,                              // (Boolean), display table headers (th or td elements) in the <thead>, (default: true)
                 footers: true,                              // (Boolean), display table footers (th or td elements) in the <tfoot>, (default: false)
-                formats: ['xls', 'csv', 'txt'],             // (String[]), filetype(s) for the export, (default: ['xls', 'csv', 'txt'])
+                formats: ['xlsx', 'csv', 'txt'],            // (String[]), filetype(s) for the export, (default: ['xlsx', 'csv', 'txt'])
                 filename: 'id',                             // (id, String), filename for the downloaded file, (default: 'id')
                 bootstrap: false,                           // (Boolean), style buttons using bootstrap, (default: true)
                 exportButtons: true,                        // (Boolean), automatically generate the built-in export buttons for each of the specified formats (default: true)
