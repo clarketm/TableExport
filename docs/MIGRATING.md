@@ -10,7 +10,7 @@
 1. [`exportButtons`](README.md#properties) added and has a default value of `true`.
 
 #### Methods
-1. [`getExportData`] added to allow direct access to the export data.
+1. [`getExportData`](README.md#methods) added to allow direct access to the export data.
 
 #### Settings
 1. [`defaultFileName`](README.md#settings) renamed to `defaultFilename`.
