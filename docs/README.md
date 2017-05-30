@@ -1,11 +1,9 @@
 # [TableExport](https://tableexport.v4.travismclarke.com) &nbsp; [![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
-The simple, easy-to-implement library to export HTML tables to xlsx, xls, csv, and txt files
-
-[Examples](#examples) **--** [Demo](https://www.travismclarke.com/tableexport/) **--** [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) **--** [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) **--** [TableExport + Webpack 1](https://github.com/clarketm/tableexport_webpack-v1_app) **--** [TableExport + Angular 4 + Webpack 2](https://github.com/clarketm/tableexport_angular4_webpack2_app).
+The simple, easy-to-implement library to export HTML tables to `xlsx`, `xls`, `csv`, and `txt` files.
 
 ## Docs
 * [Migrating from **3.x** to **4.x**?](MIGRATING.md)
-* [`v3` docs](https://www.travismclarke.com/tableexport/) and [README](https://github.com/clarketm/TableExport/tree/3.x.x#getting-started): 
+* [`v3` docs](https://tableexport.v3.travismclarke.com/) and [README](https://github.com/clarketm/TableExport/tree/3.x.x#getting-started): 
 * [`v4` docs](https://tableexport.v4.travismclarke.com) and [README](#getting-started) (below): 
 
 ## Getting Started
@@ -127,16 +125,16 @@ TableExport(document.getElementsByTagName("table"), {
 
 ### Properties
 
-* [`headers`](https://www.travismclarke.com/tableexport/examples/headers_footers.html)
-* [`footers`](https://www.travismclarke.com/tableexport/examples/headers_footers.html)
-* [`formats`](https://www.travismclarke.com/tableexport/examples/formats-xlsx-xls-csv-txt.html)
-* [`filename`](https://www.travismclarke.com/tableexport/examples/filename.html)
-* [`bootstrap`](https://www.travismclarke.com/tableexport/examples/bootstrap.html)
-* [`exportButtons`](https://www.travismclarke.com/tableexport/examples/exportButtons.html)
-* [`position`](https://www.travismclarke.com/tableexport/examples/position.html)
-* [`ignoreRows`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
-* [`ignoreCols`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
-* [`trimWhitespace`](https://www.travismclarke.com/tableexport/examples/whitespace.html)
+* [`headers`](https://tableexport.v3.travismclarke.com/examples/headers_footers.html)
+* [`footers`](https://tableexport.v3.travismclarke.com/examples/headers_footers.html)
+* [`formats`](https://tableexport.v3.travismclarke.com/examples/formats-xlsx-xls-csv-txt.html)
+* [`filename`](https://tableexport.v3.travismclarke.com/examples/filename.html)
+* [`bootstrap`](https://tableexport.v3.travismclarke.com/examples/bootstrap.html)
+* [`exportButtons`](https://tableexport.v3.travismclarke.com/examples/exportButtons.html)
+* [`position`](https://tableexport.v3.travismclarke.com/examples/position.html)
+* [`ignoreRows`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
+* [`ignoreCols`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
+* [`trimWhitespace`](https://tableexport.v3.travismclarke.com/examples/whitespace.html)
 
 ### Methods
 
@@ -147,7 +145,7 @@ TableExport supports additional methods (**getExportData**, **update**, **reset*
 var table = TableExport(document.getElementById("export-buttons-table"));
 ```
 
-#### [`getExportData`](https://www.travismclarke.com/tableexport/examples/exportButtons.html)
+#### [`getExportData`](https://tableexport.v3.travismclarke.com/examples/exportButtons.html)
 ```js
 /* get export data */
 var exportData = table.getExportData();     // useful for creating custom export buttons, i.e. when (exportButtons: false)
@@ -169,7 +167,7 @@ var exportData = table.getExportData();     // useful for creating custom export
 */
 ```
 
-#### [`update`](https://www.travismclarke.com/tableexport/examples/update_reset_remove.html)
+#### [`update`](https://tableexport.v3.travismclarke.com/examples/update_reset_remove.html)
 ```js
 /* update */
 table.update({
@@ -177,13 +175,13 @@ table.update({
 });
 ```
 
-#### [`reset`](https://www.travismclarke.com/tableexport/examples/update_reset_remove.html)
+#### [`reset`](https://tableexport.v3.travismclarke.com/examples/update_reset_remove.html)
 ```js
 /* reset */
 table.reset();             // useful for a dynamically altered table
 ```
 
-#### [`remove`](https://www.travismclarke.com/tableexport/examples/update_reset_remove.html)
+#### [`remove`](https://tableexport.v3.travismclarke.com/examples/update_reset_remove.html)
 ```js
 /* remove */
 table.remove();            // removes caption and buttons
@@ -192,7 +190,7 @@ table.remove();            // removes caption and buttons
 ### Settings
 Below are some of the popular configurable settings to customize the functionality of the library.
 
-#### [`ignoreCSS`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
+#### [`ignoreCSS`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
 ```js
 /* class selector to exclude/remove cells (<td> or <th>) or rows (<tr>) from the exported file(s). */
 TableExport.prototype.ignoreCSS = "tableexport-ignore";
@@ -202,7 +200,7 @@ TableExport.prototype.ignoreCSS = "tableexport-ignore";
 $.fn.tableExport.ignoreCSS = "tableexport-ignore" ;
 ```
 
-#### [`emptyCSS`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
+#### [`emptyCSS`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
 ```js
 /* class selector to replace cells (<td> or <th>) with an empty string (i.e. "blank cell") in the exported file(s). */
 TableExport.prototype.emptyCSS = "tableexport-empty";
@@ -294,28 +292,27 @@ When used alongside Bootstrap, there are four custom classes **`.xlsx`, `.xls`, 
 ### Examples
 
 #### Customizing Properties
-* [`headers`](https://www.travismclarke.com/tableexport/examples/headers_footers.html)
-* [`footers`](https://www.travismclarke.com/tableexport/examples/headers_footers.html)
-* [`formats`](https://www.travismclarke.com/tableexport/examples/formats-xlsx-xls-csv-txt.html)
-* [`filename`](https://www.travismclarke.com/tableexport/examples/filename.html)
-* [`bootstrap`](https://www.travismclarke.com/tableexport/examples/bootstrap.html)
-* [`exportButtons`](https://www.travismclarke.com/tableexport/examples/exportButtons.html)
-* [`position`](https://www.travismclarke.com/tableexport/examples/position.html)
-* [`ignoreRows`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
-* [`ignoreCols`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
-* [`trimWhitespace`](https://www.travismclarke.com/tableexport/examples/whitespace.html)
+* [`headers`](https://tableexport.v3.travismclarke.com/examples/headers_footers.html)
+* [`footers`](https://tableexport.v3.travismclarke.com/examples/headers_footers.html)
+* [`formats`](https://tableexport.v3.travismclarke.com/examples/formats-xlsx-xls-csv-txt.html)
+* [`filename`](https://tableexport.v3.travismclarke.com/examples/filename.html)
+* [`bootstrap`](https://tableexport.v3.travismclarke.com/examples/bootstrap.html)
+* [`exportButtons`](https://tableexport.v3.travismclarke.com/examples/exportButtons.html)
+* [`position`](https://tableexport.v3.travismclarke.com/examples/position.html)
+* [`ignoreRows`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
+* [`ignoreCols`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
+* [`trimWhitespace`](https://tableexport.v3.travismclarke.com/examples/whitespace.html)
 
 #### Customizing Settings
-* [`ignoreCSS`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
-* [`emptyCSS`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
+* [`ignoreCSS`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
+* [`emptyCSS`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
 
 #### Miscellaneous
-* [`Arabic`](https://www.travismclarke.com/tableexport/examples/arabic-language.html)
-* [`emoji`](https://www.travismclarke.com/tableexport/examples/unicode-emoji.html)
-* [`cell data types`](https://www.travismclarke.com/tableexport/examples/cell-data-types.html) (`string`, `number`, `boolean`, `date`)
+* [`Arabic`](https://tableexport.v3.travismclarke.com/examples/arabic-language.html)
+* [`emoji`](https://tableexport.v3.travismclarke.com/examples/unicode-emoji.html)
+* [`cell data types`](https://tableexport.v3.travismclarke.com/examples/cell-data-types.html) (`string`, `number`, `boolean`, `date`)
 
 #### Skeletons 
-A live, interactive demo can be found on the **[TableExport](https://www.travismclarke.com/tableexport/#live-demo)** webpage. 
 * [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) skeleton.
 * [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) skeleton.
 * [TableExport + Webpack 1](https://github.com/clarketm/tableexport_webpack-v1_app) skeleton.

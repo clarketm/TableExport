@@ -1,42 +1,19 @@
 [![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=3.x.x)](https://travis-ci.org/clarketm/TableExport)
-# [TableExport](https://www.travismclarke.com/tableexport)
-The simple, easy-to-implement plugin to export HTML tables to xlsx, xls, csv, and txt files
-
-[TableExport](https://www.travismclarke.com/tableexport/) demo **--** [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) skeleton **--** [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) skeleton **--** [TableExport + Webpack 1](https://github.com/clarketm/tableexport_webpack-v1_app) **--** [TableExport + Angular 4 + Webpack 2](https://github.com/clarketm/tableexport_angular4_webpack2_app).
+# [TableExport](https://tableexport.v3.travismclarke.com)
+The simple, easy-to-implement plugin to export HTML tables to `xlsx`, `xls`, `csv`, and `txt` files.
 
 > **Notice:** As of May 2017, [v3.3](https://github.com/clarketm/TableExport/releases/tag/v3.3.13) has be superceded by [v4.0.10](https://github.com/clarketm/TableExport/releases/tag/v4.0.10).
 
 # Go to [`v4.0.10`](https://github.com/clarketm/TableExport/releases/tag/v4.0.10):
-#### Examples:
 
-#### Customizing Properties
-* [`headers`](https://www.travismclarke.com/tableexport/examples/headers_footers.html)
-* [`footers`](https://www.travismclarke.com/tableexport/examples/headers_footers.html)
-* [`formats`](https://www.travismclarke.com/tableexport/examples/formats-xlsx-xls-csv-txt.html)
-* [`filename`](https://www.travismclarke.com/tableexport/examples/filename.html)
-* [`bootstrap`](https://www.travismclarke.com/tableexport/examples/bootstrap.html)
-* [`exportButtons`](https://www.travismclarke.com/tableexport/examples/exportButtons.html)
-* [`position`](https://www.travismclarke.com/tableexport/examples/position.html)
-* [`ignoreRows`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
-* [`ignoreCols`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
-* [`trimWhitespace`](https://www.travismclarke.com/tableexport/examples/whitespace.html)
-
-#### Customizing Settings
-* [`ignoreCSS`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
-* [`emptyCSS`](https://www.travismclarke.com/tableexport/examples/ignore-row-cols-cells.html)
-
-#### Miscellaneous
-* [`Arabic`](https://www.travismclarke.com/tableexport/examples/arabic-language.html)
-* [`emoji`](https://www.travismclarke.com/tableexport/examples/unicode-emoji.html)
-* [`cell data types`](https://www.travismclarke.com/tableexport/examples/cell-data-types.html) (`string`, `number`, `boolean`, `date`)
-
-> **So why the major version bump you ask?** Well, the rationale for a major version bump is that due to a change in `TableExport`'s dependencies, in [v4.0.10](https://github.com/clarketm/TableExport/releases/tag/v4.0.10) forth, JQuery will no longer be a **required** dependency, instead it will be purely **optional**. So existing implementations *with* jQuery will continue to work unimpeded, now with the added benefit that new projets no longer need to rely on the overhead of such large library, unless of course you prefer jQuery or it is already part of your project.
+### Live Demo 
+A live, interactive demo can be found on the **[TableExport](https://tableexport.v3.travismclarke.com/#live-demo)** webpage.
 
 ## Getting Started
 
 ### Download and Setup
 
-To use this plugin, include the [jQuery](https://jquery.com) library, [FileSaver.js](https://github.com/clarketm/FileSaver.js/) script, and [TableExport.js](https://www.travismclarke.com/tableexport) plugin before the closing `<body>` tag of your HTML document:
+To use this plugin, include the [jQuery](https://jquery.com) library, [FileSaver.js](https://github.com/clarketm/FileSaver.js/) script, and [TableExport.js](https://tableexport.v3.travismclarke.com) plugin before the closing `<body>` tag of your HTML document:
 
 ```html
 <script src="jquery.js"></script>
@@ -86,7 +63,7 @@ $ npm install tableexport
 * [Bootstrap](http://getbootstrap.com/getting-started/#download) (3.1.0 or higher)
 
 #### Add-Ons:
-In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, you must include the following third-party script to your project before [FileSaver.js](https://github.com/clarketm/FileSaver.js/) and [TableExport.js](https://www.travismclarke.com/tableexport).
+In order to provide **Office Open XML SpreadsheetML Format ( .xlsx )** support, you must include the following third-party script to your project before [FileSaver.js](https://github.com/clarketm/FileSaver.js/) and [TableExport.js](https://tableexport.v3.travismclarke.com).
 
 * [xlsx.core.js](https://github.com/clarketm/js-xlsx) by _clarketm_
 
@@ -116,7 +93,7 @@ Until [Safari](https://github.com/clarketm/FileSaver.js/issues/242) provides nat
 
 ### CSS
 
-By default, [TableExport.js](https://www.travismclarke.com/tableexport) utilizes the [Bootstrap](http://getbootstrap.com/getting-started/#download) CSS framework to deliver enhanced table and button styling. For non-Bootstrap projects, initialize with the `bootstrap` property set to `false`.
+By default, [TableExport.js](https://tableexport.v3.travismclarke.com) utilizes the [Bootstrap](http://getbootstrap.com/getting-started/#download) CSS framework to deliver enhanced table and button styling. For non-Bootstrap projects, initialize with the `bootstrap` property set to `false`.
 
 ```js
 $("table").tableExport({
@@ -178,12 +155,12 @@ tables.remove();            // removes caption and buttons
 
 ### Properties
 
-A table of available properties and their usage can be found **[here](https://www.travismclarke.com/tableexport/#properties)**
+A table of available properties and their usage can be found **[here](https://tableexport.v3.travismclarke.com/#properties)**
 
 
 ### Methods
 
-A table of available methods and their usage can be found **[here](https://www.travismclarke.com/tableexport/#methods)**
+A table of available methods and their usage can be found **[here](https://tableexport.v3.travismclarke.com/#methods)**
 
 
 ### Settings
@@ -261,14 +238,38 @@ $.fn.tableExport.rowDel = "\r\n";
 *only _partial_ support for `xls` and `xlsx`: requires third-party dependency ([Blob.js](https://github.com/clarketm/Blob.js/))
 
 ### Live Demo 
-A live, interactive demo can be found on the **[TableExport](https://www.travismclarke.com/tableexport/#live-demo)** webpage. 
+A live, interactive demo can be found on the **[TableExport](https://tableexport.v3.travismclarke.com/#live-demo)** webpage. 
+
+#### Examples:
+#### Customizing Properties
+* [`headers`](https://tableexport.v3.travismclarke.com/examples/headers_footers.html)
+* [`footers`](https://tableexport.v3.travismclarke.com/examples/headers_footers.html)
+* [`formats`](https://tableexport.v3.travismclarke.com/examples/formats-xlsx-xls-csv-txt.html)
+* [`filename`](https://tableexport.v3.travismclarke.com/examples/filename.html)
+* [`bootstrap`](https://tableexport.v3.travismclarke.com/examples/bootstrap.html)
+* [`exportButtons`](https://tableexport.v3.travismclarke.com/examples/exportButtons.html)
+* [`position`](https://tableexport.v3.travismclarke.com/examples/position.html)
+* [`ignoreRows`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
+* [`ignoreCols`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
+* [`trimWhitespace`](https://tableexport.v3.travismclarke.com/examples/whitespace.html)
+
+#### Customizing Settings
+* [`ignoreCSS`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
+* [`emptyCSS`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
+
+#### Miscellaneous
+* [`Arabic`](https://tableexport.v3.travismclarke.com/examples/arabic-language.html)
+* [`emoji`](https://tableexport.v3.travismclarke.com/examples/unicode-emoji.html)
+* [`cell data types`](https://tableexport.v3.travismclarke.com/examples/cell-data-types.html) (`string`, `number`, `boolean`, `date`)
+
+#### Skeletons 
 * [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) skeleton.
 * [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) skeleton.
 * [TableExport + Webpack 1](https://github.com/clarketm/tableexport_webpack-v1_app) skeleton.
 * [TableExport + Angular 4 + Webpack 2](https://github.com/clarketm/tableexport_angular4_webpack2_app) skeleton.
 
 ### License
-[TableExport.js](https://www.travismclarke.com/tableexport) is licensed under the terms of the [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0.html) License
+[TableExport.js](https://tableexport.v3.travismclarke.com) is licensed under the terms of the [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0.html) License
 
 ### :star: Credits
 Special thanks the the following contributors: 
