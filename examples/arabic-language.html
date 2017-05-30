@@ -43,7 +43,9 @@
 <script>
 
     var ArabicTable = document.getElementById('arabic-table');
-    TableExport(ArabicTable);
+    TableExport(ArabicTable, {
+        formats: ['xlsx']
+    });
 
 </script>
 
