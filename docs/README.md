@@ -1,7 +1,3 @@
----
-search: false
----
-
 [![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
 
 # [TableExport](https://tableexport.v4.travismclarke.com)
