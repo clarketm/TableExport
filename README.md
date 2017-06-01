@@ -1,4 +1,6 @@
-# [TableExport](https://tableexport.v4.travismclarke.com) &nbsp; [![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
+[![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
+
+# [TableExport](https://tableexport.v4.travismclarke.com)
 The simple, easy-to-implement library to export HTML tables to `xlsx`, `xls`, `csv`, and `txt` files.
 
 ## Docs
@@ -328,6 +330,7 @@ When used alongside Bootstrap, there are four custom classes **`.xlsx`, `.xls`, 
 - [x] Reimplement and test the `update`, `reset`, and `remove` **TableExport** prototype properties without requiring jQuery.
 - [x] Make jQuery as *peer dependency* and ensure proper **TableExport** rendering in browser, AMD, and CommonJS environments.
 - [x] Force jQuery to be an optionally loaded module.
+- [ ] Use the enhanced [SheetJS](https://github.com/SheetJS/js-xlsx#supported-output-formats) `csv` and `txt` formats when the library is available.
 - [ ] Allow `ignoreCSS` and `emptyCSS` to work with any `selector|selector[]` instead of solely a single CSS class.
 - [ ] Ensure (via testing) full consistency and backwards-compatibility for jQuery.
 - [ ] Add **Export as PDF** support.

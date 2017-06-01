@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v5.0.0-rc.2 (https://www.travismclarke.com)
+ * TableExport.js v5.0.0-rc.3 (https://www.travismclarke.com)
  *
  * Copyright (c) 2017 - Travis Clarke - https://www.travismclarke.com
  *
@@ -106,7 +106,7 @@
                     };
                 })();
 
-                context.rcMap = new RowColMap().build.call(self, context);
+                context.rcMap = new RowColMap().build(context, settings);
 
                 var formatMap = {};
                 for (var type in _FORMAT) {
@@ -142,7 +142,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '5.0.0-rc.2',
+            version: '5.0.0-rc.3',
             /**
              * Default library options.
              * @memberof TableExport.prototype
@@ -811,13 +811,15 @@
             };
             this.getRowColMapProp = function (ir, ic, key) {
                 if (this.rcMap[ir]) {
-                    if (typeof ic === 'undefined') {
+                    if (typeof key === 'undefined') {
+                        return this.rcMap[ir][ic];
+                    } else if (typeof ic === 'undefined') {
                         return this.rcMap[ir][key];
                     } else if (this.rcMap[ir][ic]) {
                         return this.rcMap[ir][ic][key];
                     }
                 }
-                return false;
+                return undefined;
             };
             this.setRowColMapProp = function (ir, ic, key, value) {
                 this.rcMap[ir] = this.rcMap[ir] || [];
@@ -880,38 +882,48 @@
                 SPAN: 'span',
                 DEFAULT: 'default'
             },
-            build: function (context) {
+            build: function (context, settings) {
                 var self = this;
-                var settings = self.settings;
 
-                var OFFSET = 1;
-
-                var _RowColMap = new RowColMap();
+                var OFFSET = self.OFFSET;
+                var rowLength = self.rowLength = context.rows.length;
+                // var colLength = self.colLength = Math.max.apply(null,
+                //     _nodesArray(context.rows).map(function (val) {
+                //         return val.querySelectorAll('th, td').length
+                //     }));
 
                 var handleIgnoreRow = function (ir) {
-                    _RowColMap.setRowColMapProp(ir, undefined, _RowColMap.TYPE.IGNORE, true);
-
+                    self.setRowColMapProp(ir, undefined, self.TYPE.IGNORE, true);
                 };
                 var handleIgnoreCol = function (ir, ic) {
-                    _RowColMap.setRowColMapProp(ir, ic, _RowColMap.TYPE.IGNORE, true);
+                    self.setRowColMapProp(ir, ic, self.TYPE.IGNORE, true);
                 };
                 var handleEmpty = function (ir, ic) {
-                    _RowColMap.setRowColMapProp(ir, ic, _RowColMap.TYPE.EMPTY, true);
+                    self.setRowColMapProp(ir, ic, self.TYPE.EMPTY, true);
                 };
                 var handleRowSpan = function (val, ir, ic) {
                     var rowSpan = val.getAttribute('rowspan');
                     var hasColSpan = val.hasAttribute('colspan');
-                    hasColSpan && handleColSpan(val, ir, ic);
-                    for (var _row = 1; _row < rowSpan; _row++) {
-                        _RowColMap.setRowColMapProp(_row + ir, undefined, _RowColMap.TYPE.SPAN, true);
-                        _RowColMap.setRowColMapProp(_row + ir, ic, undefined, 1);
+
+                    for (var _row = 0; _row < rowSpan; _row++) {
+                        if (_row + ir >= rowLength) {
+                            return;
+                        }
                         hasColSpan && handleColSpan(val, _row + ir, ic);
+                        if (_row >= 1) {
+                            self.setRowColMapProp(_row + ir, undefined, self.TYPE.SPAN, true);
+                            self.setRowColMapProp(_row + ir, ic, undefined, 1);
+                        }
                     }
                 };
                 var handleColSpan = function (val, ir, ic) {
                     var colSpan = val.getAttribute('colspan');
-                    _RowColMap.setRowColMapProp(ir, undefined, _RowColMap.TYPE.SPAN, true);
-                    _RowColMap.setRowColMapProp(ir, ic + OFFSET, undefined, colSpan - OFFSET);
+
+                    if (colSpan <= 1) {
+                        return;
+                    }
+                    self.setRowColMapProp(ir, undefined, self.TYPE.SPAN, true);
+                    self.setRowColMapProp(ir, ic + OFFSET, undefined, colSpan - OFFSET);
                 };
 
                 _nodesArray(context.rows).map(function (val, ir) {
@@ -934,7 +946,7 @@
                     });
                 });
 
-                return _RowColMap;
+                return self;
             }
         };
 
