@@ -329,7 +329,7 @@
                             } else if (rcMap.isEmpty(ir, ic)) {
                                 return rcMap.handleRowColMapProp(rcMap.TYPE.EMPTY);
                             } else {
-                                return rcMap.handleRowColMapProp(rcMap.TYPE.DEFAULT, ir, ic, _return, colDel);
+                                return rcMap.handleRowColMapProp(rcMap.TYPE.DEFAULT, ir, ic, key, _return, colDel);
                             }
                         }).processCols(key, colDel);
                     }).processRows(key, self.rowDel);
@@ -688,7 +688,7 @@
                     this.rcMap[ir][ic][key] = value;
                 }
             };
-            this.convertSpanToArray = function (ir, ic, _return, colDel) {
+            this.convertSpanToArray = function (ir, ic, key, _return, colDel) {
                 if (this.rcMap[ir] && this.isSpan(ir)) {
                     var threshold = ic + RowColMap.prototype.OFFSET,
                         total = 0,
@@ -712,13 +712,13 @@
                             break;
                         }
                     }
-                    return (typeof colDel !== 'undefined')
-                        ? new Array(total).concat(_return).join(colDel)
-                        : new Array(total).concat(_return);
+                    return (_isEnhanced(key))
+                        ? new Array(total).concat(_return)
+                        : new Array(total).concat(_return).join(colDel);
                 }
                 return _return;
             };
-            this.handleRowColMapProp = function (type, ir, ic, _return, colDel) {
+            this.handleRowColMapProp = function (type, ir, ic, key, _return, colDel) {
                 switch (type) {
                     case RowColMap.prototype.TYPE.IGNORE:
                         return;
@@ -726,7 +726,7 @@
                         return ' ';
                     case RowColMap.prototype.TYPE.DEFAULT:
                     default:
-                        return this.convertSpanToArray(ir, ic, _return, colDel);
+                        return this.convertSpanToArray(ir, ic, key, _return, colDel);
                 }
             };
         };
