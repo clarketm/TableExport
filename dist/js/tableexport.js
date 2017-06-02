@@ -22,12 +22,20 @@
     if (typeof define === 'function' && define.amd) {
         // AMD
         define(function (require) {
-            var $; try { $ = require('jquery') } catch (e) {}
+            var $;
+            try {
+                $ = require('jquery')
+            } catch (e) {
+            }
             return factory($, require('blobjs'), require('file-saverjs'), require('xlsx'));
         });
     } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
         // CommonJS
-        var $; try { $ = require('jquery') } catch (e) {}
+        var $;
+        try {
+            $ = require('jquery')
+        } catch (e) {
+        }
         module.exports = factory($, require('blobjs'), require('file-saverjs'), require('xlsx'));
     } else {
         // Browser globals
@@ -44,7 +52,7 @@
         var TableExport = function (selectors, options) {
             var self = this;
 
-            if (!selectors) return new Error('"selectors" is required');
+            if (!selectors) return _handleError('"selectors" is required. \nUsage: TableExport(selectors, options)');
             if (!self) return new TableExport(selectors, options);
 
             /**
@@ -108,14 +116,19 @@
 
                 context.rcMap = new RowColMap().build(context, settings);
 
-                var formatMap = {};
-                for (var type in _FORMAT) {
-                    formatMap[_FORMAT[type]] = 0;
-                }
+                var formatMap = _FORMAT_LIST
+                    .reduce(function (acc, cur) {
+                        acc[cur] = 0;
+                        return acc;
+                    }, {});
 
                 settings.formats.forEach(
                     function (key) {
-                        if (!formatMap[key]) {
+                        if (!_isValidFormat(key)) {
+                            return _handleError('"' + key + '" is not a valid format. \nFormats: ' + _FORMAT_LIST.join(', '))
+                        } else if (!_hasDependencies(key)) {
+                            return _handleError('"' + key + '" requires "js-xlsx".');
+                        } else if (!formatMap[key]) {
                             context.setExportData(self.exporters.build.call(self, context, key));
                             formatMap[key]++;
                         }
@@ -158,6 +171,8 @@
             CONSTANTS: {
                 FORMAT: {
                     XLSX: 'xlsx',
+                    XLSM: 'xlsm',
+                    XLSB: 'xlsb',
                     BIFF2: 'biff2',
                     XLS: 'xls',
                     CSV: 'csv',
@@ -213,19 +228,31 @@
              */
             entityMap: {'&': '&#38;', '<': '&#60;', '>': '&#62;', "'": '&#39;', '/': '&#47;'},
             /**
-             * XLSX (Open XML spreadsheet) file extension configuration
-             * @memberof TableExport.prototype
-             */
-            /**
              * Format configuration
              * @memberof TableExport.prototype
              */
             formatConfig: {
+                /**
+                 * XLSX (Open XML spreadsheet) file extension configuration
+                 * @memberof TableExport.prototype
+                 */
                 xlsx: {
                     defaultClass: 'xlsx',
                     buttonContent: 'Export to xlsx',
                     mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                     fileExtension: '.xlsx'
+                },
+                xlsm: {
+                    defaultClass: 'xlsm',
+                    buttonContent: 'Export to xlsm',
+                    mimeType: 'application/vnd.ms-excel.sheet.macroEnabled.main+xml',
+                    fileExtension: '.xlsm'
+                },
+                xlsb: {
+                    defaultClass: 'xlsb',
+                    buttonContent: 'Export to xlsb',
+                    mimeType: 'application/vnd.ms-excel.sheet.binary.macroEnabled.main',
+                    fileExtension: '.xlsb'
                 },
                 /**
                  * XLS (Binary spreadsheet) file extension configuration
@@ -307,12 +334,10 @@
                             }
                         }
                         switch (key) {
-                            case _FORMAT.XLSX:
-                            case _FORMAT.XLS:
-                            case _FORMAT.TXT:
-                                return settings.formatValue(val.textContent);
                             case _FORMAT.CSV:
                                 return '"' + settings.formatValue(val.textContent.replace(/"/g, '""')) + '"';
+                            default:
+                                return settings.formatValue(val.textContent);
                         }
                     };
 
@@ -530,9 +555,9 @@
             },
             downloadDataURI: function (dataURI, name, extension) {
                 var encodedUri = encodeURI(dataURI);
-                var link = document.createElement("a");
-                link.setAttribute("href", encodedUri);
-                link.setAttribute("download", name + extension);
+                var link = document.createElement('a');
+                link.setAttribute('href', encodedUri);
+                link.setAttribute('download', name + extension);
                 document.body.appendChild(link);
                 link.click();
             },
@@ -618,7 +643,7 @@
                 if (this.exists(key) && !overwrite) {
                     return;
                 }
-                if (typeof value !== 'string') return this.error('"value" must be a string');
+                if (typeof value !== 'string') return _handleError('"value" must be a string.');
                 this.store.setItem(key, value);
                 return _key;
             };
@@ -633,9 +658,6 @@
             this.removeItem = function (_key) {
                 var key = this.getKey(_key);
                 return this.store.removeItem(key);
-            };
-            this.error = function (message) {
-                return new Error('error:', message);
             };
         };
         LocalStorage.getInstance = function () {
@@ -825,6 +847,12 @@
             return TableExport.prototype.CONSTANTS.FORMAT;
         })();
 
+        var _FORMAT_LIST = (function () {
+            return Object.keys(_FORMAT).map(function (key) {
+                return _FORMAT[key];
+            });
+        })();
+
         var _TYPE = (function () {
             return TableExport.prototype.CONSTANTS.TYPE;
         })();
@@ -912,6 +940,30 @@
 
         function _toArray(val) {
             return val && [].concat.apply([], val);
+        }
+
+        function _isValidFormat(key) {
+            return ~_FORMAT_LIST.indexOf(key);
+        }
+
+        function _hasDependencies(key) {
+            var hasDependencies;
+
+            switch (key) {
+                case _FORMAT.TXT:
+                case _FORMAT.CSV:
+                case _FORMAT.XLS:
+                    hasDependencies = true;
+                    break;
+                default:
+                    hasDependencies = _isEnhanced(key);
+            }
+            return hasDependencies
+        }
+
+        function _handleError(msg) {
+            console.error(msg);
+            return new Error(msg)
         }
 
         function _getBootstrapSettings(bootstrap, bootstrapConfig, defaultButton) {
