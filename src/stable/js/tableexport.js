@@ -22,7 +22,11 @@
     if (typeof define === 'function' && define.amd) {
         // AMD
         define(function (require) {
-            var $; try { $ = require('jquery') } catch (e) {}
+            var $;
+            try {
+                $ = require('jquery')
+            } catch (e) {
+            }
             return factory($, require('blobjs'), require('file-saverjs'), require('xlsx'));
         });
     } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
@@ -236,7 +240,8 @@
                     buttonContent: 'Export to xls',
                     separator: '\t',
                     mimeType: 'application/vnd.ms-excel',
-                    fileExtension: '.xls'
+                    fileExtension: '.xls',
+                    enforceStrictRFC4180: false
                 },
                 /**
                  * CSV (Comma Separated Values) file extension configuration
@@ -247,7 +252,8 @@
                     buttonContent: 'Export to csv',
                     separator: ',',
                     mimeType: 'text/csv',
-                    fileExtension: '.csv'
+                    fileExtension: '.csv',
+                    enforceStrictRFC4180: true
                 },
                 /**
                  * TXT (Plain Text) file extension configuration
@@ -258,7 +264,8 @@
                     buttonContent: 'Export to txt',
                     separator: '  ',
                     mimeType: 'text/plain',
-                    fileExtension: '.txt'
+                    fileExtension: '.txt',
+                    enforceStrictRFC4180: true
                 }
             },
             /**
