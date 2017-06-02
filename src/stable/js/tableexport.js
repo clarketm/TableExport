@@ -22,11 +22,7 @@
     if (typeof define === 'function' && define.amd) {
         // AMD
         define(function (require) {
-            var $;
-            try {
-                $ = require('jquery')
-            } catch (e) {
-            }
+            var $; try { $ = require('jquery') } catch (e) {}
             return factory($, require('blobjs'), require('file-saverjs'), require('xlsx'));
         });
     } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
