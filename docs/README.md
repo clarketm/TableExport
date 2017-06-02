@@ -310,9 +310,11 @@ When used alongside Bootstrap, there are four custom classes **`.xlsx`, `.xls`, 
 * [`emptyCSS`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
 
 #### Miscellaneous
-* [`Arabic`](https://tableexport.v3.travismclarke.com/examples/arabic-language.html)
-* [`emoji`](https://tableexport.v3.travismclarke.com/examples/unicode-emoji.html)
+* [`rowspan`](https://tableexport.v3.travismclarke.com/examples/rowspan-colspan.html)
+* [`colspan`](https://tableexport.v3.travismclarke.com/examples/rowspan-colspan.html)
 * [`cell data types`](https://tableexport.v3.travismclarke.com/examples/cell-data-types.html) (`string`, `number`, `boolean`, `date`)
+* [`emoji`](https://tableexport.v3.travismclarke.com/examples/unicode-emoji.html)
+* [`Arabic`](https://tableexport.v3.travismclarke.com/examples/arabic-language.html)
 
 #### Skeletons 
 * [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) skeleton.
