@@ -683,9 +683,16 @@
                 var _empty = RowColMap.prototype.TYPE.EMPTY;
                 return this.getRowColMapProp(ir, ic, _empty);
             };
+            this.isRowSpan = function (ir) {
+                var _rowspan = RowColMap.prototype.TYPE.ROWSPAN;
+                return this.getRowColMapProp(ir, undefined, _rowspan);
+            };
+            this.isColSpan = function (ir) {
+                var _colspan = RowColMap.prototype.TYPE.COLSPAN;
+                return this.getRowColMapProp(ir, undefined, _colspan);
+            };
             this.isSpan = function (ir) {
-                var _span = RowColMap.prototype.TYPE.SPAN;
-                return this.getRowColMapProp(ir, undefined, _span);
+                return this.isRowSpan(ir) || this.isColSpan(ir);
             };
             this.getRowColMapProp = function (ir, ic, key) {
                 if (this.rcMap[ir]) {
@@ -710,30 +717,32 @@
                     this.rcMap[ir][ic][key] = value;
                 }
             };
-            this.convertSpanToArray = function (ir, ic, key, _return, colDel) {
-                if (this.rcMap[ir] && this.isSpan(ir)) {
-                    var threshold = ic + RowColMap.prototype.OFFSET,
-                        total = 0,
-                        count = 0,
-                        skip = null,
-                        max = Math.max.apply(Math,
-                            Object.keys(this.rcMap[ir]).filter(_numeric)
-                        );
+            this.generateTotal = function (ir, ic) {
+                var _total = 0;
 
-                    for (var _col = 0; _col <= max; _col++) {
-                        skip = this.rcMap[ir][_col];
+                if (this.isRowSpan(ir) && this.getRowColMapProp(ir, ic - 1) > 0) {
+                    return _total;
+                }
 
-                        if (!skip) {
-                            count++
-                        } else {
-                            total = (count >= ic)
-                                ? total + skip
-                                : total
-                        }
-                        if (count === threshold) {
+                while (this.rcMap[ir][ic]) {
+                    if (!this.isRowSpan(ir)) {
+                        if (this.rcMap[ir][ic] === 1) {
+                            break
+                        } else if (this.isColSpan(ir)) {
+                            _total  = this.rcMap[ir][ic];
                             break;
                         }
                     }
+                    _total  += this.rcMap[ir][ic];
+                    ic++
+                }
+
+                return _total;
+            };
+            this.convertSpanToArray = function (ir, ic, key, _return, colDel) {
+                if (this.rcMap[ir] && this.isSpan(ir)) {
+                    var total = this.generateTotal(ir, ic);
+
                     return (_isEnhanced(key))
                         ? new Array(total).concat(_return)
                         : new Array(total).concat(_return).join(colDel);
@@ -757,7 +766,8 @@
             TYPE: {
                 IGNORE: 'ignore',
                 EMPTY: 'empty',
-                SPAN: 'span',
+                ROWSPAN: 'rowspan',
+                COLSPAN: 'colspan',
                 DEFAULT: 'default'
             },
             build: function (context, settings) {
@@ -789,7 +799,7 @@
                         }
                         hasColSpan && handleColSpan(val, _row + ir, ic);
                         if (_row >= 1) {
-                            self.setRowColMapProp(_row + ir, undefined, self.TYPE.SPAN, true);
+                            self.setRowColMapProp(_row + ir, undefined, self.TYPE.ROWSPAN, true);
                             self.setRowColMapProp(_row + ir, ic, undefined, 1);
                         }
                     }
@@ -800,7 +810,7 @@
                     if (colSpan <= 1) {
                         return;
                     }
-                    self.setRowColMapProp(ir, undefined, self.TYPE.SPAN, true);
+                    self.setRowColMapProp(ir, undefined, self.TYPE.COLSPAN, true);
                     self.setRowColMapProp(ir, ic + OFFSET, undefined, colSpan - OFFSET);
                 };
 
