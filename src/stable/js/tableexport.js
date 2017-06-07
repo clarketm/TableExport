@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v5.0.0-rc.4 (https://www.travismclarke.com)
+ * TableExport.js v5.0.0-rc.6 (https://www.travismclarke.com)
  *
  * Copyright (c) 2017 - Travis Clarke - https://www.travismclarke.com
  *
@@ -116,7 +116,7 @@
 
                 context.rcMap = new RowColMap().build(context, settings);
 
-                console.debug(context.rcMap);
+                // console.debug(context.rcMap);
 
                 var formatMap = _FORMAT_LIST
                     .reduce(function (acc, cur) {
@@ -149,7 +149,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '5.0.0-rc.4',
+            version: '5.0.0-rc.6',
             /**
              * Default library options.
              * @memberof TableExport.prototype
@@ -790,7 +790,6 @@
                             return;
                         }
                         hasColSpan && (handledByColSpan = handleColSpan(val, _row + ir, ic, _row > 0));
-
                         if (_row >= 1) {
                             var currentRowSpan = self.getRowColMapProp(_row + ir, undefined, self.TYPE.ROWSPAN) || 0;
                             self.setRowColMapProp(_row + ir, undefined, self.TYPE.ROWSPAN, currentRowSpan + 1);
@@ -815,9 +814,7 @@
                         return true;
                     } else {
                         self.setRowColMapProp(ir, ic + OFFSET, undefined, colSpan - OFFSET);
-                        return false;
                     }
-
                 };
 
                 _nodesArray(context.rows).map(function (val, ir) {
