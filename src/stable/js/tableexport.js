@@ -116,6 +116,8 @@
 
                 context.rcMap = new RowColMap().build(context, settings);
 
+                console.debug(context.rcMap);
+
                 var formatMap = _FORMAT_LIST
                     .reduce(function (acc, cur) {
                         acc[cur] = 0;
@@ -720,26 +722,15 @@
             this.generateTotal = function (ir, ic) {
                 var _total = 0;
 
-                if (this.isRowSpan(ir) && this.getRowColMapProp(ir, ic - 1) > 0) {
-                    return _total;
+                if (this.isRowSpan(ir) && this.isColSpan(ir)) {
+                    _total = this.getRowColMapProp(ir, ic) || 0;
+                } else if (this.getRowColMapProp(ir, ic)) {
+                    _total = this.getRowColMapProp(ir, ic);
                 }
-
-                while (this.rcMap[ir][ic]) {
-                    if (!this.isRowSpan(ir)) {
-                        if (this.rcMap[ir][ic] === 1) {
-                            break
-                        } else if (this.isColSpan(ir)) {
-                            _total  = this.rcMap[ir][ic];
-                            break;
-                        }
-                    }
-                    _total  += this.rcMap[ir][ic];
-                    ic++
-                }
-
                 return _total;
             };
             this.convertSpanToArray = function (ir, ic, key, _return, colDel) {
+
                 if (this.rcMap[ir] && this.isSpan(ir)) {
                     var total = this.generateTotal(ir, ic);
 
@@ -790,28 +781,43 @@
                     self.setRowColMapProp(ir, ic, self.TYPE.EMPTY, true);
                 };
                 var handleRowSpan = function (val, ir, ic) {
-                    var rowSpan = val.getAttribute('rowspan');
+                    var rowSpan = +val.getAttribute('rowspan');
                     var hasColSpan = val.hasAttribute('colspan');
+                    var handledByColSpan;
 
                     for (var _row = 0; _row < rowSpan; _row++) {
                         if (_row + ir >= rowLength) {
                             return;
                         }
-                        hasColSpan && handleColSpan(val, _row + ir, ic);
+                        hasColSpan && (handledByColSpan = handleColSpan(val, _row + ir, ic, _row > 0));
+
                         if (_row >= 1) {
-                            self.setRowColMapProp(_row + ir, undefined, self.TYPE.ROWSPAN, true);
-                            self.setRowColMapProp(_row + ir, ic, undefined, 1);
+                            var currentRowSpan = self.getRowColMapProp(_row + ir, undefined, self.TYPE.ROWSPAN) || 0;
+                            self.setRowColMapProp(_row + ir, undefined, self.TYPE.ROWSPAN, currentRowSpan + 1);
+
+                            if (!handledByColSpan) {
+                                var current = self.getRowColMapProp(_row + ir, ic - currentRowSpan) || 0;
+                                self.setRowColMapProp(_row + ir, ic - currentRowSpan, undefined, current + 1);
+                            }
                         }
                     }
                 };
-                var handleColSpan = function (val, ir, ic) {
-                    var colSpan = val.getAttribute('colspan');
+                var handleColSpan = function (val, ir, ic, isRowSpan) {
+                    var colSpan = +val.getAttribute('colspan');
+                    var currentColSpan = self.getRowColMapProp(ir, undefined, self.TYPE.COLSPAN) || 0;
+                    self.setRowColMapProp(ir, undefined, self.TYPE.COLSPAN, currentColSpan + 1);
 
                     if (colSpan <= 1) {
-                        return;
+                        return false;
                     }
-                    self.setRowColMapProp(ir, undefined, self.TYPE.COLSPAN, true);
-                    self.setRowColMapProp(ir, ic + OFFSET, undefined, colSpan - OFFSET);
+                    if (isRowSpan) {
+                        self.setRowColMapProp(ir, ic - currentColSpan, undefined, colSpan);
+                        return true;
+                    } else {
+                        self.setRowColMapProp(ir, ic + OFFSET, undefined, colSpan - OFFSET);
+                        return false;
+                    }
+
                 };
 
                 _nodesArray(context.rows).map(function (val, ir) {
