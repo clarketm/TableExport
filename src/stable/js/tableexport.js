@@ -67,8 +67,8 @@
             var settings = self.settings;
             settings.ignoreRows = settings.ignoreRows instanceof Array ? settings.ignoreRows : [settings.ignoreRows];
             settings.ignoreCols = settings.ignoreCols instanceof Array ? settings.ignoreCols : [settings.ignoreCols];
-            settings.ignoreCSS = self.ignoreCSS instanceof Array ? self.ignoreCSS.join(', ') : self.ignoreCSS;
-            settings.emptyCSS = self.emptyCSS instanceof Array ? self.emptyCSS.join(', ') : self.emptyCSS;
+            settings.ignoreCSS = self.ignoreCSS instanceof Array ? self.ignoreCSS : [self.ignoreCSS];
+            settings.emptyCSS = self.emptyCSS instanceof Array ? self.emptyCSS : [self.emptyCSS];
             settings.formatValue = self.formatValue.bind(this, settings.trimWhitespace);
             settings.bootstrapSettings = _getBootstrapSettings(settings.bootstrap, self.bootstrapConfig, self.defaultButton);
 
@@ -203,17 +203,18 @@
              */
             defaultButton: 'button-default',
             /**
-             * Class selector to exclude/remove cells from the exported file(s).
-             * @memberof TableExport.prototype
-             */
-            // TODO: make `@type {selector|selector[]}` instead of only `class`
-            ignoreCSS: 'tableexport-ignore',
             /**
-             * Class selector to replace cells with an empty string in the exported file(s).
+             * CSS selector or selector[] to exclude/remove cells from the exported file(s).
+             * @type {selector|selector[]}
              * @memberof TableExport.prototype
              */
-            // TODO: make `@type {selector|selector[]}` instead of only `class`
-            emptyCSS: 'tableexport-empty',
+            ignoreCSS: '.tableexport-ignore',
+            /**
+             * CSS selector or selector[] to replace cells with an empty string in the exported file(s).
+             * @type {selector|selector[]}
+             * @memberof TableExport.prototype
+             */
+            emptyCSS: '.tableexport-empty',
             /**
              * Bootstrap configuration classes ['base', 'theme', 'container'].
              * @memberof TableExport.prototype
@@ -818,15 +819,18 @@
                 };
 
                 _nodesArray(context.rows).map(function (val, ir) {
-                    if (!!~settings.ignoreRows.indexOf(ir - context.thAdj) || _hasClass(val, settings.ignoreCSS)) {
-                        handleIgnoreRow(ir);
+                    if (!!~settings.ignoreRows.indexOf(ir - context.thAdj) || _matches(val, settings.ignoreCSS)) {
+                        handleIgnore(ir);
+                    }
+                    if (_matches(val, settings.emptyCSS)) {
+                        handleEmpty(ir);
                     }
                     var cols = val.querySelectorAll('th, td');
                     return _nodesArray(cols).map(function (val, ic) {
-                        if (!!~settings.ignoreCols.indexOf(ic) || _hasClass(val, settings.ignoreCSS)) {
-                            handleIgnoreCol(ir, ic);
+                        if (!!~settings.ignoreCols.indexOf(ic) || _matches(val, settings.ignoreCSS)) {
+                            handleIgnore(ir, ic);
                         }
-                        if (_hasClass(val, settings.emptyCSS)) {
+                        if (_matches(val, settings.emptyCSS)) {
                             handleEmpty(ir, ic);
                         }
                         if (val.hasAttribute('rowspan')) {
@@ -941,6 +945,12 @@
 
         function _hasClass(el, cls) {
             return el.classList ? el.classList.contains(cls) : new RegExp('(^| )' + cls + '( |$)', 'gi').test(el.cls);
+        }
+
+        function _matches(el, selectors) {
+            return selectors.filter(function (selector) {
+                    return [].indexOf.call(document.querySelectorAll(selector), el) !== -1;
+                }).length > 0;
         }
 
         function _numeric(val) {
