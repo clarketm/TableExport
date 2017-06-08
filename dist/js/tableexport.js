@@ -67,8 +67,8 @@
             var settings = self.settings;
             settings.ignoreRows = settings.ignoreRows instanceof Array ? settings.ignoreRows : [settings.ignoreRows];
             settings.ignoreCols = settings.ignoreCols instanceof Array ? settings.ignoreCols : [settings.ignoreCols];
-            settings.ignoreCSS = self.ignoreCSS instanceof Array ? self.ignoreCSS.join(', ') : self.ignoreCSS;
-            settings.emptyCSS = self.emptyCSS instanceof Array ? self.emptyCSS.join(', ') : self.emptyCSS;
+            settings.ignoreCSS = self.ignoreCSS instanceof Array ? self.ignoreCSS : [self.ignoreCSS];
+            settings.emptyCSS = self.emptyCSS instanceof Array ? self.emptyCSS : [self.emptyCSS];
             settings.formatValue = self.formatValue.bind(this, settings.trimWhitespace);
             settings.bootstrapSettings = _getBootstrapSettings(settings.bootstrap, self.bootstrapConfig, self.defaultButton);
 
@@ -94,12 +94,12 @@
                  * @param exportButton {HTMLButtonElement}
                  */
                 context.checkCaption = function (exportButton) {
-                    var caption = el.querySelectorAll('caption.tableexport-caption');
+                    var caption = el.querySelectorAll('caption.' + self.defaultCaptionClass);
                     if (caption.length) {
                         caption[0].appendChild(exportButton);
                     } else {
                         caption = document.createElement('caption');
-                        caption.className = settings.bootstrapSettings.bootstrapSpacing + settings.position + ' ' + 'tableexport-caption';
+                        caption.className = settings.bootstrapSettings.bootstrapSpacing + settings.position + ' ' + self.defaultCaptionClass;
                         caption.appendChild(exportButton);
                         el.insertBefore(caption, el.firstChild);
                     }
@@ -115,8 +115,6 @@
                 })();
 
                 context.rcMap = new RowColMap().build(context, settings);
-
-                // console.debug(context.rcMap);
 
                 var formatMap = _FORMAT_LIST
                     .reduce(function (acc, cur) {
@@ -138,7 +136,7 @@
                 );
             });
 
-            var exportButton = document.querySelectorAll('button[tableexport-id]');
+            var exportButton = document.querySelectorAll('button[' + self.localStorageKey + ']');
             _on(exportButton, 'click', self.downloadHandler, self);
 
             return self;
@@ -203,17 +201,32 @@
              */
             defaultButton: 'button-default',
             /**
-             * Class selector to exclude/remove cells from the exported file(s).
+             * Class applied to each table caption.
              * @memberof TableExport.prototype
              */
-            // TODO: make `@type {selector|selector[]}` instead of only `class`
-            ignoreCSS: 'tableexport-ignore',
+            defaultCaptionClass: 'tableexport-caption',
             /**
-             * Class selector to replace cells with an empty string in the exported file(s).
+             * Namespace (i.e. prefix) applied to each table UUID and LocalStorage key.
              * @memberof TableExport.prototype
              */
-            // TODO: make `@type {selector|selector[]}` instead of only `class`
-            emptyCSS: 'tableexport-empty',
+            defaultNamespace: 'tableexport-',
+            /**
+             * Attribute applied to each export button element used to reference a LocalStorage key.
+             * @memberof TableExport.prototype
+             */
+            localStorageKey: 'tableexport-id',
+            /**
+             * CSS selector or selector[] to exclude/remove cells from the exported file(s).
+             * @type {selector|selector[]}
+             * @memberof TableExport.prototype
+             */
+            ignoreCSS: '.tableexport-ignore',
+            /**
+             * CSS selector or selector[] to replace cells with an empty string in the exported file(s).
+             * @type {selector|selector[]}
+             * @memberof TableExport.prototype
+             */
+            emptyCSS: '.tableexport-empty',
             /**
              * Bootstrap configuration classes ['base', 'theme', 'container'].
              * @memberof TableExport.prototype
@@ -324,7 +337,7 @@
                 build: function (context, key) {
                     var self = this;
                     var settings = self.settings;
-                    var format = TableExport.prototype.formatConfig[key];
+                    var format = self.formatConfig[key];
                     var colDel = format.separator;
                     var rcMap = context.rcMap;
 
@@ -346,9 +359,10 @@
                     var dataURI = _nodesArray(context.rows).map(function (val, ir) {
                         if (rcMap.isIgnore(ir)) {
                             return rcMap.handleRowColMapProp(rcMap.TYPE.IGNORE);
+                        } else if (rcMap.isEmpty(ir)) {
+                            return rcMap.handleRowColMapProp(rcMap.TYPE.EMPTY);
                         }
                         var cols = val.querySelectorAll('th, td');
-
                         return _nodesArray(cols).map(function (val, ic) {
                             var _return = getReturn(val);
                             if (rcMap.isIgnore(ir, ic)) {
@@ -370,7 +384,7 @@
 
                     var hashKey = _hashCode({uuid: context.uuid, type: key});
 
-                    settings.exportButtons && context.checkCaption(TableExport.prototype.createObjButton(
+                    settings.exportButtons && context.checkCaption(self.createObjButton(
                         hashKey,
                         dataObject,
                         format.buttonContent,
@@ -391,7 +405,7 @@
              */
             createObjButton: function (hashKey, dataObject, myContent, myClass, bootstrapSettings) {
                 var exportButton = document.createElement('button');
-                exportButton.setAttribute('tableexport-id', hashKey);
+                exportButton.setAttribute(this.localStorageKey, hashKey);
                 exportButton.className = bootstrapSettings.bootstrapClass + bootstrapSettings.bootstrapTheme + myClass;
                 exportButton.textContent = myContent;
                 return exportButton
@@ -403,8 +417,9 @@
              * @returns {String} escaped string
              */
             escapeHtml: function (string) {
+                var self = this;
                 return String(string).replace(/[&<>'\/]/g, function (s) {
-                    return TableExport.prototype.entityMap[s];
+                    return self.entityMap[s];
                 });
             },
             /**
@@ -436,7 +451,7 @@
              */
             getType: function (string) {
                 if (!string) return '';
-                var types = TableExport.prototype.typeConfig;
+                var types = this.typeConfig;
                 if (~string.indexOf(types.string.defaultClass)) {
                     return _TYPE.STRING;
                 } else if (~string.indexOf(types.number.defaultClass)) {
@@ -470,7 +485,7 @@
             createSheet: function (data) {
                 var ws = {};
                 var range = {s: {c: 10000000, r: 10000000}, e: {c: 0, r: 0}};
-                var types = TableExport.prototype.typeConfig;
+                var types = this.typeConfig;
                 for (var R = 0; R !== data.length; ++R) {
                     for (var C = 0; C !== data[R].length; ++C) {
                         if (range.s.r > R) range.s.r = R;
@@ -506,7 +521,7 @@
              */
             downloadHandler: function (event) {
                 var target = event.target;
-                var object = JSON.parse(LocalStorage.getInstance().getItem(target.getAttribute('tableexport-id'))),
+                var object = JSON.parse(LocalStorage.getInstance().getItem(target.getAttribute(this.localStorageKey))),
                     data = object.data,
                     filename = object.filename,
                     mimeType = object.mimeType,
@@ -605,7 +620,7 @@
              * @returns {TableExport} updated TableExport instance
              */
             update: function (options) {
-                TableExport.prototype.remove.call(this);
+                this.remove();
                 return new TableExport(this.selectors, _extend({}, this.defaults, options));
             },
             /**
@@ -613,15 +628,16 @@
              * @returns {TableExport} original TableExport instance
              */
             reset: function () {
-                TableExport.prototype.remove.call(this);
+                this.remove();
                 return new TableExport(this.selectors, this.settings);
             },
             /**
              * Remove the instance (i.e. caption containing the export buttons)
              */
             remove: function () {
+                var self = this;
                 this.selectors.forEach(function (el) {
-                    var caption = el.querySelector('caption.tableexport-caption');
+                    var caption = el.querySelector('caption.' + self.defaultCaptionClass);
                     caption && el.removeChild(caption);
                 });
             }
@@ -636,7 +652,7 @@
             this._instance = null;
 
             this.store = localStorage;
-            this.namespace = 'te-';
+            this.namespace = TableExport.prototype.defaultNamespace;
             this.getKey = function (key) {
                 return this.namespace + key;
             };
@@ -771,10 +787,7 @@
                 //         return val.querySelectorAll('th, td').length
                 //     }));
 
-                var handleIgnoreRow = function (ir) {
-                    self.setRowColMapProp(ir, undefined, self.TYPE.IGNORE, true);
-                };
-                var handleIgnoreCol = function (ir, ic) {
+                var handleIgnore = function (ir, ic) {
                     self.setRowColMapProp(ir, ic, self.TYPE.IGNORE, true);
                 };
                 var handleEmpty = function (ir, ic) {
@@ -818,15 +831,18 @@
                 };
 
                 _nodesArray(context.rows).map(function (val, ir) {
-                    if (!!~settings.ignoreRows.indexOf(ir - context.thAdj) || _hasClass(val, settings.ignoreCSS)) {
-                        handleIgnoreRow(ir);
+                    if (!!~settings.ignoreRows.indexOf(ir - context.thAdj) || _matches(val, settings.ignoreCSS)) {
+                        handleIgnore(ir);
+                    }
+                    if (_matches(val, settings.emptyCSS)) {
+                        handleEmpty(ir);
                     }
                     var cols = val.querySelectorAll('th, td');
                     return _nodesArray(cols).map(function (val, ic) {
-                        if (!!~settings.ignoreCols.indexOf(ic) || _hasClass(val, settings.ignoreCSS)) {
-                            handleIgnoreCol(ir, ic);
+                        if (!!~settings.ignoreCols.indexOf(ic) || _matches(val, settings.ignoreCSS)) {
+                            handleIgnore(ir, ic);
                         }
-                        if (_hasClass(val, settings.emptyCSS)) {
+                        if (_matches(val, settings.emptyCSS)) {
                             handleEmpty(ir, ic);
                         }
                         if (val.hasAttribute('rowspan')) {
@@ -872,7 +888,7 @@
 
         Array.prototype.processRows = function (key, rowDel) {
             if (_isEnhanced(key)) {
-                return this.map(_toArray).filter(_defined);
+                return this.filter(_defined);
             } else {
                 return this.filter(_defined).join(rowDel);
             }
@@ -890,7 +906,7 @@
 
             return function (el) {
                 if (!el.id) {
-                    el.id = 'tableexport-' + (++uuid);
+                    el.id = TableExport.prototype.defaultNamespace + (++uuid);
                 }
                 return el.id;
             };
@@ -941,6 +957,12 @@
 
         function _hasClass(el, cls) {
             return el.classList ? el.classList.contains(cls) : new RegExp('(^| )' + cls + '( |$)', 'gi').test(el.cls);
+        }
+
+        function _matches(el, selectors) {
+            return selectors.filter(function (selector) {
+                    return [].indexOf.call(document.querySelectorAll(selector), el) !== -1;
+                }).length > 0;
         }
 
         function _numeric(val) {
