@@ -359,9 +359,10 @@
                     var dataURI = _nodesArray(context.rows).map(function (val, ir) {
                         if (rcMap.isIgnore(ir)) {
                             return rcMap.handleRowColMapProp(rcMap.TYPE.IGNORE);
+                        } else if (rcMap.isEmpty(ir)) {
+                            return rcMap.handleRowColMapProp(rcMap.TYPE.EMPTY);
                         }
                         var cols = val.querySelectorAll('th, td');
-
                         return _nodesArray(cols).map(function (val, ic) {
                             var _return = getReturn(val);
                             if (rcMap.isIgnore(ir, ic)) {
