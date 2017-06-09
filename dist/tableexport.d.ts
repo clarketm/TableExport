@@ -1,9 +1,9 @@
-// Type definitions for TableExport v5.0.0-rc.7
+// Type definitions for TableExport v5.0.0-rc.8
 // Project: https://tableexport.v4.travismclarke.com
 // Definitions by: Travis Clarke <https://github.com/clarketm>
 
 /*!
- * TableExport.js v5.0.0-rc.7 (https://www.travismclarke.com)
+ * TableExport.js v5.0.0-rc.8 (https://www.travismclarke.com)
  *
  * Copyright (c) 2017 - Travis Clarke - https://www.travismclarke.com
  *

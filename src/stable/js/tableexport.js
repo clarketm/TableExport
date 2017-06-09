@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v5.0.0-rc.7 (https://www.travismclarke.com)
+ * TableExport.js v5.0.0-rc.8 (https://www.travismclarke.com)
  *
  * Copyright (c) 2017 - Travis Clarke - https://www.travismclarke.com
  *
@@ -147,7 +147,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '5.0.0-rc.7',
+            version: '5.0.0-rc.8',
             /**
              * Default library options.
              * @memberof TableExport.prototype
@@ -888,7 +888,7 @@
 
         Array.prototype.processRows = function (key, rowDel) {
             if (_isEnhanced(key)) {
-                return this.filter(_defined);
+                return this.map(_toArray).filter(_defined);
             } else {
                 return this.filter(_defined).join(rowDel);
             }
@@ -974,7 +974,7 @@
         }
 
         function _toArray(val) {
-            return val && [].concat.apply([], val);
+            return val instanceof Array ? [].concat.apply([], val) : val;
         }
 
         function _isValidFormat(key) {
