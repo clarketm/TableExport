@@ -116,6 +116,8 @@
 
                 context.rcMap = new RowColMap().build(context, settings);
 
+                console.debug(context.rcMap);
+
                 var formatMap = _FORMAT_LIST
                     .reduce(function (acc, cur) {
                         acc[cur] = 0;
@@ -379,7 +381,8 @@
                         data: dataURI,
                         filename: context.filename,
                         mimeType: format.mimeType,
-                        fileExtension: format.fileExtension
+                        fileExtension: format.fileExtension,
+                        merges: rcMap.merges
                     });
 
                     var hashKey = _hashCode({uuid: context.uuid, type: key});
@@ -481,8 +484,9 @@
              * Creates an Excel spreadsheet from a data string
              * @memberof TableExport.prototype
              * @param data {String}
+             * @param merges {Object[]}
              */
-            createSheet: function (data) {
+            createSheet: function (data, merges) {
                 var ws = {};
                 var range = {s: {c: 10000000, r: 10000000}, e: {c: 0, r: 0}};
                 var types = this.typeConfig;
@@ -502,16 +506,16 @@
                             else if (types.date.assert(cell.v)) cell.t = _TYPE.DATE;
                             else cell.t = _TYPE.STRING;
                         }
-
                         if (cell.t === _TYPE.DATE) {
                             cell.t = _TYPE.NUMBER;
                             cell.z = XLSX.SSF._table[14];
                             cell.v = this.dateNum(cell.v);
                         }
-
                         ws[cell_ref] = cell;
                     }
                 }
+                // console.debug(merges);
+                ws['!merges'] = merges;
                 if (range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
                 return ws;
             },
@@ -525,8 +529,9 @@
                     data = object.data,
                     filename = object.filename,
                     mimeType = object.mimeType,
-                    fileExtension = object.fileExtension;
-                this.export2file(data, mimeType, filename, fileExtension);
+                    fileExtension = object.fileExtension,
+                    merges = object.merges;
+                this.export2file(data, mimeType, filename, fileExtension, merges);
             },
             /**
              * Excel Workbook constructor
@@ -556,9 +561,10 @@
              * @param mime {String} mime type
              * @param name {String} filename
              * @param extension {String} file extension
+             * @param merges {Object[]}
              */
-            export2file: function (data, mime, name, extension) {
-                data = this.getRawData(data, extension, name);
+            export2file: function (data, mime, name, extension, merges) {
+                data = this.getRawData(data, extension, name, merges);
 
                 if (_isMobile) {
                     // TODO: fix dataURI on iphone (xlsx & xls)
@@ -586,12 +592,12 @@
                         return key;
                 }
             },
-            getRawData: function (data, extension, name) {
+            getRawData: function (data, extension, name, merges) {
                 var key = extension.substring(1);
 
                 if (_isEnhanced(key)) {
                     var wb = new this.Workbook(),
-                        ws = this.createSheet(data),
+                        ws = this.createSheet(data, merges),
                         bookType = this.getBookType(key);
 
                     name = name || '';
@@ -692,6 +698,7 @@
          */
         var RowColMap = function () {
             this.rcMap = [];
+            this.merges = [];
 
             this.isIgnore = function (ir, ic) {
                 var _ignore = RowColMap.prototype.TYPE.IGNORE;
@@ -712,6 +719,14 @@
             this.isSpan = function (ir) {
                 return this.isRowSpan(ir) || this.isColSpan(ir);
             };
+            this.isMerge = function (ir) {
+                return this.merges.length > 0;
+            };
+            this.addMerge = function (ir, mergeObj) {
+                var _merge = RowColMap.prototype.TYPE.MERGE;
+                this.merges.push(mergeObj);
+                this.setRowColMapProp(ir, undefined, _merge, this.merges);
+            };
             this.getRowColMapProp = function (ir, ic, key) {
                 if (this.rcMap[ir]) {
                     if (typeof key === 'undefined') {
@@ -727,12 +742,12 @@
             this.setRowColMapProp = function (ir, ic, key, value) {
                 this.rcMap[ir] = this.rcMap[ir] || [];
                 if (typeof key === 'undefined') {
-                    this.rcMap[ir][ic] = value;
+                    return this.rcMap[ir][ic] = value;
                 } else if (typeof ic === 'undefined') {
-                    this.rcMap[ir][key] = value;
+                    return this.rcMap[ir][key] = value;
                 } else {
                     this.rcMap[ir][ic] = this.rcMap[ir][ic] || [];
-                    this.rcMap[ir][ic][key] = value;
+                    return this.rcMap[ir][ic][key] = value;
                 }
             };
             this.generateTotal = function (ir, ic) {
@@ -746,13 +761,15 @@
                 return _total;
             };
             this.convertSpanToArray = function (ir, ic, key, _return, colDel) {
-
                 if (this.rcMap[ir] && this.isSpan(ir)) {
                     var total = this.generateTotal(ir, ic);
 
-                    return (_isEnhanced(key))
-                        ? new Array(total).concat(_return)
-                        : new Array(total).concat(_return).join(colDel);
+                    if (_isEnhanced(key)) {
+                        _return.m = this.getRowColMapProp(ir, undefined, RowColMap.prototype.TYPE.MERGE);
+                        return new Array(total).concat(_return);
+                    } else {
+                        new Array(total).concat(_return).join(colDel);
+                    }
                 }
                 return _return;
             };
@@ -773,8 +790,10 @@
             TYPE: {
                 IGNORE: 'ignore',
                 EMPTY: 'empty',
+                MERGE: 'merge',
                 ROWSPAN: 'rowspan',
                 COLSPAN: 'colspan',
+                COLSPANTOTAL: 'colspantotal',
                 DEFAULT: 'default'
             },
             build: function (context, settings) {
@@ -796,38 +815,53 @@
                 var handleRowSpan = function (val, ir, ic) {
                     var rowSpan = +val.getAttribute('rowspan');
                     var hasColSpan = val.hasAttribute('colspan');
-                    var handledByColSpan;
+                    var handledByColSpan, countColSpan, totalColSpan;
 
                     for (var _row = 0; _row < rowSpan; _row++) {
                         if (_row + ir >= rowLength) {
                             return;
                         }
-                        hasColSpan && (handledByColSpan = handleColSpan(val, _row + ir, ic, _row > 0));
+                        hasColSpan && (handledByColSpan = handleColSpan(val, _row + ir, ic, _row > 0, rowSpan));
                         if (_row >= 1) {
-                            var currentRowSpan = self.getRowColMapProp(_row + ir, undefined, self.TYPE.ROWSPAN) || 0;
-                            self.setRowColMapProp(_row + ir, undefined, self.TYPE.ROWSPAN, currentRowSpan + 1);
-
                             if (!handledByColSpan) {
-                                var current = self.getRowColMapProp(_row + ir, ic - currentRowSpan) || 0;
-                                self.setRowColMapProp(_row + ir, ic - currentRowSpan, undefined, current + 1);
+                                totalColSpan = self.getRowColMapProp(ir, undefined, self.TYPE.COLSPANTOTAL) || 0;
+                                countColSpan = self.getRowColMapProp(ir, undefined, self.TYPE.COLSPAN) || 0;
+                                self.setRowColMapProp(_row + ir, ic + totalColSpan - countColSpan, undefined, 1);
+                                // handleMerge(ir, icStart, irEnd, icEnd);
                             }
                         }
                     }
                 };
-                var handleColSpan = function (val, ir, ic, isRowSpan) {
+                var handleColSpan = function (val, ir, ic, isRowSpan, rowSpan) {
                     var colSpan = +val.getAttribute('colspan');
-                    var currentColSpan = self.getRowColMapProp(ir, undefined, self.TYPE.COLSPAN) || 0;
-                    self.setRowColMapProp(ir, undefined, self.TYPE.COLSPAN, currentColSpan + 1);
+                    var countColSpan = self.getRowColMapProp(ir, undefined, self.TYPE.COLSPAN) || 0;
+                    var totalColSpan = self.getRowColMapProp(ir, undefined, self.TYPE.COLSPANTOTAL) || 0;
 
                     if (colSpan <= 1) {
                         return false;
                     }
+                    self.setRowColMapProp(ir, undefined, self.TYPE.COLSPAN, countColSpan + 1);
+                    self.setRowColMapProp(ir, undefined, self.TYPE.COLSPANTOTAL, totalColSpan + colSpan);
+
                     if (isRowSpan) {
-                        self.setRowColMapProp(ir, ic - currentColSpan, undefined, colSpan);
+                        self.setRowColMapProp(ir, ic - countColSpan, undefined, colSpan);
                         return true;
                     } else {
+                        var irEnd = ir + (rowSpan || 1) - OFFSET;
+                        var icStart = ic + totalColSpan - countColSpan;
+                        var icEnd = ic + totalColSpan - countColSpan + (colSpan - OFFSET);
                         self.setRowColMapProp(ir, ic + OFFSET, undefined, colSpan - OFFSET);
+                        handleMerge(ir, icStart, irEnd, icEnd);
                     }
+                };
+
+                var handleMerge = function (irs, ics, ire, ice) {
+                    var merge = {
+                        s: {r: irs, c: ics},
+                        e: {r: ire, c: ice}
+                    };
+                    console.debug("merges:", merge.s, merge.e);
+                    return self.addMerge(irs, merge);
                 };
 
                 _nodesArray(context.rows).map(function (val, ir) {

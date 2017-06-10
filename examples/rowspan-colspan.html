@@ -101,20 +101,48 @@
 <main>
     <h1>Colspan</h1>
     <table id="rowspan-colspan-table-3">
+        <thead>
+        <tr>
+            <td>1</td>
+            <td colspan="2">1</td>
+            <td colspan="3">2</td>
+            <td>3</td>
+            <td colspan="1">3</td>
+            <td>3</td>
+            <td colspan="3">4</td>
+        </tr>
+        </thead>
         <tbody>
         <tr>
+            <td>刷卡支付</td>
+            <td>刷卡支付</td>
+            <td>刷卡支付</td>
+            <td>刷卡支付</td>
+            <td>刷卡支付</td>
+            <td>刷卡支付</td>
+            <td>刷卡支付</td>
+            <td>刷卡支付</td>
             <td>刷卡支付</td>
             <td>1000</td>
             <td>1001</td>
             <td>1002</td>
         </tr>
         <tr>
-            <td colspan="2">现金</td>
-            <td>1980</td>
-            <td>1981</td>
+            <td>刷卡支付</td>
+            <td>刷卡支付</td>
+            <td>刷卡支付</td>
+            <td>刷卡支付</td>
+            <td>刷卡支付</td>
+            <td>刷卡支付</td>
+            <td>刷卡支付</td>
+            <td>刷卡支付</td>
+            <td>刷卡支付</td>
+            <td>1000</td>
+            <td>1001</td>
+            <td>1002</td>
         </tr>
         <tr>
-            <td colspan="4">会员卡</td>
+            <td colspan="12">会员卡</td>
         </tr>
         </tbody>
     </table>
@@ -124,7 +152,8 @@
 <script type="text/javascript" src="../bower_components/js-xlsx/dist/xlsx.core.min.js"></script>
 <script type="text/javascript" src="../bower_components/blobjs/Blob.min.js"></script>
 <script type="text/javascript" src="../bower_components/file-saverjs/FileSaver.min.js"></script>
-<script type="text/javascript" src="../dist/js/tableexport.min.js"></script>
+<!--<script type="text/javascript" src="../dist/js/tableexport.min.js"></script>-->
+<script type="text/javascript" src="../src/stable/js/tableexport.js"></script>
 <script type="text/javascript" src="../assets/js/analytics.js"></script>
 <script>
 
