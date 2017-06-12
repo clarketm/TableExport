@@ -116,7 +116,7 @@
 
                 context.rcMap = new RowColMap().build(context, settings);
 
-                console.debug(context.rcMap);
+                // console.debug(context.rcMap);
 
                 var formatMap = _FORMAT_LIST
                     .reduce(function (acc, cur) {
@@ -851,7 +851,7 @@
                         var icStart = ic + totalColSpan - countColSpan;
                         var icEnd = ic + totalColSpan - countColSpan + (colSpan - OFFSET);
                         self.setRowColMapProp(ir, ic + OFFSET, undefined, colSpan - OFFSET);
-                        handleMerge(ir, icStart, irEnd, icEnd);
+                        // handleMerge(ir, icStart, irEnd, icEnd);
                     }
                 };
 
@@ -860,8 +860,8 @@
                         s: {r: irs, c: ics},
                         e: {r: ire, c: ice}
                     };
-                    console.debug("merges:", merge.s, merge.e);
-                    return self.addMerge(irs, merge);
+                    // console.debug("merges:", merge.s, merge.e);
+                    // return self.addMerge(irs, merge);
                 };
 
                 _nodesArray(context.rows).map(function (val, ir) {
