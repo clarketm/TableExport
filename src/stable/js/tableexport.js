@@ -754,9 +754,9 @@
                 var _total = 0;
 
                 if (this.isRowSpan(ir) && this.isColSpan(ir)) {
-                    _total = this.getRowColMapProp(ir, ic) || 0;
-                } else if (this.getRowColMapProp(ir, ic)) {
-                    _total = this.getRowColMapProp(ir, ic);
+                    _total = this.getRowColMapProp(ir, ic, 'value') || 0;
+                } else if (this.getRowColMapProp(ir, ic, 'value')) {
+                    _total = this.getRowColMapProp(ir, ic, 'value');
                 }
                 return _total;
             };
@@ -792,6 +792,7 @@
                 EMPTY: 'empty',
                 MERGE: 'merge',
                 ROWSPAN: 'rowspan',
+                ROWSPANTOTAL: 'rowspantotal',
                 COLSPAN: 'colspan',
                 COLSPANTOTAL: 'colspantotal',
                 DEFAULT: 'default'
@@ -814,44 +815,212 @@
                 };
                 var handleRowSpan = function (val, ir, ic) {
                     var rowSpan = +val.getAttribute('rowspan');
-                    var hasColSpan = val.hasAttribute('colspan');
-                    var handledByColSpan, countColSpan, totalColSpan;
+                    var colSpan = +val.getAttribute('colspan');
+                    var handledByColSpan,
+                        countRowSpan, countColSpan,
+                        totalRowSpan, totalColSpan,
+                        irStart, irEnd, icStart, icEnd;
+
+                    var prevHandled = false;
 
                     for (var _row = 0; _row < rowSpan; _row++) {
                         if (_row + ir >= rowLength) {
                             return;
                         }
-                        hasColSpan && (handledByColSpan = handleColSpan(val, _row + ir, ic, _row > 0, rowSpan));
+                        colSpan && (handledByColSpan = handleColSpan(val, _row + ir, ic, _row > 0, rowSpan));
+
+                        if (rowSpan <= 1) {
+                            return false;
+                        }
+
+                        // console.error("[" + (_row + ir) + "," + ic + "]", rowSpan);
+
+                        // countRowSpan = self.getRowColMapProp(ir, undefined, self.TYPE.ROWSPAN) || 0;
+                        // totalRowSpan = self.getRowColMapProp(ir, undefined, self.TYPE.ROWSPANTOTAL) || 0;
+                        // console.debug("SETTING");
+                        // console.warn(ir);
+
+                        var cur = self.rcMap['c' + (ic - 1)] ? self.rcMap['c' + (ic - 1)][_row + ir] : 0;
+                        //
+                        if (cur) {
+                            self.rcMap['c' + (ic)] = self.rcMap['c' + (ic)] || [];
+                            self.rcMap['c' + (ic)][_row + ir] = (self.rcMap['c' + (ic)][_row + ir] || 0) + cur;
+                            console.log();
+                            // console.log("self.rcMap['c' + (ic + 1)][_row + ir]", self.rcMap['c' + (ic + 1)][_row + ir]);
+                            // console.log("cur", cur);
+                        }
                         if (_row >= 1) {
+
                             if (!handledByColSpan) {
+                                // var current = self.getRowColMapProp(_row + ir, ic - currentRowSpan) || 0;
+                                // self.setRowColMapProp(_row + ir, ic - currentRowSpan, undefined, current + 1);
+                                //     var current = self.getRowColMapProp(_row + ir, ic - currentRowSpan) || 0;
+                                //     self.setRowColMapProp(_row + ir, ic - currentRowSpan, undefined, current + 1);
+                                //
                                 totalColSpan = self.getRowColMapProp(ir, undefined, self.TYPE.COLSPANTOTAL) || 0;
                                 countColSpan = self.getRowColMapProp(ir, undefined, self.TYPE.COLSPAN) || 0;
-                                self.setRowColMapProp(_row + ir, ic + totalColSpan - countColSpan, undefined, 1);
+                                self.setRowColMapProp(_row + ir, ic + totalColSpan - countColSpan, 'value', 1);
+
+                                // if (_row === 1) {
+                                // irStart = _row + ir - 1;
+                                // irEnd = _row + ir + rowSpan - 2;
+                                // console.groupCollapsed(val.textContent, "[" + irStart + "," + irEnd + "]");
+
+                                // console.log(colSpan, rowSpan);
+                                if (rowSpan > 1 && _row === 1) {
+                                    // console.log("ROW i", _row + ir - 1);
+                                    // console.log("COL i", ic);
+                                    // console.log("ic + 1", ic + 1);
+                                    // console.log("rowspan", rowSpan);
+                                    // console.log("colspan", colSpan);
+                                    // console.log("prevHandled", prevHandled);
+                                    // console.debug("countColSpan", countColSpan);
+                                    // console.debug("totalColSpan", totalColSpan);
+                                    var _re = self.rcMap['c' + (ic)] && self.rcMap['c' + (ic)][_row + ir];
+
+                                    irStart = ir;
+                                    irEnd = ir + rowSpan - 1;
+                                    icStart = ic + totalColSpan - countColSpan + (_re || 0);
+                                    icEnd = icStart + Math.max(1, colSpan) - 1;
+                                    console.group(val.textContent);
+                                    console.log("irStart", irStart);
+                                    console.log("irEnd", irEnd);
+                                    console.log("icStart", icStart);
+                                    console.log("icEnd", icEnd);
+                                    console.log("ic + totalColSpan - countColSpan", ic + totalColSpan - countColSpan);
+                                    console.log("countColSpan", countColSpan);
+                                    console.log("totalColSpan", totalColSpan);
+                                    // console.log(ic, _row + ir);
+                                    // console.log(_re);
+                                    // console.log(self.rcMap['c' + (ic)]);
+                                    // console.log(JSON.parse(JSON.stringify(self.rcMap)));
+                                    console.groupEnd();
+
+                                    handleMerge(irStart, icStart, irEnd, icEnd);
+
+
+                                    // console.warn("ic + totalColSpan - countColSpan", ic + totalColSpan - countColSpan);
+                                    //
+                                    // self.rcMap['c' + (ic + 1)] = self.rcMap['c' + (ic + 1)] || [];
+                                    // self.rcMap['c' + (ic + 1)][_row + ir - 1] = (self.rcMap['c' + (ic + 1)][_row + ir - 1] || 0) + (ic + totalColSpan - countColSpan);
+
+
+                                }
+
+
+                                // 2 // ROW s/e [1,2]  COL s/e [1]
+                                // 3 // ROW s/e [1,2]  COL s/e [5]
+                                // 7 // ROW s/e [1,2]  COL s/e [6]
+                                // E // ROW s/e [0,2]  COL s/e [7]
+
+                                // console.groupCollapsed(val.textContent);
+                                // console.log("ROW i", _row + ir - 1);
+                                // console.log("COL i", ic);
+                                // console.debug("countRowSpan", countRowSpan);
+                                // console.debug("totalRowSpan", totalRowSpan);
+                                // console.warn(" ic + totalColSpan - countColSpan", _row + ir + totalRowSpan - countRowSpan);
+                                // console.groupEnd();
+
+
+                                // console.log("CALC", _row + ir + totalRowSpan - countRowSpan + (rowSpan - OFFSET));
+                                // console.log(_row + ir);
+                                // console.log(countRowSpan);
+                                // console.log(ic + totalColSpan - countColSpan);
+
+                                // if (_row + ir >= currentRowSpan) {
+                                //     icStart = icEnd = ic;
+                                // } else {
+                                //     icStart = icEnd = ic + totalColSpan - countColSpan + 1;
+                                // }
+
+                                // console.log(val.textContent, , icStart);
+
+
                                 // handleMerge(ir, icStart, irEnd, icEnd);
+                                // }
                             }
+                            // console.debug((_row + ir), prevHandled);
                         }
+
+                        if (rowSpan && _row === 0 && colSpan > 1) {
+
+                            console.log(val.textContent);
+                            for (var i = 0; i < rowSpan; i++) {
+                                self.rcMap['c' + (ic + 1)] = self.rcMap['c' + (ic + 1)] || [];
+                                self.rcMap['c' + (ic + 1)][_row + ir + i] = (self.rcMap['c' + (ic + 1)][_row + ir + i] || 0) + Math.max(1, colSpan);
+
+                            }
+
+                            // console.groupCollapsed(val.textContent);
+                            // console.log("ROW i", _row + ir - 1);
+                            // console.log("COL i", ic);
+                            // console.log("ic + 1", ic + 1);
+                            // console.log("rowspan", rowSpan);
+                            // console.log("colspan", colSpan);
+                            // console.log("prevHandled", prevHandled);
+                            // console.debug("countColSpan", countColSpan);
+                            // console.debug("totalColSpan", totalColSpan);
+                            // console.warn("ic + totalColSpan - countColSpan", ic + totalColSpan - countColSpan);
+                            //
+                            //
+                            // console.groupEnd();
+
+
+                            irStart = ir;
+                            irEnd = ir + rowSpan - 1;
+                            icStart = ic + totalColSpan - countColSpan;
+                            icEnd = (ic + totalColSpan - countColSpan) + Math.max(1, colSpan) - 1;
+                            // handleMerge(irStart, icStart, irEnd, icEnd);
+
+                        }
+
+                        prevHandled = typeof handledByColSpan === 'undefined' ? true : handledByColSpan;
+
                     }
+                    // self.setRowColMapProp(ir, undefined, self.TYPE.ROWSPAN, countRowSpan + 1);
+                    // self.setRowColMapProp(ir, undefined, self.TYPE.ROWSPANTOTAL, totalRowSpan + rowSpan);
+
+                    // console.warn("END");
                 };
                 var handleColSpan = function (val, ir, ic, isRowSpan, rowSpan) {
+                    var irStart, irEnd, icStart, icEnd;
                     var colSpan = +val.getAttribute('colspan');
                     var countColSpan = self.getRowColMapProp(ir, undefined, self.TYPE.COLSPAN) || 0;
                     var totalColSpan = self.getRowColMapProp(ir, undefined, self.TYPE.COLSPANTOTAL) || 0;
+                    // var countRowSpan = self.getRowColMapProp(ir, undefined, self.TYPE.ROWSPAN) || 0;
 
                     if (colSpan <= 1) {
+                        // if (isRowSpan && rowSpan > 1) {
+                        //     irStart = ir - 1;
+                        //     irEnd = ir + rowSpan - 2;
+                        //     if (ir >= countRowSpan) {
+                        //         icStart = icEnd = ic;
+                        //     } else {
+                        //         icStart = icEnd = ic + totalColSpan - countColSpan + 1;
+                        //     }
+                        //     handleMerge(irStart, icStart, irEnd, icEnd);
+                        // }
                         return false;
                     }
+
                     self.setRowColMapProp(ir, undefined, self.TYPE.COLSPAN, countColSpan + 1);
                     self.setRowColMapProp(ir, undefined, self.TYPE.COLSPANTOTAL, totalColSpan + colSpan);
 
                     if (isRowSpan) {
-                        self.setRowColMapProp(ir, ic - countColSpan, undefined, colSpan);
+                        // console.warn(val.textContent);
+                        self.setRowColMapProp(ir, ic - countColSpan, 'value', colSpan);
                         return true;
                     } else {
-                        var irEnd = ir + (rowSpan || 1) - OFFSET;
-                        var icStart = ic + totalColSpan - countColSpan;
-                        var icEnd = ic + totalColSpan - countColSpan + (colSpan - OFFSET);
-                        self.setRowColMapProp(ir, ic + OFFSET, undefined, colSpan - OFFSET);
-                        handleMerge(ir, icStart, irEnd, icEnd);
+                        irStart = ir;
+                        irEnd = ir + (rowSpan || 1) - OFFSET;
+                        icStart = ic + totalColSpan - countColSpan;
+                        icEnd = ic + totalColSpan - countColSpan + (colSpan - OFFSET);
+                        self.setRowColMapProp(ir, ic + OFFSET, 'value', colSpan - OFFSET);
+                        // console.log(val.textContent, "ir:" + ir, "ic:", ic);
+                        if (irEnd - ir === 0) {
+                            // console.log(val.textContent, ir, irEnd);
+                            handleMerge(irStart, icStart, irEnd, icEnd);
+                        }
                     }
                 };
 
@@ -864,7 +1033,7 @@
                     return self.addMerge(irs, merge);
                 };
 
-                _nodesArray(context.rows).map(function (val, ir) {
+                var nodes = _nodesArray(context.rows).map(function (val, ir) {
                     if (!!~settings.ignoreRows.indexOf(ir - context.thAdj) || _matches(val, settings.ignoreCSS)) {
                         handleIgnore(ir);
                     }
@@ -886,6 +1055,101 @@
                         }
                     });
                 });
+
+                var handle = function (val, rowIndex, colIndex, colSpan, rowSpan, isChild, prevCountColSpan, prevTotalColSpan, depth) {
+
+
+                    // console.log(rowIndex, colIndex);
+
+                    // var irSave, icSave, icStart, irEnd, icEnd, countColSpan, totalColSpan, result;
+                    //
+                    // colSpan = colSpan <= 1 ? 0 : (colSpan || +val.getAttribute('colspan'));
+                    // rowSpan = rowSpan <= 1 ? 0 : (rowSpan || +val.getAttribute('rowspan'));
+                    // countColSpan = self.getRowColMapProp(rowIndex, undefined, self.TYPE.COLSPAN) || 0;
+                    // totalColSpan = self.getRowColMapProp(rowIndex, undefined, self.TYPE.COLSPANTOTAL) || 0;
+                    //
+                    // if (colSpan <= 1 && rowSpan <= 1) {
+                    //     return;
+                    // }
+                    //
+                    // if (rowIndex >= rowLength) {
+                    //     return;
+                    // }
+                    //
+                    // if (colSpan > 1) {
+                    //     // increment `countColSpan`
+                    //     self.setRowColMapProp(rowIndex, undefined, self.TYPE.COLSPAN, countColSpan + 1);
+                    //     // increment `totalColSpan`
+                    //     self.setRowColMapProp(rowIndex, undefined, self.TYPE.COLSPANTOTAL, totalColSpan + colSpan);
+                    // }
+                    //
+                    // if (colSpan > 1 && !isChild) {
+                    //     console.count("col");
+                    //     irEnd = rowIndex + (rowSpan || 1) - 1;
+                    //     icStart = colIndex + totalColSpan - countColSpan;
+                    //     icEnd = colIndex + totalColSpan - countColSpan + (colSpan - 1);
+                    //     handleMerge(rowIndex, icStart, irEnd, icEnd);
+                    // } else if (rowSpan > 1 && !isChild) {
+                    //     irEnd = rowIndex + (rowSpan || 1) - 1;
+                    //
+                    //     // 7
+                    //     // 1
+                    //     // 5
+                    //     // 6
+                    //     irEnd = rowIndex + (rowSpan || 1) - 1;
+                    //     // var icStart1 = ic + prevTotalColSpan - prevCountColSpan;
+                    //     var icStart2 = colIndex + totalColSpan - countColSpan;
+                    //     debugger;
+                    //
+                    // }
+                    //
+                    // if (colSpan > 1 || isChild) {
+                    //     irSave = rowIndex;
+                    //     icSave = colIndex + 1;
+                    //     result = isChild ? Math.max(1, colSpan) : colSpan - 1;
+                    //     //
+                    //     // console.groupCollapsed(irSave, icSave);
+                    //     // console.log("result:", result);
+                    //     // console.log("isChild:", isChild);
+                    //     // console.warn("countColSpan", countColSpan);
+                    //     // console.warn("totalColSpan", totalColSpan);
+                    //     // console.warn("colspan", colSpan);
+                    //     // console.warn("rowspan", rowSpan);
+                    //     // console.groupEnd();
+                    //     self.setRowColMapProp(irSave, icSave, undefined, result);
+                    //
+                    // }
+                    // // target => 7
+                    //
+                    // if (val !== null) {
+                    //     for (var i = 1; i < rowSpan; i++) {
+                    //         _handleColSpan(null, ++rowIndex, colIndex + totalColSpan - countColSpan - 1, colSpan, rowSpan, true, countColSpan, totalColSpan, i)
+                    //     }
+                    // }
+                };
+
+
+                // for (var i = 0; i < nodes.length; i++) {
+                //     debugger;
+                //     var k = 0;
+                //     while (true) {
+                //         // break;
+                //         var cell = nodes[i] && nodes[i][k];
+                //         if (!cell) {
+                //             break;
+                //         }
+                //         if (cell.hasAttribute('rowspan') || cell.hasAttribute('colspan')) {
+                //             handle(cell, i, k);
+                //         }
+                //         k++;
+                //     }
+                //
+                //     // for (var j = 0; j < nodes[i].length; j++) {
+                //     //     console.log(nodes[i][j]);
+                //     // }
+                // }
+                //
+                // console.log(nodes);
 
                 return self;
             }
