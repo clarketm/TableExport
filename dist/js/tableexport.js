@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v4.0.10 (https://www.travismclarke.com)
+ * TableExport.js v4.0.11 (https://www.travismclarke.com)
  *
  * Copyright (c) 2017 - Travis Clarke - https://www.travismclarke.com
  *
@@ -141,7 +141,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '4.0.10',
+            version: '4.0.11',
             /**
              * Default library options.
              * @memberof TableExport.prototype
@@ -435,7 +435,7 @@
                                 if (_hasClass(val, settings.emptyCSS)) {
                                     return ' '
                                 }
-                                return val.textContent;
+                                return settings.formatValue(val.textContent);
                             }).filter(function (val) {
                                 return typeof val !== 'undefined';
                             }).join(colD);
