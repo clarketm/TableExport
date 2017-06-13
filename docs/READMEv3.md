@@ -2,9 +2,9 @@
 # [TableExport](https://tableexport.v3.travismclarke.com)
 The simple, easy-to-implement plugin to export HTML tables to `xlsx`, `xls`, `csv`, and `txt` files.
 
-> **Notice:** As of May 2017, [v3.3](https://github.com/clarketm/TableExport/releases/tag/v3.3.13) has be superceded by [v4.0.10](https://github.com/clarketm/TableExport/releases/tag/v4.0.10).
+> **Notice:** As of May 2017, [v3.3](https://github.com/clarketm/TableExport/releases/tag/v3.3.13) has be superceded by [v4](https://github.com/clarketm/TableExport/releases/tag/v4.0.11).
 
-# Go to [`v4.0.10`](https://github.com/clarketm/TableExport/releases/tag/v4.0.10):
+# Go to [`v4.0.11`](https://github.com/clarketm/TableExport/releases/tag/v4.0.11):
 
 ### Live Demo 
 A live, interactive demo can be found on the **[TableExport](https://tableexport.v3.travismclarke.com/#live-demo)** webpage.
@@ -56,7 +56,7 @@ $ npm install tableexport
 * [jQuery](https://jquery.com) (1.2.1 or higher) `*`
 * [FileSaver.js](https://github.com/clarketm/FileSaver.js/)
 
-> `*` jQuery dependency requirement is removed as of [v4.0.10](https://github.com/clarketm/TableExport/tree/v4.0.10)
+> `*` jQuery dependency requirement is removed as of [v4](https://github.com/clarketm/TableExport/tree/v4.0.11)
 
 #### Optional / Theming:
 
