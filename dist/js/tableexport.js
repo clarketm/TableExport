@@ -127,6 +127,7 @@
                         if (!_isValidFormat(key)) {
                             return _handleError('"' + key + '" is not a valid format. \nFormats: ' + _FORMAT_LIST.join(', '))
                         } else if (!_hasDependencies(key)) {
+                            // TODO: provide a fallback option to XLS?
                             return _handleError('"' + key + '" requires "js-xlsx".');
                         } else if (!formatMap[key]) {
                             context.setExportData(self.exporters.build.call(self, context, key));
@@ -569,6 +570,7 @@
                     var dataURI = 'data:' + mime + ';' + this.charset + ',' + data;
                     this.downloadDataURI(dataURI, name, extension);
                 } else {
+                    // TODO: error and fallback when `saveAs` not available
                     saveAs(new Blob([data],
                         {type: mime + ';' + this.charset}),
                         name + extension, true);
