@@ -513,7 +513,6 @@
                         ws[cell_ref] = cell;
                     }
                 }
-                // console.debug(merges);
                 ws['!merges'] = merges;
                 if (range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
                 return ws;
