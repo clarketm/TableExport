@@ -107,7 +107,7 @@
 
                 context.setExportData = (function () {
                     return function (exporter) {
-                        var data = LocalStorage.getInstance().getItem(exporter);
+                        var data = Storage.getInstance().getItem(exporter);
                         var type = exporter.substring(exporter.indexOf('-') + 1);
                         _exportData[context.uuid] = _exportData[context.uuid] || {};
                         _exportData[context.uuid][type] = JSON.parse(data);
@@ -138,7 +138,7 @@
                 );
             });
 
-            var exportButton = document.querySelectorAll('button[' + self.localStorageKey + ']');
+            var exportButton = document.querySelectorAll('button[' + self.storageKey + ']');
             _on(exportButton, 'click', self.downloadHandler, self);
 
             return self;
@@ -208,15 +208,15 @@
              */
             defaultCaptionClass: 'tableexport-caption',
             /**
-             * Namespace (i.e. prefix) applied to each table UUID and LocalStorage key.
+             * Namespace (i.e. prefix) applied to each table UUID and Storage key.
              * @memberof TableExport.prototype
              */
             defaultNamespace: 'tableexport-',
             /**
-             * Attribute applied to each export button element used to reference a LocalStorage key.
+             * Attribute applied to each export button element used to reference a Storage key.
              * @memberof TableExport.prototype
              */
-            localStorageKey: 'tableexport-id',
+            storageKey: 'tableexport-id',
             /**
              * CSS selector or selector[] to exclude/remove cells from the exported file(s).
              * @type {selector|selector[]}
@@ -394,7 +394,7 @@
                         format.defaultClass,
                         settings.bootstrapSettings
                     ));
-                    return LocalStorage.getInstance().setItem(hashKey, dataObject, true);
+                    return Storage.getInstance().setItem(hashKey, dataObject, true);
                 }
             },
             /**
@@ -408,7 +408,7 @@
              */
             createObjButton: function (hashKey, dataObject, myContent, myClass, bootstrapSettings) {
                 var exportButton = document.createElement('button');
-                exportButton.setAttribute(this.localStorageKey, hashKey);
+                exportButton.setAttribute(this.storageKey, hashKey);
                 exportButton.className = bootstrapSettings.bootstrapClass + bootstrapSettings.bootstrapTheme + myClass;
                 exportButton.textContent = myContent;
                 return exportButton
@@ -525,7 +525,7 @@
              */
             downloadHandler: function (event) {
                 var target = event.target;
-                var object = JSON.parse(LocalStorage.getInstance().getItem(target.getAttribute(this.localStorageKey))),
+                var object = JSON.parse(Storage.getInstance().getItem(target.getAttribute(this.storageKey))),
                     data = object.data,
                     filename = object.filename,
                     mimeType = object.mimeType,
@@ -650,21 +650,21 @@
         };
 
         /**
-         * LocalStorage main interface constructor
+         * Storage main interface constructor
          * @memberof TableExport.prototype
          * @constructor
          */
-        var LocalStorage = function () {
+        var Storage = function () {
             this._instance = null;
 
-            this.store = localStorage;
+            this.store = sessionStorage;
             this.namespace = TableExport.prototype.defaultNamespace;
             this.getKey = function (key) {
                 return this.namespace + key;
             };
             this.setItem = function (_key, value, overwrite) {
                 var key = this.getKey(_key);
-                if (this.exists(key) && !overwrite) {
+                if (this.exists(_key) && !overwrite) {
                     return;
                 }
                 if (typeof value !== 'string') return _handleError('"value" must be a string.');
@@ -684,15 +684,15 @@
                 return this.store.removeItem(key);
             };
         };
-        LocalStorage.getInstance = function () {
+        Storage.getInstance = function () {
             if (!this._instance) {
-                this._instance = new LocalStorage();
+                this._instance = new Storage();
             }
             return this._instance;
         };
 
         /**
-         * LocalStorage main interface constructor
+         * RowColMap main interface constructor
          * @memberof TableExport.prototype
          * @constructor
          */
@@ -751,12 +751,15 @@
                 }
             };
             this.generateTotal = function (ir, ic) {
+                var VALUE = RowColMap.prototype.TYPE.VALUE;
                 var _total = 0;
 
                 if (this.isRowSpan(ir) && this.isColSpan(ir)) {
-                    _total = this.getRowColMapProp(ir, ic, 'value') || 0;
-                } else if (this.getRowColMapProp(ir, ic, 'value')) {
-                    _total = this.getRowColMapProp(ir, ic, 'value');
+                    // console.debug("1", this.getRowColMapProp(ir, ic, VALUE));
+                    _total = this.getRowColMapProp(ir, ic, VALUE) || 0;
+                } else if (this.getRowColMapProp(ir, ic, VALUE)) {
+                    // console.debug("2", this.getRowColMapProp(ir, ic, VALUE));
+                    _total = this.getRowColMapProp(ir, ic, VALUE);
                 }
                 return _total;
             };
@@ -765,7 +768,6 @@
                     var total = this.generateTotal(ir, ic);
 
                     if (_isEnhanced(key)) {
-                        _return.m = this.getRowColMapProp(ir, undefined, RowColMap.prototype.TYPE.MERGE);
                         return new Array(total).concat(_return);
                     } else {
                         new Array(total).concat(_return).join(colDel);
@@ -795,7 +797,8 @@
                 ROWSPANTOTAL: 'rowspantotal',
                 COLSPAN: 'colspan',
                 COLSPANTOTAL: 'colspantotal',
-                DEFAULT: 'default'
+                DEFAULT: 'default',
+                VALUE: 'value'
             },
             build: function (context, settings) {
                 var self = this;
@@ -849,8 +852,8 @@
                             self.setRowColMapProp(_row + ir, undefined, self.TYPE.ROWSPAN, countRowSpan + 1);
 
                             if (!handledByColSpan) {
-                                totalRowSpan = self.getRowColMapProp(_row + ir, ic - countRowSpan, 'value') || 0;
-                                self.setRowColMapProp(_row + ir, ic - countRowSpan, 'value', totalRowSpan + 1);
+                                totalRowSpan = self.getRowColMapProp(_row + ir, ic - countRowSpan, self.TYPE.VALUE) || 0;
+                                self.setRowColMapProp(_row + ir, ic - countRowSpan, self.TYPE.VALUE, totalRowSpan + 1);
                                 if (rowSpan > 1 && _row === 1) {
                                     var _re = self.rcMap['c' + (ic)] && self.rcMap['c' + (ic)][_row + ir];
                                     totalColSpan = self.getRowColMapProp(ir, undefined, self.TYPE.COLSPANTOTAL) || 0;
@@ -880,14 +883,14 @@
                     self.setRowColMapProp(ir, undefined, self.TYPE.COLSPANTOTAL, totalColSpan + colSpan);
 
                     if (isRowSpan) {
-                        self.setRowColMapProp(ir, ic - countColSpan, 'value', colSpan);
+                        self.setRowColMapProp(ir, ic - countColSpan, self.TYPE.VALUE, colSpan);
                         return true;
                     } else {
                         irStart = ir;
                         irEnd = ir + (rowSpan || 1) - OFFSET;
                         icStart = ic + totalColSpan - countColSpan;
                         icEnd = ic + totalColSpan - countColSpan + (colSpan - OFFSET);
-                        self.setRowColMapProp(ir, ic + OFFSET, 'value', colSpan - OFFSET);
+                        self.setRowColMapProp(ir, ic + OFFSET, self.TYPE.VALUE, colSpan - OFFSET);
                         handleMerge(irStart, icStart, irEnd, icEnd);
                     }
                 };
