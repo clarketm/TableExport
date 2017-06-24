@@ -116,8 +116,6 @@
 
                 context.rcMap = new RowColMap().build(context, settings);
 
-                // console.debug(context.rcMap);
-
                 var formatMap = _FORMAT_LIST
                     .reduce(function (acc, cur) {
                         acc[cur] = 0;
@@ -755,10 +753,8 @@
                 var _total = 0;
 
                 if (this.isRowSpan(ir) && this.isColSpan(ir)) {
-                    // console.debug("1", this.getRowColMapProp(ir, ic, VALUE));
                     _total = this.getRowColMapProp(ir, ic, VALUE) || 0;
                 } else if (this.getRowColMapProp(ir, ic, VALUE)) {
-                    // console.debug("2", this.getRowColMapProp(ir, ic, VALUE));
                     _total = this.getRowColMapProp(ir, ic, VALUE);
                 }
                 return _total;
@@ -770,7 +766,7 @@
                     if (_isEnhanced(key)) {
                         return new Array(total).concat(_return);
                     } else {
-                        new Array(total).concat(_return).join(colDel);
+                        return new Array(total).concat(_return).join(colDel);
                     }
                 }
                 return _return;
@@ -900,7 +896,6 @@
                         s: {r: irs, c: ics},
                         e: {r: ire, c: ice}
                     };
-                    // console.debug("merges:", merge.s, merge.e);
                     return self.addMerge(irs, merge);
                 };
 
