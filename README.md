@@ -1,6 +1,4 @@
-<!-- [![TableExport](./Hero.png)](https://tableexport.v4.travismclarke.com) -->
-# [TableExport](https://tableexport.v4.travismclarke.com)
-The simple, easy-to-implement library to export HTML tables to `xlsx`, `xls`, `csv`, and `txt` files.
+[![TableExport](/Hero.png)](https://tableexport.v4.travismclarke.com)
 
 [![GitHub release](https://img.shields.io/github/release/clarketm/tableexport.svg)]()
 [![GitHub (pre-)release](https://img.shields.io/github/release/clarketm/tableexport/all.svg)]()
