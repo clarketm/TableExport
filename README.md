@@ -1,8 +1,8 @@
 [![TableExport](https://github.com/clarketm/TableExport/blob/master/Hero.png)](https://tableexport.v4.travismclarke.com)
 
-[![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
-[![Downloads](https://img.shields.io/npm/dt/tableexport.svg)
-[![License](https://img.shields.io/npm/l/tableexport.svg)
+[!Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
+[!Downloads](https://img.shields.io/npm/dt/tableexport.svg)]()
+[!License](https://img.shields.io/npm/l/tableexport.svg)]()
 
 ## Docs
 * [Migrating from **3.x** to **4.x**?](MIGRATING.md)
