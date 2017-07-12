@@ -1,7 +1,12 @@
-[![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
+ [![TableExport](/Hero.png)](https://tableexport.v4.travismclarke.com)
+<!-- # [TableExport](https://tableexport.v4.travismclarke.com) -->
+<!-- The simple, easy-to-implement library to export HTML tables to `xlsx`, `xls`, `csv`, and `txt` files. -->
 
-# [TableExport](https://tableexport.v4.travismclarke.com)
-The simple, easy-to-implement library to export HTML tables to `xlsx`, `xls`, `csv`, and `txt` files.
+[![GitHub release](https://img.shields.io/github/release/clarketm/tableexport.svg)]()
+[![GitHub (pre-)release](https://img.shields.io/github/release/clarketm/tableexport/all.svg)]()
+[![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
+[![Downloads](https://img.shields.io/npm/dt/tableexport.svg)]()
+[![License](https://img.shields.io/npm/l/tableexport.svg)]()
 
 ## Docs
 * [Migrating from **3.x** to **4.x**?](MIGRATING.md)
