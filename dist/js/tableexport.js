@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v5.0.0-rc.10 (https://www.travismclarke.com)
+ * TableExport.js v5.0.0-rc.11 (https://www.travismclarke.com)
  *
  * Copyright (c) 2017 - Travis Clarke - https://www.travismclarke.com
  *
@@ -211,6 +211,11 @@
              * @memberof TableExport.prototype
              */
             defaultNamespace: 'tableexport-',
+            /**
+             * Attribute applied to each table element used to generate each Storage key.
+             * @memberof TableExport.prototype
+             */
+            tableKey: 'tableexport-key',
             /**
              * Attribute applied to each export button element used to reference a Storage key.
              * @memberof TableExport.prototype
@@ -975,10 +980,15 @@
             var uuid = 0;
 
             return function (el) {
-                if (!el.id) {
-                    el.id = TableExport.prototype.defaultNamespace + (++uuid);
+                var tableKey = el.getAttribute(TableExport.prototype.tableKey);
+
+                if (!tableKey) {
+                    tableKey = el.id
+                        ? el.id
+                        : TableExport.prototype.defaultNamespace + (++uuid);
+                    el.setAttribute(TableExport.prototype.tableKey, tableKey);
                 }
-                return el.id;
+                return tableKey;
             };
         })();
 
