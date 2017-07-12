@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v5.0.0-rc.9 (https://www.travismclarke.com)
+ * TableExport.js v5.0.0-rc.10 (https://www.travismclarke.com)
  *
  * Copyright (c) 2017 - Travis Clarke - https://www.travismclarke.com
  *
@@ -148,7 +148,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '5.0.0-rc.9',
+            version: '5.0.0-rc.10',
             /**
              * Default library options.
              * @memberof TableExport.prototype
@@ -983,9 +983,10 @@
         })();
 
         var _hashCode = (function () {
-            var hash = 0, i, char;
 
             return function (hashKey) {
+                var hash = 0, i, char;
+
                 var type = hashKey.type;
                 hashKey = JSON.stringify(hashKey);
                 if (hashKey.length === 0) return hash;
