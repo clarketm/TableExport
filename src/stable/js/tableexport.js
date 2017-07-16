@@ -148,7 +148,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '5.0.0-rc.10',
+            version: '5.0.0-rc.11',
             /**
              * Default library options.
              * @memberof TableExport.prototype
