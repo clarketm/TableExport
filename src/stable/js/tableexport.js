@@ -86,14 +86,23 @@
                  * @param exportButton {HTMLButtonElement}
                  */
                 context.checkCaption = function (exportButton) {
-                    var caption = el.querySelectorAll('caption.tableexport-caption');
+                    var caption;
+                    if(settings.buttonsElementId){
+                        caption = document.querySelectorAll('#'+settings.buttonsElementId+' .tableexport-caption');
+                    }else{
+                        caption = document.querySelectorAll('caption.tableexport-caption');
+                    }
                     if (caption.length) {
                         caption[0].appendChild(exportButton);
                     } else {
-                        caption = document.createElement('caption');
+                        caption = settings.buttonsElementId ? document.createElement('div') : document.createElement('caption');;
                         caption.className = settings.bootstrapSettings.bootstrapSpacing + settings.position + ' ' + 'tableexport-caption';
                         caption.appendChild(exportButton);
-                        el.insertBefore(caption, el.firstChild);
+                        if(settings.buttonsElementId){
+                            document.getElementById(settings.buttonsElementId).append(caption);
+                        }else{
+                            el.insertBefore(caption, el.firstChild);
+                        }
                     }
                 };
 
@@ -114,6 +123,7 @@
                     formatMap[type] = 0;
                 }
 
+                context.formatsLabels = settings.formatsLabels;
                 settings.formats.forEach(
                     function (key) {
                         (XLSX && !_isMobile) && key === _FORMAT.XLS
@@ -333,7 +343,7 @@
                     settings.exportButtons && context.checkCaption(TableExport.prototype.createObjButton(
                         hashKey,
                         dataObject,
-                        format.buttonContent,
+                        context.formatsLabels && context.formatsLabels.xlsx ? context.formatsLabels.xlsx : format.buttonContent,
                         format.defaultClass,
                         settings.bootstrapSettings
                     ));
@@ -374,7 +384,7 @@
                     settings.exportButtons && context.checkCaption(TableExport.prototype.createObjButton(
                         hashKey,
                         dataObject,
-                        format.buttonContent,
+                        context.formatsLabels && context.formatsLabels.xls ? context.formatsLabels.xls : format.buttonContent,
                         format.defaultClass,
                         settings.bootstrapSettings
                     ));
@@ -413,7 +423,7 @@
                     settings.exportButtons && context.checkCaption(TableExport.prototype.createObjButton(
                         hashKey,
                         dataObject,
-                        format.buttonContent,
+                        context.formatsLabels && context.formatsLabels.xls ? context.formatsLabels.xls : format.buttonContent,
                         format.defaultClass,
                         settings.bootstrapSettings
                     ));
@@ -452,7 +462,7 @@
                     settings.exportButtons && context.checkCaption(TableExport.prototype.createObjButton(
                         hashKey,
                         dataObject,
-                        format.buttonContent,
+                        context.formatsLabels && context.formatsLabels.csv ? context.formatsLabels.csv : format.buttonContent,
                         format.defaultClass,
                         settings.bootstrapSettings
                     ));
@@ -491,7 +501,7 @@
                     settings.exportButtons && context.checkCaption(TableExport.prototype.createObjButton(
                         hashKey,
                         dataObject,
-                        format.buttonContent,
+                        context.formatsLabels && context.formatsLabels.txt ? context.formatsLabels.txt : format.buttonContent,
                         format.defaultClass,
                         settings.bootstrapSettings
                     ));
@@ -727,10 +737,23 @@
              * Remove the instance (i.e. caption containing the export buttons)
              */
             remove: function () {
-                this.selectors.forEach(function (el) {
-                    var caption = el.querySelector('caption.tableexport-caption');
-                    caption && el.removeChild(caption);
-                });
+                console.log(this.selectors);
+                var settings = this.settings;
+
+                if(settings.buttonsElementId){
+                    var element = document.querySelectorAll('#'+settings.buttonsElementId+' .tableexport-caption');
+                    if(element.length){
+                        document.getElementById(settings.buttonsElementId).removeChild(element[0]);
+                    }
+                }else{
+                    this.selectors.forEach(function (el) {
+                        var caption = el.querySelector('caption.tableexport-caption');
+                        caption && el.removeChild(caption);
+                    });
+                }
+
+
+
             }
         };
 
