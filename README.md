@@ -1,17 +1,18 @@
- [![TableExport](/Hero.png)](https://tableexport.v4.travismclarke.com)
-<!-- # [TableExport](https://tableexport.v4.travismclarke.com) -->
-<!-- The simple, easy-to-implement library to export HTML tables to `xlsx`, `xls`, `csv`, and `txt` files. -->
+ <!--[![TableExport](/Hero.png)](https://tableexport.v4.travismclarke.com)-->
+# [TableExport](https://tableexport.v4.travismclarke.com)
+The simple, easy-to-implement library to export HTML tables to `xlsx`, `xls`, `csv`, and `txt` files.
 
 [![GitHub release](https://img.shields.io/github/release/clarketm/tableexport.svg)]()
-[![GitHub (pre-)release](https://img.shields.io/github/release/clarketm/tableexport/all.svg)]()
 [![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
 [![Downloads](https://img.shields.io/npm/dt/tableexport.svg)]()
 [![License](https://img.shields.io/npm/l/tableexport.svg)]()
 
 ## Docs
 * [Migrating from **3.x** to **4.x**?](MIGRATING_v3_to_v4.md)
-* [`v3` docs](https://tableexport.v3.travismclarke.com/) and [README](https://github.com/clarketm/TableExport/tree/3.x.x#getting-started): 
-* [`v4` docs](https://tableexport.v4.travismclarke.com) and [README](#getting-started) (below): 
+* [Migrating from **4.x** to **5.x**?](MIGRATING_v4_to_v5.md)
+* [`v3` docs](https://tableexport.v3.travismclarke.com/) and [README](https://github.com/clarketm/TableExport/tree/3.x.x#getting-started):
+* [`v4` docs](https://tableexport.v4.travismclarke.com/v/v4.0.11/) and [README](https://github.com/clarketm/TableExport/tree/4.x.x#getting-started):
+* [`v5` docs](https://tableexport.v4.travismclarke.com/v/v5.0.0/) and [README](#getting-started):
 
 ## Getting Started
 
@@ -39,9 +40,9 @@ $ npm install tableexport
 #### [CDNjs](https://cdnjs.com/libraries/TableExport)
 |          | uncompressed | compressed |
 | :------: | :----------: | :--------: |
-|  __CSS__ |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.11/css/tableexport.css)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.11/css/tableexport.min.css)      |
-|  __JS__  |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.11/js/tableexport.js)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.11/js/tableexport.min.js)      |
-|  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.11/img/xlsx.svg)[🔗<sup>xls</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.11/img/xls.svg)[🔗<sup>csv</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.11/img/csv.svg)[🔗<sup>txt</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.11/img/txt.svg)  |
+|  __CSS__ |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.0/css/tableexport.css)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.0/css/tableexport.min.css)      |
+|  __JS__  |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.0/js/tableexport.js)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.0/js/tableexport.min.js)      |
+|  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.0/img/xlsx.svg)[🔗<sup>xls</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.0/img/xls.svg)[🔗<sup>csv</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.0/img/csv.svg)[🔗<sup>txt</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.0/img/txt.svg)  |
 
 
 #### [unpkg](https://unpkg.com/#/)
@@ -118,7 +119,7 @@ Notice that by default, TableExport will create export buttons for three differe
 TableExport(document.getElementsByTagName("table"), {
     headers: true,                              // (Boolean), display table headers (th or td elements) in the <thead>, (default: true)
     footers: true,                              // (Boolean), display table footers (th or td elements) in the <tfoot>, (default: false)
-    formats: ['xls', 'csv', 'txt'],             // (String[]), filetype(s) for the export, (default: ['xls', 'csv', 'txt'])
+    formats: ['xlsx', 'csv', 'txt'],            // (String[]), filetype(s) for the export, (default: ['xlsx', 'csv', 'txt'])
     filename: 'id',                             // (id, String), filename for the downloaded file, (default: 'id')
     bootstrap: false,                           // (Boolean), style buttons using bootstrap, (default: true)
     exportButtons: true,                        // (Boolean), automatically generate the built-in export buttons for each of the specified formats (default: true)
@@ -174,6 +175,24 @@ var exportData = table.getExportData();     // useful for creating custom export
 */
 ```
 
+#### [`getFileSize`](https://tableexport.v3.travismclarke.com/examples/exportButtons.html)
+```js
+var tableId = 'export-buttons-table';
+var XLS = table.CONSTANTS.FORMAT.XLS;
+
+/* get export data (see `getExportData` above) */
+var exportDataXLS = table.getExportData()[tableId][XLS];
+
+/* get file size (bytes) */
+var bytesXLS = table.getFileSize(exportDataXLS.data, exportDataXLS.fileExtension);
+
+/**********************************
+ ** bytesXLS (file size in bytes)
+ **********************************
+352
+*/
+```
+
 #### [`update`](https://tableexport.v3.travismclarke.com/examples/update_reset_remove.html)
 ```js
 /* update */
@@ -199,22 +218,48 @@ Below are some of the popular configurable settings to customize the functionali
 
 #### [`ignoreCSS`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
 ```js
-/* class selector to exclude/remove cells (<td> or <th>) or rows (<tr>) from the exported file(s). */
-TableExport.prototype.ignoreCSS = "tableexport-ignore";
+/**
+ * CSS selector or selector[] to exclude/remove cells (<td> or <th>) from the exported file(s).
+ * @type {selector|selector[]}
+ * @memberof TableExport.prototype
+ */
+
+// selector
+TableExport.prototype.ignoreCSS = ".tableexport-ignore";
+
+// selector[]
+TableExport.prototype.ignoreCSS = [".tableexport-ignore", ".other-ignore-class"];
 
 // OR using jQuery
 
-$.fn.tableExport.ignoreCSS = "tableexport-ignore" ;
+// selector
+$.fn.tableExport.ignoreCSS = ".tableexport-ignore" ;
+
+// selector[]
+$.fn.tableExport.ignoreCSS = [".tableexport-ignore", ".other-ignore-class"] ;
 ```
 
 #### [`emptyCSS`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
 ```js
-/* class selector to replace cells (<td> or <th>) with an empty string (i.e. "blank cell") in the exported file(s). */
-TableExport.prototype.emptyCSS = "tableexport-empty";
+/**
+ * CSS selector or selector[] to replace cells (<td> or <th>) with an empty string in the exported file(s).
+ * @type {selector|selector[]}
+ * @memberof TableExport.prototype
+ */
+
+// selector
+TableExport.prototype.emptyCSS = ".tableexport-empty";
+
+// selector[]
+TableExport.prototype.emptyCSS = [".tableexport-empty", ".other-empty-class"];
 
 // OR using jQuery
 
-$.fn.tableExport.emptyCSS = "tableexport-empty" ;
+// selector
+$.fn.tableExport.emptyCSS = ".tableexport-empty" ;
+
+// selector[]
+$.fn.tableExport.emptyCSS = [".tableexport-empty", ".other-empty-class"];
 ```
 
 ```js
@@ -235,42 +280,78 @@ TableExport.prototype.rowDel = "\r\n";
 ```
 
 ```js
-/* Format-specific configuration (default class, content, and separator) */
+/**
+ * Format-specific configuration (default class, content, mimeType, etc.)
+ * @memberof TableExport.prototype
+ */
+formatConfig: {
+    /**
+     * XLSX (Open XML spreadsheet) file extension configuration
+     * @memberof TableExport.prototype
+     */
+    xlsx: {
+        defaultClass: 'xlsx',
+        buttonContent: 'Export to xlsx',
+        mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        fileExtension: '.xlsx'
+    },
+    xlsm: {
+        defaultClass: 'xlsm',
+        buttonContent: 'Export to xlsm',
+        mimeType: 'application/vnd.ms-excel.sheet.macroEnabled.main+xml',
+        fileExtension: '.xlsm'
+    },
+    xlsb: {
+        defaultClass: 'xlsb',
+        buttonContent: 'Export to xlsb',
+        mimeType: 'application/vnd.ms-excel.sheet.binary.macroEnabled.main',
+        fileExtension: '.xlsb'
+    },
+    /**
+     * XLS (Binary spreadsheet) file extension configuration
+     * @memberof TableExport.prototype
+     */
+    xls: {
+        defaultClass: 'xls',
+        buttonContent: 'Export to xls',
+        separator: '\t',
+        mimeType: 'application/vnd.ms-excel',
+        fileExtension: '.xls',
+        enforceStrictRFC4180: false
+    },
+    /**
+     * CSV (Comma Separated Values) file extension configuration
+     * @memberof TableExport.prototype
+     */
+    csv: {
+        defaultClass: 'csv',
+        buttonContent: 'Export to csv',
+        separator: ',',
+        mimeType: 'text/csv',
+        fileExtension: '.csv',
+        enforceStrictRFC4180: true
+    },
+    /**
+     * TXT (Plain Text) file extension configuration
+     * @memberof TableExport.prototype
+     */
+    txt: {
+        defaultClass: 'txt',
+        buttonContent: 'Export to txt',
+        separator: '  ',
+        mimeType: 'text/plain',
+        fileExtension: '.txt',
+        enforceStrictRFC4180: true
+    }
+},
 
-/* Excel Open XML spreadsheet (.xlsx) */
-TableExport.prototype.xlsx = {
-    defaultClass: "xlsx",
-    buttonContent: "Export to xlsx",
-    mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    fileExtension: ".xlsx"
-};
+//////////////////////////////////////////
+// Configuration override example
+//////////////////////////////////////////
 
-/* Excel Binary spreadsheet (.xls) */
-TableExport.prototype.xls = {
-    defaultClass: "xls",
-    buttonContent: "Export to xls",
-    separator: "\t",
-    mimeType: "application/vnd.ms-excel",
-    fileExtension: ".xls"
-};
+/* Change the CSV (Comma Separated Values) `mimeType` to "application/csv" */
+TableExport.prototype.formatConfig.xlsx.mimeType = "application/csv"
 
-/* Comma Separated Values (.csv) */
-TableExport.prototype.csv = {
-    defaultClass: "csv",
-    buttonContent: "Export to csv",
-    separator: ",",
-    mimeType: "application/csv",
-    fileExtension: ".csv"
-};
-
-/* Plain Text (.txt) */
-TableExport.prototype.txt = {
-    defaultClass: "txt",
-    buttonContent: "Export to txt",
-    separator: "  ",
-    mimeType: "text/plain",
-    fileExtension: ".txt"
-};
 ```
 
 ### CSS
@@ -339,7 +420,7 @@ When used alongside Bootstrap, there are four custom classes **`.xlsx`, `.xls`, 
 - [x] Force jQuery to be an optionally loaded module.
 - [x] Use the enhanced [SheetJS](https://github.com/SheetJS/js-xlsx#supported-output-formats) `xls`, `csv`, and `txt` formats (exposed via `enforceStrictRFC4180` prototype property).
 - [x] Allow `ignoreCSS` and `emptyCSS` to work with any `selector|selector[]` instead of solely a single CSS class.
-- [ ] Ensure (via testing) full consistency and backwards-compatibility for jQuery.
+- [x] Ensure (via testing) full consistency and backwards-compatibility for jQuery.
 - [ ] Add **Export as PDF** support.
 
 ### Credits
