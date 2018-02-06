@@ -9,7 +9,7 @@
 [![License](https://img.shields.io/npm/l/tableexport.svg)]()
 
 ## Docs
-* [Migrating from **3.x** to **4.x**?](MIGRATING.md)
+* [Migrating from **3.x** to **4.x**?](MIGRATING_v3_to_v4.md)
 * [`v3` docs](https://tableexport.v3.travismclarke.com/) and [README](https://github.com/clarketm/TableExport/tree/3.x.x#getting-started): 
 * [`v4` docs](https://tableexport.v4.travismclarke.com) and [README](#getting-started) (below): 
 

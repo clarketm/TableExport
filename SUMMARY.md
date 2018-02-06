@@ -2,7 +2,7 @@
 * [TableExport](README.md#tableexport)
 
 ## Docs
-* [Migrating from **3.x** to **4.x**?](MIGRATING.md)
+* [Migrating from **3.x** to **4.x**?](MIGRATING_v3_to_v4.md)
 * [`v3` docs](READMEv3.md) 
 * [`v4` docs](README.md#docs)
 
