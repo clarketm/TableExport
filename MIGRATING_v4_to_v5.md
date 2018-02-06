@@ -12,16 +12,13 @@
 // (String[]), filetype(s) for the export, (default: ['xlsx', 'csv', 'txt'])
 formats: ['xlsx', 'csv', 'txt'],
 ```
-
-1. Two(2) new export formats have been added: `xlsm` and `xlsb`. [v5.0.0-rc.4](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.4)
-
-1. Both `csv` and `xls` formats now have a the `enforceStrictRFC4180` property set to `false`. [v5.0.0-rc.4](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.4)
+2. Two(2) new export formats have been added: `xlsm` and `xlsb`. [v5.0.0-rc.4](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.4)
+3. Both `csv` and `xls` formats now have a the `enforceStrictRFC4180` property set to `false`. [v5.0.0-rc.4](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.4)
 
 
 #### Methods
 1. `getFileSize` utility method to quickly [calculate the filesize](https://github.com/clarketm/TableExport/blob/v5.0.0-rc.1/examples/exportButtons.html) of a file export. [v5.0.0-rc.1](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.1)
-
-1. `getBinaryData` renamed to a more semantically correct `getRawData`
+2. `getBinaryData` renamed to a more semantically correct `getRawData`
 
 
 #### Settings
@@ -34,8 +31,7 @@ formats: ['xlsx', 'csv', 'txt'],
  */
 ignoreCSS: '.tableexport-ignore'
 ```
-
-1. [`emptyCSS`](README.md#emptycss) can now accept either a `selector` (e.g. `'.tableexport-empty'`) or `selector[]` (e.g. `['.tableexport-empty', '#empty']`). [v5.0.0-rc.7](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.7)
+2. [`emptyCSS`](README.md#emptycss) can now accept either a `selector` (e.g. `'.tableexport-empty'`) or `selector[]` (e.g. `['.tableexport-empty', '#empty']`). [v5.0.0-rc.7](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.7)
 ```javascript
 /**
  * CSS selector or selector[] to replace cells with an empty string in the exported file(s).
@@ -44,8 +40,7 @@ ignoreCSS: '.tableexport-ignore'
  */
 emptyCSS: '.tableexport-empty'
 ```
-
-1. `defaultCaptionClass` class is now configurable rather than statically set to the `.tableexport-caption` class. [v5.0.0-rc.10](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.10)
+3. `defaultCaptionClass` class is now configurable rather than statically set to the `.tableexport-caption` class. [v5.0.0-rc.10](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.10)
 ```javascript
 /**
  * Class applied to each table caption.
@@ -53,8 +48,7 @@ emptyCSS: '.tableexport-empty'
  */
 defaultCaptionClass: 'tableexport-caption'
 ```
-
-1. `storageKey` attribute is now configurable rather than statically set to the `tableexport-id` attribute. [v5.0.0-rc.10](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.10)
+4. `storageKey` attribute is now configurable rather than statically set to the `tableexport-id` attribute. [v5.0.0-rc.10](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.10)
 ```javascript
 /**
  * Attribute applied to each export button element used to reference a Storage key.
@@ -62,9 +56,7 @@ defaultCaptionClass: 'tableexport-caption'
  */
 storageKey: 'tableexport-id'
 ```
-
-1. `defaultNamespace` string is now configurable rather than statically set to the `te-` string. [v5.0.0-rc.10](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.10)
-
+5. `defaultNamespace` string is now configurable rather than statically set to the `te-` string. [v5.0.0-rc.10](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.10)
 ```javascript
 /**
  * Namespace (i.e. prefix) applied to each table UUID and Storage key.
@@ -72,13 +64,11 @@ storageKey: 'tableexport-id'
  */
 defaultNamespace: 'tableexport-'
 ```
-
-1. `types` renamed to `typeConfig`. [v5.0.0-rc.1](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.1)
-
-1. `xlsx`, `xls`, `csv`, and `txt` prototype properties moved to nested under the `formatConfig` namespace. [v5.0.0-rc.1](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.1)
+6. `types` renamed to `typeConfig`. [v5.0.0-rc.1](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.1)
+7. `xlsx`, `xls`, `csv`, and `txt` prototype properties moved to nested under the `formatConfig` namespace. [v5.0.0-rc.1](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.1)
 
 
 #### Miscellaneous
 1. Improved error logging to the console, including more verbose error descriptions. [v5.0.0-rc.4](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.4)
-1. Serialized export data is now stored in Session Storage rather than Local Storage to prevent undesirable persistence. [v5.0.0-rc.10](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.10)
-1. Implement caching by maintaining unique reference to tables by `id`. The `tableKey` attribute is now used to uniquely identify table elements and hold either the table's `id` or a UUID generated from the `defaultNamespace` and a unique internal counter. [v5.0.0-rc.10](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.10), [v5.0.0-rc.11](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.11)
+2. Serialized export data is now stored in Session Storage rather than Local Storage to prevent undesirable persistence. [v5.0.0-rc.10](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.10)
+3. Implement caching by maintaining unique reference to tables by `id`. The `tableKey` attribute is now used to uniquely identify table elements and hold either the table's `id` or a UUID generated from the `defaultNamespace` and a unique internal counter. [v5.0.0-rc.10](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.10), [v5.0.0-rc.11](https://github.com/clarketm/TableExport/releases/tag/v5.0.0-rc.11)
