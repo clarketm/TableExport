@@ -1,12 +1,18 @@
 [![Build Status](https://travis-ci.org/clarketm/TableExport.svg?branch=master)](https://travis-ci.org/clarketm/TableExport)
 
-# [TableExport](https://tableexport.v4.travismclarke.com)
+# [TableExport](https://tableexport.v4.travismclarke.com/READMEv4.html)
 The simple, easy-to-implement library to export HTML tables to `xlsx`, `xls`, `csv`, and `txt` files.
+
+---
+# Deprecation notice:
+### Below are the docs for [`v4.0.11`](https://github.com/clarketm/TableExport/tree/4.x.x#getting-started).
+### Check out to [`v5.0.0`](https://github.com/clarketm/TableExport/#getting-started) for the latest release.
+---
 
 ## Docs
 * [Migrating from **3.x** to **4.x**?](MIGRATING.md)
 * [`v3` docs](https://tableexport.v3.travismclarke.com/) and [README](https://github.com/clarketm/TableExport/tree/3.x.x#getting-started): 
-* [`v4` docs](https://tableexport.v4.travismclarke.com) and [README](#getting-started) (below): 
+* [`v4` docs](https://tableexport.v4.travismclarke.com/READMEv4.html) and [README](#getting-started) (below):
 
 ## Getting Started
 
