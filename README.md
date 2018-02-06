@@ -11,8 +11,8 @@
 * [Migrating from **3.x** to **4.x**?](MIGRATING_v3_to_v4.md)
 * [Migrating from **4.x** to **5.x**?](MIGRATING_v4_to_v5.md)
 * [`v3` docs](https://tableexport.v3.travismclarke.com/) and [README](https://github.com/clarketm/TableExport/tree/3.x.x#getting-started):
-* [`v4` docs](https://tableexport.v4.travismclarke.com/v/v4.0.11/) and [README](https://github.com/clarketm/TableExport/tree/4.x.x#getting-started):
-* [`v5` docs](https://tableexport.v4.travismclarke.com/v/v5.0.0/) and [README](#getting-started) (below):
+* [`v4` docs](https://tableexport.v4.travismclarke.com/READMEv4.html) and [README](https://github.com/clarketm/TableExport/tree/4.x.x#getting-started):
+* [`v5` docs](https://tableexport.v4.travismclarke.com/) and [README](#getting-started) (below):
 
 ## Getting Started
 
