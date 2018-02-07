@@ -1,5 +1,5 @@
- [![TableExport](/Hero.png)](https://tableexport.v4.travismclarke.com)
-<!-- # [TableExport](https://tableexport.v4.travismclarke.com) -->
+ [![TableExport](/Hero.png)](https://tableexport.travismclarke.com)
+<!-- # [TableExport](https://tableexport.travismclarke.com) -->
 <!-- The simple, easy-to-implement library to export HTML tables to `xlsx`, `xls`, `csv`, and `txt` files. -->
 
 [![GitHub release](https://img.shields.io/github/release/clarketm/tableexport.svg)]()
@@ -11,13 +11,13 @@
 * [Migrating from **3.x** to **4.x**?](MIGRATING_v3_to_v4.md)
 * [Migrating from **4.x** to **5.x**?](MIGRATING_v4_to_v5.md)
 * [`v3` docs](https://tableexport.v3.travismclarke.com/) and [README](https://github.com/clarketm/TableExport/tree/3.x.x#getting-started):
-* [`v4` docs](https://tableexport.v4.travismclarke.com/READMEv4.html) and [README](https://github.com/clarketm/TableExport/tree/4.x.x#getting-started):
-* [`v5` docs](https://tableexport.v4.travismclarke.com/) and [README](#getting-started) (below):
+* [`v4` docs](https://tableexport.travismclarke.com/READMEv4.html) and [README](https://github.com/clarketm/TableExport/tree/4.x.x#getting-started):
+* [`v5` docs](https://tableexport.travismclarke.com/) and [README](#getting-started) (below):
 
 ## Getting Started
 
 ### Install manually using `<script>` tags
-To use this library, include the [FileSaver.js](https://github.com/clarketm/FileSaver.js/) library, and [TableExport](https://tableexport.v4.travismclarke.com) library before the closing `<body>` tag of your HTML document:
+To use this library, include the [FileSaver.js](https://github.com/clarketm/FileSaver.js/) library, and [TableExport](https://tableexport.travismclarke.com) library before the closing `<body>` tag of your HTML document:
 
 ```html
 <script src="FileSaver.js"></script>
@@ -65,7 +65,7 @@ $ npm install tableexport
 * [Bootstrap](http://getbootstrap.com/getting-started/#download) (3.1.0 or higher)
 
 #### Add-Ons:
-In order to provide **Office Open XML SpreadsheetML Format ( `.xlsx` )** support, you must include the following third-party library in your project before both [FileSaver.js](https://github.com/clarketm/FileSaver.js/) and [TableExport](https://tableexport.v4.travismclarke.com).
+In order to provide **Office Open XML SpreadsheetML Format ( `.xlsx` )** support, you must include the following third-party library in your project before both [FileSaver.js](https://github.com/clarketm/FileSaver.js/) and [TableExport](https://tableexport.travismclarke.com).
 
 * [xlsx.core.js](https://github.com/SheetJS/js-xlsx) by _SheetJS_
 
@@ -96,7 +96,7 @@ To support legacy browsers ( **Chrome** < 20, **Firefox** < 13, **Opera** < 12.1
 
 ### JavaScript
 
-To use this library, simple call the [`TableExport`](https://tableexport.v4.travismclarke.com) constructor:
+To use this library, simple call the [`TableExport`](https://tableexport.travismclarke.com) constructor:
 
 ```js
 new TableExport(document.getElementsByTagName("table"));
@@ -146,7 +146,7 @@ TableExport(document.getElementsByTagName("table"), {
 
 ### Methods
 
-TableExport supports additional methods (**getExportData**, **update**, **reset** and **remove**) to control the [`TableExport`](https://tableexport.v4.travismclarke.com) instance after creation.
+TableExport supports additional methods (**getExportData**, **update**, **reset** and **remove**) to control the [`TableExport`](https://tableexport.travismclarke.com) instance after creation.
 
 ```js
 /* First, call the `TableExport` constructor and save the return instance to a variable */
@@ -356,7 +356,7 @@ TableExport.prototype.formatConfig.xlsx.mimeType = "application/csv"
 
 ### CSS
 
-[TableExport](https://tableexport.v4.travismclarke.com) packages with customized [Bootstrap](http://getbootstrap.com/getting-started/#download) CSS stylesheets to deliver enhanced table and button styling. These styles can be *enabled* by initializing with the `bootstrap` property set to `true`.
+[TableExport](https://tableexport.travismclarke.com) packages with customized [Bootstrap](http://getbootstrap.com/getting-started/#download) CSS stylesheets to deliver enhanced table and button styling. These styles can be *enabled* by initializing with the `bootstrap` property set to `true`.
 
 ```js
 TableExport(document.getElementsByTagName("table"), {
@@ -409,7 +409,7 @@ When used alongside Bootstrap, there are four custom classes **`.xlsx`, `.xls`, 
 * [TableExport + Angular 4 + Webpack 2](https://github.com/clarketm/tableexport_angular4_webpack2_app) skeleton.
 
 ### License
-[TableExport](https://tableexport.v4.travismclarke.com) is licensed under the terms of the [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0.html) License
+[TableExport](https://tableexport.travismclarke.com) is licensed under the terms of the [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0.html) License
 
 ### Going Forward
 #### TODOs
