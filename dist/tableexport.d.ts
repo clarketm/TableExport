@@ -1,5 +1,5 @@
 // Type definitions for TableExport v4.0.11
-// Project: https://tableexport.v4.travismclarke.com
+// Project: https://tableexport.travismclarke.com
 // Definitions by: Travis Clarke <https://github.com/clarketm>
 
 /*!
