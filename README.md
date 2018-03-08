@@ -8,6 +8,8 @@
 [![License](https://img.shields.io/npm/l/tableexport.svg)]()
 
 ## Docs
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/clarketm/TableExport.svg)](https://greenkeeper.io/)
 * [Migrating from **3.x** to **4.x**?](MIGRATING_v3_to_v4.md)
 * [Migrating from **4.x** to **5.x**?](MIGRATING_v4_to_v5.md)
 * [`v3` docs](https://tableexport.v3.travismclarke.com/) and [README](https://github.com/clarketm/TableExport/tree/3.x.x#getting-started):
