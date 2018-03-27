@@ -961,20 +961,27 @@
             return TableExport.prototype.CONSTANTS.TYPE;
         })();
 
-        Array.prototype.processRows = function (key, rowDel) {
+        Object.defineProperty(Array.prototype, "processRows", {
+          enumerable: false,
+          value: function(key, rowDel) {
             if (_isEnhanced(key)) {
-                return this.map(_toArray).filter(_defined);
+              return this.map(_toArray).filter(_defined);
             } else {
                 return this.filter(_defined).join(rowDel);
             }
-        };
-        Array.prototype.processCols = function (key, colDel) {
+          }
+        });
+
+        Object.defineProperty(Array.prototype, "processCols", {
+          enumerable: false,
+          value: function(key, rowDel) {
             if (_isEnhanced(key)) {
-                return this.filter(_defined);
+              return this.filter(_defined);
             } else {
                 return this.filter(_defined).join(colDel);
             }
-        };
+          }
+        });
 
         var _uuid = (function () {
             var uuid = 0;
