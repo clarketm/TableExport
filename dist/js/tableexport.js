@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v5.0.0 (https://www.travismclarke.com)
+ * TableExport.js v5.0.1 (https://www.travismclarke.com)
  *
  * Copyright (c) 2018 - Travis Clarke - https://www.travismclarke.com
  *
@@ -148,7 +148,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '5.0.0',
+            version: '5.0.1',
             /**
              * Default library options.
              * @memberof TableExport.prototype
