@@ -412,6 +412,7 @@
              */
             createObjButton: function (hashKey, dataObject, myContent, myClass, bootstrapSettings) {
                 var exportButton = document.createElement('button');
+                exportButton.setAttribute('type', 'button');
                 exportButton.setAttribute(this.storageKey, hashKey);
                 exportButton.className = bootstrapSettings.bootstrapClass + bootstrapSettings.bootstrapTheme + myClass;
                 exportButton.textContent = myContent;
