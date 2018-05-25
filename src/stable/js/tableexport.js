@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v5.0.1 (https://www.travismclarke.com)
+ * TableExport.js v5.0.2 (https://www.travismclarke.com)
  *
  * Copyright (c) 2018 - Travis Clarke - https://www.travismclarke.com
  *
@@ -148,7 +148,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '5.0.1',
+            version: '5.0.2',
             /**
              * Default library options.
              * @memberof TableExport.prototype
@@ -962,20 +962,27 @@
             return TableExport.prototype.CONSTANTS.TYPE;
         })();
 
-        Array.prototype.processRows = function (key, rowDel) {
+        Object.defineProperty(Array.prototype, 'processRows', {
+          enumerable: false,
+          value: function (key, rowDel) {
             if (_isEnhanced(key)) {
-                return this.map(_toArray).filter(_defined);
+              return this.map(_toArray).filter(_defined);
             } else {
-                return this.filter(_defined).join(rowDel);
+              return this.filter(_defined).join(rowDel);
             }
-        };
-        Array.prototype.processCols = function (key, colDel) {
+          }
+        });
+
+        Object.defineProperty(Array.prototype, 'processCols', {
+          enumerable: false,
+          value: function (key, colDel) {
             if (_isEnhanced(key)) {
-                return this.filter(_defined);
+              return this.filter(_defined);
             } else {
-                return this.filter(_defined).join(colDel);
+              return this.filter(_defined).join(colDel);
             }
-        };
+          }
+        });
 
         var _uuid = (function () {
             var uuid = 0;
