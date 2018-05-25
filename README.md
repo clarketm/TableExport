@@ -7,7 +7,7 @@ The simple, easy-to-implement plugin to export HTML tables to `xlsx`, `xls`, `cs
 ---
 # Deprecation notice:
 ### Below are the docs for [`v3.3.13`](https://github.com/clarketm/TableExport/tree/3.x.x#getting-started).
-### Check out [`v5.0.0`](https://github.com/clarketm/TableExport/#getting-started) for the latest release.
+### Check out [`v5.0.1`](https://github.com/clarketm/TableExport/#getting-started) for the latest release.
 ---
 
 ### Live Demo 
