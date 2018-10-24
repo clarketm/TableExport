@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v5.0.2 (https://www.travismclarke.com)
+ * TableExport.js v5.0.3 (https://www.travismclarke.com)
  *
  * Copyright (c) 2018 - Travis Clarke - https://www.travismclarke.com
  *
@@ -148,7 +148,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '5.0.2',
+            version: '5.0.3',
             /**
              * Default library options.
              * @memberof TableExport.prototype
@@ -1111,7 +1111,7 @@
              * @returns {TableExport} TableExport instance
              */
             $.fn.tableExport = function (options) {
-                return new TableExport(this, options);
+                return TableExport.call(_extend({}, TableExport.prototype, $.fn.tableExport), this, options);
             };
 
             // alias the TableExport prototype

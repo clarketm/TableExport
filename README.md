@@ -40,9 +40,9 @@ $ npm install tableexport
 #### [CDNjs](https://cdnjs.com/libraries/TableExport)
 |          | uncompressed | compressed |
 | :------: | :----------: | :--------: |
-|  __CSS__ |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.2/css/tableexport.css)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.2/css/tableexport.min.css)      |
-|  __JS__  |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.2/js/tableexport.js)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.2/js/tableexport.min.js)      |
-|  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.2/img/xlsx.svg)[🔗<sup>xls</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.2/img/xls.svg)[🔗<sup>csv</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.2/img/csv.svg)[🔗<sup>txt</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.2/img/txt.svg)  |
+|  __CSS__ |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.3/css/tableexport.css)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.3/css/tableexport.min.css)      |
+|  __JS__  |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.3/js/tableexport.js)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.3/js/tableexport.min.js)      |
+|  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.3/img/xlsx.svg)[🔗<sup>xls</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.3/img/xls.svg)[🔗<sup>csv</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.3/img/csv.svg)[🔗<sup>txt</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.3/img/txt.svg)  |
 
 
 #### [unpkg](https://unpkg.com/#/)
@@ -82,7 +82,7 @@ In order to provide **Office Open XML SpreadsheetML Format ( `.xlsx` )** support
 To support legacy browsers ( **Chrome** < 20, **Firefox** < 13, **Opera** < 12.10, **IE** < 10, __Safari__ < 6 ) include the [Blob.js](https://github.com/clarketm/Blob.js/) polyfill before the [FileSaver.js](https://github.com/clarketm/FileSaver.js/) script.
 
 * [Blob.js](https://github.com/clarketm/Blob.js) by _eligrey_ (forked by  _clarketm_)
- 
+
  > Including `Blob.js` is **NOT** necessary if installing with [`Bower`](#install-with-bower) or [`npm`](#install-with-npm)
 
 ```html
@@ -107,7 +107,7 @@ TableExport(document.getElementsByTagName("table"));
 
 // OR using jQuery
 
-$("table").tableExport();    
+$("table").tableExport();
 ```
 
 Additional properties can be passed-in to customize the look and feel of your tables, buttons, and exported data.
@@ -402,7 +402,7 @@ When used alongside Bootstrap, there are four custom classes **`.xlsx`, `.xls`, 
 * [`emoji`](https://tableexport.v3.travismclarke.com/examples/unicode-emoji.html)
 * [`Arabic`](https://tableexport.v3.travismclarke.com/examples/arabic-language.html)
 
-#### Skeletons 
+#### Skeletons
 * [TableExport + RequireJS](https://github.com/clarketm/tableexport_requirejs_app) skeleton.
 * [TableExport + Flask](https://github.com/clarketm/tableexport_flask_app) skeleton.
 * [TableExport + Webpack 1](https://github.com/clarketm/tableexport_webpack-v1_app) skeleton.
@@ -424,6 +424,6 @@ When used alongside Bootstrap, there are four custom classes **`.xlsx`, `.xls`, 
 - [ ] Add **Export as PDF** support.
 
 ### Credits
-Special thanks the the following contributors: 
-* [SheetJS](https://github.com/SheetJS) - js-xlsx 
+Special thanks the the following contributors:
+* [SheetJS](https://github.com/SheetJS) - js-xlsx
 * [Eli Grey](https://github.com/eligrey) - FileSaver.js & Blob.js
