@@ -80,14 +80,33 @@
             self.selectors.forEach(function (el) {
                 var context = {};
 
-                context.rows = _nodesArray(el.querySelectorAll('tbody > tr'));
-                context.rows = settings.headers ? _nodesArray(el.querySelectorAll('thead > tr')).concat(context.rows) : context.rows;
-                context.rows = settings.footers ? context.rows.concat(_nodesArray(el.querySelectorAll('tfoot > tr'))) : context.rows;
-                context.thAdj = settings.headers ? el.querySelectorAll('thead > tr').length : 0;
+                var _setContextRows = function (element) {
+                    var container = {};
+                    container.rows = _nodesArray(element.querySelectorAll('tbody > tr'));
+                    container.rows = settings.headers ? _nodesArray(element.querySelectorAll('thead > tr')).concat(container.rows) : container.rows;
+                    container.rows = settings.footers ? container.rows.concat(_nodesArray(element.querySelectorAll('tfoot > tr'))) : container.rows;
+                    container.thAdj = settings.headers ? element.querySelectorAll('thead > tr').length : 0;
+                    return container
+                }
+                if (!el.querySelectorAll('table').length) {
+                    // SINGLE TABLE
+                    Object.assign(context, _setContextRows(el));
+                } else {
+                    // MULTIPLE TABLES
+                    context.rows = [];
+                    context.thAdj = 0;
+                    el.querySelectorAll('table').forEach((value, index) => {
+                        // Keeping it es5 ;)
+                        Array.prototype.push.apply(context.rows, _setContextRows(value).rows);
+                        context.thAdj += _setContextRows(value).thAdj;
+                    });
+                }
+    
                 context.filename = settings.filename === 'id'
                     ? (el.getAttribute('id') ? el.getAttribute('id') : self.defaultFilename)
                     : (settings.filename ? settings.filename : self.defaultFilename);
                 context.uuid = _uuid(el);
+
 
                 /**
                  * Initializes table caption with export buttons
