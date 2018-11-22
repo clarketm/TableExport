@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v5.0.3 (https://www.travismclarke.com)
+ * TableExport.js v5.0.4 (https://www.travismclarke.com)
  *
  * Copyright (c) 2018 - Travis Clarke - https://www.travismclarke.com
  *
@@ -148,7 +148,7 @@
              * Version.
              * @memberof TableExport.prototype
              */
-            version: '5.0.3',
+            version: '5.0.4',
             /**
              * Default library options.
              * @memberof TableExport.prototype
@@ -568,10 +568,10 @@
              * @param merges {Object[]}
              */
             export2file: function (data, mime, name, extension, merges) {
+                var format = extension.slice(1);
                 data = this.getRawData(data, extension, name, merges);
 
-                if (_isMobile) {
-                    // TODO: fix dataURI on iphone (xlsx & xls)
+                if (_isMobile && (format === _FORMAT.CSV || format === _FORMAT.TXT)) {
                     var dataURI = 'data:' + mime + ';' + this.charset + ',' + data;
                     this.downloadDataURI(dataURI, name, extension);
                 } else {
@@ -942,7 +942,6 @@
             return function (key) {
                 return (
                     XLSX
-                    && !_isMobile
                     && !(TableExport.prototype.formatConfig[key].enforceStrictRFC4180)
                 );
             }

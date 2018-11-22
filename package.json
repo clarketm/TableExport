@@ -1,6 +1,6 @@
 {
   "name": "tableexport",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "authors": [
     "clarketm <travis.m.clarke@gmail.com>"
   ],
@@ -34,23 +34,23 @@
     "url": "https://github.com/clarketm/TableExport/issues"
   },
   "peerDependencies": {
-    "jquery": ">= 1.1.2",
-    "bootstrap": ">= 3 < 4"
+    "bootstrap": ">= 3 < 4",
+    "jquery": ">= 1.1.2"
   },
   "dependencies": {
     "blobjs": "^1.1.1",
     "file-saverjs": "^1.3.6",
-    "xlsx": "^0.9.13"
+    "xlsx": "^0.14.0"
   },
   "devDependencies": {
-    "del": "^2.2.0",
+    "del": "^3.0.0",
     "gulp": "^3.9.1",
-    "gulp-bump": "^2.4.0",
-    "gulp-clean-css": "^2.0.7",
+    "gulp-bump": "^3.1.1",
+    "gulp-clean-css": "^4.0.0",
     "gulp-rename": "^1.2.2",
-    "gulp-replace": "^0.5.4",
-    "gulp-uglify": "^1.5.3",
-    "jasmine": "^2.4.1"
+    "gulp-replace": "^1.0.0",
+    "gulp-uglify": "^3.0.1",
+    "jasmine": "^3.3.0"
   },
   "license": "Apache-2.0",
   "homepage": "https://tableexport.travismclarke.com/",
