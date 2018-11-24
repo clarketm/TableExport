@@ -16,3 +16,4 @@ gitbook.css
 bower_components
 node_modules
 _examples
+.htaccess
