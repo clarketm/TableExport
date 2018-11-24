@@ -64,11 +64,11 @@ code {
   background: yellow;
   font-weight: bold;
 }
-.top {
+#position-table .tableexport-caption {
   background: yellow;
   font-weight: bold;
 }
-#formats .bottom {
+#formats .tableexport-caption {
   background: yellow;
   font-weight: bold;
 }
