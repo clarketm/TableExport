@@ -23,8 +23,11 @@
     "ecosystem:jquery"
   ],
   "scripts": {
-    "test": "gulp",
-    "build": "gulp"
+    "build": "gulp build",
+    "prettier": "prettier --write './src/stable/**/*.{js,css,md}'",
+    "test": "gulp test",
+    "prep": "yarn prettier && yarn build",
+    "prepublishOnly": "yarn prep && sh ./resources/publish.sh"
   },
   "repository": {
     "type": "git",
@@ -50,7 +53,8 @@
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^1.0.0",
     "gulp-uglify": "^3.0.1",
-    "jasmine": "^3.3.0"
+    "jasmine": "^3.3.0",
+    "prettier": "^1.15.2"
   },
   "license": "Apache-2.0",
   "homepage": "https://tableexport.travismclarke.com/",
