@@ -27,7 +27,7 @@
     "prettier": "prettier --write './src/stable/**/*.{js,css,md}'",
     "test": "gulp test",
     "prep": "yarn prettier && yarn build",
-    "prepublishOnly": "yarn prep && sh ./resources/publish.sh"
+    "prepublishOnly": "yarn prep && sh ./publish.sh"
   },
   "repository": {
     "type": "git",
