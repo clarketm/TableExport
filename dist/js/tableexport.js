@@ -114,7 +114,7 @@
           caption = document.createElement("caption");
           caption.className =
             settings.bootstrapSettings.bootstrapSpacing + self.defaultCaptionClass;
-          caption.style = "caption-side: " + settings.position;
+          caption.style.cssText = "caption-side: " + settings.position;
           caption.appendChild(exportButton);
           el.insertBefore(caption, el.firstChild);
         }
