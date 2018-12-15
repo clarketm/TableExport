@@ -1,6 +1,6 @@
 {
   "name": "tableexport",
-  "version": "5.0.6",
+  "version": "5.1.0",
   "author": "Travis Clarke <travis.m.clarke@gmail.com> (https://www.travismclarke.com/)",
   "description": "The simple, easy-to-implement library to export HTML tables to xlsx, xls, csv, and txt files",
   "main": "dist/js/tableexport.js",

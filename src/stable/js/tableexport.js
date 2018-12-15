@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v5.0.6 (https://www.travismclarke.com)
+ * TableExport.js v5.1.0 (https://www.travismclarke.com)
  *
  * Copyright (c) 2018 - Travis Clarke - https://www.travismclarke.com
  *
@@ -49,8 +49,7 @@
   var TableExport = function(selectors, options) {
     var self = this;
 
-    if (!selectors)
-      return _handleError('"selectors" is required. \nUsage: TableExport(selectors, options)');
+    if (!selectors) return _handleError('"selectors" is required. \nUsage: TableExport(selectors, options)');
     if (!self) return new TableExport(selectors, options);
 
     /**
@@ -63,18 +62,12 @@
     self.selectors = _nodesArray(selectors);
 
     var settings = self.settings;
-    settings.ignoreRows =
-      settings.ignoreRows instanceof Array ? settings.ignoreRows : [settings.ignoreRows];
-    settings.ignoreCols =
-      settings.ignoreCols instanceof Array ? settings.ignoreCols : [settings.ignoreCols];
+    settings.ignoreRows = settings.ignoreRows instanceof Array ? settings.ignoreRows : [settings.ignoreRows];
+    settings.ignoreCols = settings.ignoreCols instanceof Array ? settings.ignoreCols : [settings.ignoreCols];
     settings.ignoreCSS = self.ignoreCSS instanceof Array ? self.ignoreCSS : [self.ignoreCSS];
     settings.emptyCSS = self.emptyCSS instanceof Array ? self.emptyCSS : [self.emptyCSS];
     settings.formatValue = self.formatValue.bind(this, settings.trimWhitespace);
-    settings.bootstrapSettings = _getBootstrapSettings(
-      settings.bootstrap,
-      self.bootstrapConfig,
-      self.defaultButton
-    );
+    settings.bootstrapSettings = _getBootstrapSettings(settings.bootstrap, self.bootstrapConfig, self.defaultButton);
 
     var _exportData = {};
     self.getExportData = function() {
@@ -85,12 +78,8 @@
       var context = {};
 
       context.rows = _nodesArray(el.querySelectorAll("tbody > tr"));
-      context.rows = settings.headers
-        ? _nodesArray(el.querySelectorAll("thead > tr")).concat(context.rows)
-        : context.rows;
-      context.rows = settings.footers
-        ? context.rows.concat(_nodesArray(el.querySelectorAll("tfoot > tr")))
-        : context.rows;
+      context.rows = settings.headers ? _nodesArray(el.querySelectorAll("thead > tr")).concat(context.rows) : context.rows;
+      context.rows = settings.footers ? context.rows.concat(_nodesArray(el.querySelectorAll("tfoot > tr"))) : context.rows;
       context.thAdj = settings.headers ? el.querySelectorAll("thead > tr").length : 0;
       context.filename =
         settings.filename === "id"
@@ -112,8 +101,7 @@
           caption[0].appendChild(exportButton);
         } else {
           caption = document.createElement("caption");
-          caption.className =
-            settings.bootstrapSettings.bootstrapSpacing + self.defaultCaptionClass;
+          caption.className = settings.bootstrapSettings.bootstrapSpacing + self.defaultCaptionClass;
           caption.style.cssText = "caption-side: " + settings.position;
           caption.appendChild(exportButton);
           el.insertBefore(caption, el.firstChild);
@@ -138,9 +126,7 @@
 
       settings.formats.forEach(function(key) {
         if (!_isValidFormat(key)) {
-          return _handleError(
-            '"' + key + '" is not a valid format. \nFormats: ' + _FORMAT_LIST.join(", ")
-          );
+          return _handleError('"' + key + '" is not a valid format. \nFormats: ' + _FORMAT_LIST.join(", "));
         } else if (!_hasDependencies(key)) {
           // TODO: provide a fallback option to XLS?
           return _handleError('"' + key + '" requires "js-xlsx".');
@@ -162,7 +148,7 @@
      * Version.
      * @memberof TableExport.prototype
      */
-    version: "5.0.6",
+    version: "5.1.0",
     /**
      * Default library options.
      * @memberof TableExport.prototype
@@ -177,7 +163,8 @@
       position: "bottom", // (top, bottom), position of the caption element relative to table, (default: 'bottom')
       ignoreRows: null, // (Number, Number[]), row indices to exclude from the exported file(s) (default: null)
       ignoreCols: null, // (Number, Number[]), column indices to exclude from the exported file(s) (default: null)
-      trimWhitespace: true // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s) (default: false)
+      trimWhitespace: true, // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s) (default: false)
+      RTL: false // (Boolean), set direction of the worksheet to right-to-left (default: false)
     },
     /**
      * Constants
@@ -398,14 +385,7 @@
                 } else if (rcMap.isEmpty(ir, ic)) {
                   return rcMap.handleRowColMapProp(rcMap.TYPE.EMPTY);
                 } else {
-                  return rcMap.handleRowColMapProp(
-                    rcMap.TYPE.DEFAULT,
-                    ir,
-                    ic,
-                    key,
-                    _return,
-                    colDel
-                  );
+                  return rcMap.handleRowColMapProp(rcMap.TYPE.DEFAULT, ir, ic, key, _return, colDel);
                 }
               })
               .processCols(key, colDel);
@@ -417,21 +397,14 @@
           filename: context.filename,
           mimeType: format.mimeType,
           fileExtension: format.fileExtension,
-          merges: rcMap.merges
+          merges: rcMap.merges,
+          RTL: settings.RTL
         });
 
         var hashKey = _hashCode({ uuid: context.uuid, type: key });
 
         settings.exportButtons &&
-          context.checkCaption(
-            self.createObjButton(
-              hashKey,
-              dataObject,
-              format.buttonContent,
-              format.defaultClass,
-              settings.bootstrapSettings
-            )
-          );
+          context.checkCaption(self.createObjButton(hashKey, dataObject, format.buttonContent, format.defaultClass, settings.bootstrapSettings));
         return Storage.getInstance().setItem(hashKey, dataObject, true);
       }
     },
@@ -448,8 +421,7 @@
       var exportButton = document.createElement("button");
       exportButton.setAttribute("type", "button");
       exportButton.setAttribute(this.storageKey, hashKey);
-      exportButton.className =
-        bootstrapSettings.bootstrapClass + bootstrapSettings.bootstrapTheme + myClass;
+      exportButton.className = bootstrapSettings.bootstrapClass + bootstrapSettings.bootstrapTheme + myClass;
       exportButton.textContent = myContent;
       return exportButton;
     },
@@ -569,8 +541,9 @@
         filename = object.filename,
         mimeType = object.mimeType,
         fileExtension = object.fileExtension,
-        merges = object.merges;
-      this.export2file(data, mimeType, filename, fileExtension, merges);
+        merges = object.merges,
+        RTL = object.RTL;
+      this.export2file(data, mimeType, filename, fileExtension, merges, RTL);
     },
     /**
      * Excel Workbook constructor
@@ -578,6 +551,7 @@
      * @constructor
      */
     Workbook: function() {
+      this.Workbook = { Views: [] };
       this.SheetNames = [];
       this.Sheets = {};
     },
@@ -601,10 +575,11 @@
      * @param name {String} filename
      * @param extension {String} file extension
      * @param merges {Object[]}
+     * @param RTL {Boolean}
      */
-    export2file: function(data, mime, name, extension, merges) {
+    export2file: function(data, mime, name, extension, merges, RTL) {
       var format = extension.slice(1);
-      data = this.getRawData(data, extension, name, merges);
+      data = this.getRawData(data, extension, name, merges, RTL);
 
       if (_isMobile && (format === _FORMAT.CSV || format === _FORMAT.TXT)) {
         var dataURI = "data:" + mime + ";" + this.charset + "," + data;
@@ -630,7 +605,7 @@
           return key;
       }
     },
-    getRawData: function(data, extension, name, merges) {
+    getRawData: function(data, extension, name, merges, RTL) {
       var key = extension.substring(1);
 
       if (_isEnhanced(key)) {
@@ -641,6 +616,7 @@
         name = name || "";
         wb.SheetNames.push(name);
         wb.Sheets[name] = ws;
+        wb.Workbook.Views[0] = { RTL: RTL };
         var wopts = {
             bookType: bookType,
             bookSST: false,
@@ -654,9 +630,7 @@
     },
     getFileSize: function(data, extension) {
       var binary = this.getRawData(data, extension);
-      return binary instanceof ArrayBuffer
-        ? binary.byteLength
-        : this.string2ArrayBuffer(binary).byteLength;
+      return binary instanceof ArrayBuffer ? binary.byteLength : this.string2ArrayBuffer(binary).byteLength;
     },
     /**
      * Updates the library instance with new/updated options
@@ -855,15 +829,7 @@
       var handleRowSpan = function(val, ir, ic) {
         var rowSpan = +val.getAttribute("rowspan");
         var colSpan = +val.getAttribute("colspan");
-        var handledByColSpan,
-          countRowSpan,
-          countColSpan,
-          totalRowSpan,
-          totalColSpan,
-          irStart,
-          irEnd,
-          icStart,
-          icEnd;
+        var handledByColSpan, countRowSpan, countColSpan, totalRowSpan, totalColSpan, irStart, irEnd, icStart, icEnd;
 
         for (var _row = 0; _row < rowSpan; _row++) {
           if (_row + ir >= rowLength) {
@@ -883,8 +849,7 @@
           if (rowSpan && _row === 0 && colSpan > 1) {
             for (var i = 0; i < rowSpan; i++) {
               self.rcMap["c" + (ic + 1)] = self.rcMap["c" + (ic + 1)] || [];
-              self.rcMap["c" + (ic + 1)][_row + ir + i] =
-                (self.rcMap["c" + (ic + 1)][_row + ir + i] || 0) + Math.max(1, colSpan);
+              self.rcMap["c" + (ic + 1)][_row + ir + i] = (self.rcMap["c" + (ic + 1)][_row + ir + i] || 0) + Math.max(1, colSpan);
             }
           }
 
@@ -893,14 +858,8 @@
             self.setRowColMapProp(_row + ir, undefined, self.TYPE.ROWSPAN, countRowSpan + 1);
 
             if (!handledByColSpan) {
-              totalRowSpan =
-                self.getRowColMapProp(_row + ir, ic - countRowSpan, self.TYPE.VALUE) || 0;
-              self.setRowColMapProp(
-                _row + ir,
-                ic - countRowSpan,
-                self.TYPE.VALUE,
-                totalRowSpan + 1
-              );
+              totalRowSpan = self.getRowColMapProp(_row + ir, ic - countRowSpan, self.TYPE.VALUE) || 0;
+              self.setRowColMapProp(_row + ir, ic - countRowSpan, self.TYPE.VALUE, totalRowSpan + 1);
               if (rowSpan > 1 && _row === 1) {
                 var _re = self.rcMap["c" + ic] && self.rcMap["c" + ic][_row + ir];
                 totalColSpan = self.getRowColMapProp(ir, undefined, self.TYPE.COLSPANTOTAL) || 0;
@@ -951,10 +910,7 @@
       };
 
       _nodesArray(context.rows).map(function(val, ir) {
-        if (
-          !!~settings.ignoreRows.indexOf(ir - context.thAdj) ||
-          _matches(val, settings.ignoreCSS)
-        ) {
+        if (!!~settings.ignoreRows.indexOf(ir - context.thAdj) || _matches(val, settings.ignoreCSS)) {
           handleIgnore(ir);
         }
         if (_matches(val, settings.emptyCSS)) {
@@ -1082,8 +1038,7 @@
 
   function _extend() {
     var args = arguments;
-    for (var i = 1; i < args.length; i++)
-      for (var key in args[i]) if (args[i].hasOwnProperty(key)) args[0][key] = args[i][key];
+    for (var i = 1; i < args.length; i++) for (var key in args[i]) if (args[i].hasOwnProperty(key)) args[0][key] = args[i][key];
     return args[0];
   }
 
@@ -1092,9 +1047,7 @@
   }
 
   function _hasClass(el, cls) {
-    return el.classList
-      ? el.classList.contains(cls)
-      : new RegExp("(^| )" + cls + "( |$)", "gi").test(el.cls);
+    return el.classList ? el.classList.contains(cls) : new RegExp("(^| )" + cls + "( |$)", "gi").test(el.cls);
   }
 
   function _matches(el, selectors) {
