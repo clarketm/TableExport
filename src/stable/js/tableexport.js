@@ -578,6 +578,7 @@
      * @constructor
      */
     Workbook: function() {
+      this.Workbook = {Views: []};
       this.SheetNames = [];
       this.Sheets = {};
     },
@@ -641,6 +642,7 @@
         name = name || "";
         wb.SheetNames.push(name);
         wb.Sheets[name] = ws;
+        wb.Workbook.Views[0] = {RTL: true};
         var wopts = {
             bookType: bookType,
             bookSST: false,
