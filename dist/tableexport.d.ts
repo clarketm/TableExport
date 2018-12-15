@@ -189,6 +189,7 @@ interface Defaults {
     ignoreRows?: number[];
     ignoreCols?: number[];
     trimWhitespace?: boolean;
+    RTL?: boolean;
 }
 
 /**
