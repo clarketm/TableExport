@@ -40,9 +40,9 @@ $ npm install tableexport
 #### [CDNjs](https://cdnjs.com/libraries/TableExport)
 |          | uncompressed | compressed |
 | :------: | :----------: | :--------: |
-|  __CSS__ |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.6/css/tableexport.css)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.6/css/tableexport.min.css)      |
-|  __JS__  |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.6/js/tableexport.js)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.6/js/tableexport.min.js)      |
-|  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.6/img/xlsx.svg)[🔗<sup>xls</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.6/img/xls.svg)[🔗<sup>csv</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.6/img/csv.svg)[🔗<sup>txt</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.0.6/img/txt.svg)  |
+|  __CSS__ |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.1.0/css/tableexport.css)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.1.0/css/tableexport.min.css)      |
+|  __JS__  |   [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.1.0/js/tableexport.js)     |  [🔗](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.1.0/js/tableexport.min.js)      |
+|  __Images__  | &mdash; |   [🔗<sup>xlsx</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.1.0/img/xlsx.svg)[🔗<sup>xls</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.1.0/img/xls.svg)[🔗<sup>csv</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.1.0/img/csv.svg)[🔗<sup>txt</sup>](https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.1.0/img/txt.svg)  |
 
 
 #### [unpkg](https://unpkg.com/#/)
@@ -126,7 +126,8 @@ TableExport(document.getElementsByTagName("table"), {
     position: 'bottom',                         // (top, bottom), position of the caption element relative to table, (default: 'bottom')
     ignoreRows: null,                           // (Number, Number[]), row indices to exclude from the exported file(s) (default: null)
     ignoreCols: null,                           // (Number, Number[]), column indices to exclude from the exported file(s) (default: null)
-    trimWhitespace: true                        // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s) (default: false)
+    trimWhitespace: true,                       // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s) (default: false)
+    RTL: false                                  // (Boolean), set direction of the worksheet to right-to-left (default: false)
 });
 ```
 > **Note:**  to use the `xlsx` filetype, you must include [js-xlsx](https://github.com/SheetJS/js-xlsx/blob/master/dist/xlsx.core.min.js); reference the [`Add-Ons`](#add-ons) section.
@@ -143,6 +144,7 @@ TableExport(document.getElementsByTagName("table"), {
 * [`ignoreRows`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
 * [`ignoreCols`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
 * [`trimWhitespace`](https://tableexport.v3.travismclarke.com/examples/whitespace.html)
+* [`RTL`](https://tableexport.v3.travismclarke.com/examples/right-to-left.html)
 
 ### Methods
 
@@ -390,6 +392,7 @@ When used alongside Bootstrap, there are four custom classes **`.xlsx`, `.xls`, 
 * [`ignoreRows`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
 * [`ignoreCols`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
 * [`trimWhitespace`](https://tableexport.v3.travismclarke.com/examples/whitespace.html)
+* [`RTL`](https://tableexport.v3.travismclarke.com/examples/right-to-left.html)
 
 #### Customizing Settings
 * [`ignoreCSS`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
