@@ -6,7 +6,7 @@ The simple, easy-to-implement library to export HTML tables to `xlsx`, `xls`, `c
 ---
 # Deprecation notice:
 ### Below are the docs for [`v4.0.11`](https://github.com/clarketm/TableExport/tree/4.x.x#getting-started).
-### Check out [`v5.0.1`](https://github.com/clarketm/TableExport/#getting-started) for the latest release.
+### Check out [`v5`](https://github.com/clarketm/TableExport/#getting-started) for the latest release.
 ---
 
 ## Docs
