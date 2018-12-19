@@ -19,6 +19,9 @@ table {
   width: 45%;
   display: inline-block;
 }
+#example-link {
+  font-weight: bold;
+}
 hr {
   margin-top: 22px;
   border: 0;
