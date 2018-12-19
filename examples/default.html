@@ -23,7 +23,8 @@
         ignoreRows: null,
         ignoreCols: null,
         trimWhitespace: true,
-        RTL: false
+        RTL: false,
+        sheetname: 'id'
 </pre>
     </article>
 
@@ -94,7 +95,9 @@
         ignoreCols: null,                           // (Number, Number[]), column indices to exclude from the exported file(s) (default: null)
         ignoreCSS: '.tableexport-ignore',           // (selector, selector[]), selector(s) to exclude cells from the exported file(s) (default: '.tableexport-ignore')
         emptyCSS: '.tableexport-empty',             // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file(s) (default: '.tableexport-empty')
-        trimWhitespace: true                        // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s) (default: true)
+        trimWhitespace: true,                       // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s) (default: true)
+        RTL: false,                                 // (Boolean), set direction of the worksheet to right-to-left (default: false)
+        sheetname: 'id'                             // (id, String), sheet name for the exported spreadsheet, (default: 'id')
     });
     // **** jQuery **************************
     //    $(DefaultTable).tableExport({
@@ -108,7 +111,9 @@
     //        ignoreCols: null,
     //        ignoreCSS: '.tableexport-ignore',
     //        emptyCSS: '.tableexport-empty',
-    //        trimWhitespace: false
+    //        trimWhitespace: false,
+    //        RTL: false,
+    //        sheetname: 'id'
     //    });
     // **************************************
 
