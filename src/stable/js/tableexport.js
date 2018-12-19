@@ -82,7 +82,7 @@
       context.rows = settings.footers ? context.rows.concat(_nodesArray(el.querySelectorAll("tfoot > tr"))) : context.rows;
       context.thAdj = settings.headers ? el.querySelectorAll("thead > tr").length : 0;
       context.filename = settings.filename === "id" ? el.getAttribute("id") || self.defaultFilename : settings.filename || self.defaultFilename;
-      context.sheetname = settings.sheetname === "id" ? el.getAttribute("id") || self.defaultFilename : settings.sheetname || self.defaultFilename;
+      context.sheetname = settings.sheetname === "id" ? el.getAttribute("id") || self.defaultSheetname : settings.sheetname || self.defaultSheetname;
       context.uuid = _uuid(el);
 
       /**
@@ -192,6 +192,11 @@
      * @memberof TableExport.prototype
      */
     defaultFilename: "myDownload",
+    /**
+     * Sheetname fallback for exported files.
+     * @memberof TableExport.prototype
+     */
+    defaultSheetname: "myWorksheet",
     /**
      * Class applied to each export button element.
      * @memberof TableExport.prototype
