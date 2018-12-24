@@ -81,14 +81,8 @@
       context.rows = settings.headers ? _nodesArray(el.querySelectorAll("thead > tr")).concat(context.rows) : context.rows;
       context.rows = settings.footers ? context.rows.concat(_nodesArray(el.querySelectorAll("tfoot > tr"))) : context.rows;
       context.thAdj = settings.headers ? el.querySelectorAll("thead > tr").length : 0;
-      context.filename =
-        settings.filename === "id"
-          ? el.getAttribute("id")
-            ? el.getAttribute("id")
-            : self.defaultFilename
-          : settings.filename
-          ? settings.filename
-          : self.defaultFilename;
+      context.filename = settings.filename === "id" ? el.getAttribute("id") || self.defaultFilename : settings.filename || self.defaultFilename;
+      context.sheetname = settings.sheetname === "id" ? el.getAttribute("id") || self.defaultSheetname : settings.sheetname || self.defaultSheetname;
       context.uuid = _uuid(el);
 
       /**
@@ -164,7 +158,8 @@
       ignoreRows: null, // (Number, Number[]), row indices to exclude from the exported file(s) (default: null)
       ignoreCols: null, // (Number, Number[]), column indices to exclude from the exported file(s) (default: null)
       trimWhitespace: true, // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s) (default: false)
-      RTL: false // (Boolean), set direction of the worksheet to right-to-left (default: false)
+      RTL: false, // (Boolean), set direction of the worksheet to right-to-left (default: false)
+      sheetname: "id" // (id, String), sheet name for the exported spreadsheet, (default: 'id')
     },
     /**
      * Constants
@@ -197,6 +192,11 @@
      * @memberof TableExport.prototype
      */
     defaultFilename: "myDownload",
+    /**
+     * Sheetname fallback for exported files.
+     * @memberof TableExport.prototype
+     */
+    defaultSheetname: "myWorksheet",
     /**
      * Class applied to each export button element.
      * @memberof TableExport.prototype
@@ -398,7 +398,8 @@
           mimeType: format.mimeType,
           fileExtension: format.fileExtension,
           merges: rcMap.merges,
-          RTL: settings.RTL
+          RTL: settings.RTL,
+          sheetname: settings.sheetname
         });
 
         var hashKey = _hashCode({ uuid: context.uuid, type: key });
@@ -542,8 +543,9 @@
         mimeType = object.mimeType,
         fileExtension = object.fileExtension,
         merges = object.merges,
-        RTL = object.RTL;
-      this.export2file(data, mimeType, filename, fileExtension, merges, RTL);
+        RTL = object.RTL,
+        sheetname = object.sheetname;
+      this.export2file(data, mimeType, filename, fileExtension, merges, RTL, sheetname);
     },
     /**
      * Excel Workbook constructor
@@ -577,9 +579,9 @@
      * @param merges {Object[]}
      * @param RTL {Boolean}
      */
-    export2file: function(data, mime, name, extension, merges, RTL) {
+    export2file: function(data, mime, name, extension, merges, RTL, sheetname) {
       var format = extension.slice(1);
-      data = this.getRawData(data, extension, name, merges, RTL);
+      data = this.getRawData(data, extension, name, merges, RTL, sheetname);
 
       if (_isMobile && (format === _FORMAT.CSV || format === _FORMAT.TXT)) {
         var dataURI = "data:" + mime + ";" + this.charset + "," + data;
@@ -605,7 +607,7 @@
           return key;
       }
     },
-    getRawData: function(data, extension, name, merges, RTL) {
+    getRawData: function(data, extension, name, merges, RTL, sheetname) {
       var key = extension.substring(1);
 
       if (_isEnhanced(key)) {
@@ -613,9 +615,9 @@
           ws = this.createSheet(data, merges),
           bookType = this.getBookType(key);
 
-        name = name || "";
-        wb.SheetNames.push(name);
-        wb.Sheets[name] = ws;
+        sheetname = sheetname || "";
+        wb.SheetNames.push(sheetname);
+        wb.Sheets[sheetname] = ws;
         wb.Workbook.Views[0] = { RTL: RTL };
         var wopts = {
             bookType: bookType,

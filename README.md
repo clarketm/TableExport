@@ -119,7 +119,8 @@ TableExport(document.getElementsByTagName("table"), {
     ignoreRows: null,                           // (Number, Number[]), row indices to exclude from the exported file(s) (default: null)
     ignoreCols: null,                           // (Number, Number[]), column indices to exclude from the exported file(s) (default: null)
     trimWhitespace: true,                       // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s) (default: false)
-    RTL: false                                  // (Boolean), set direction of the worksheet to right-to-left (default: false)
+    RTL: false,                                 // (Boolean), set direction of the worksheet to right-to-left (default: false)
+    sheetname: "id"                             // (id, String), sheet name for the exported spreadsheet, (default: 'id')
 });
 ```
 > **Note:**  to use the `xlsx` filetype, you must include [js-xlsx](https://github.com/SheetJS/js-xlsx/blob/master/dist/xlsx.core.min.js); reference the [`Add-Ons`](#add-ons) section.
@@ -137,6 +138,7 @@ TableExport(document.getElementsByTagName("table"), {
 * [`ignoreCols`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
 * [`trimWhitespace`](https://tableexport.v3.travismclarke.com/examples/whitespace.html)
 * [`RTL`](https://tableexport.v3.travismclarke.com/examples/right-to-left.html)
+* [`sheetname`](https://tableexport.v3.travismclarke.com/examples/sheetname.html)
 
 ### Methods
 
@@ -385,6 +387,7 @@ When used alongside Bootstrap, there are four custom classes **`.xlsx`, `.xls`, 
 * [`ignoreCols`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)
 * [`trimWhitespace`](https://tableexport.v3.travismclarke.com/examples/whitespace.html)
 * [`RTL`](https://tableexport.v3.travismclarke.com/examples/right-to-left.html)
+* [`sheetname`](https://tableexport.v3.travismclarke.com/examples/sheetname.html)
 
 #### Customizing Settings
 * [`ignoreCSS`](https://tableexport.v3.travismclarke.com/examples/ignore-row-cols-cells.html)

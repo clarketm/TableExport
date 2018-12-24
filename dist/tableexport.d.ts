@@ -61,6 +61,11 @@ export declare class TableExport {
     defaultFilename: string;
 
     /**
+     * Sheetname fallback for exported files.
+     */
+    defaultSheetname: string;
+
+    /**
      * Class applied to each export button element.
      */
     defaultButton: string;
@@ -190,6 +195,7 @@ interface Defaults {
     ignoreCols?: number[];
     trimWhitespace?: boolean;
     RTL?: boolean;
+    sheetname?: string;
 }
 
 /**
