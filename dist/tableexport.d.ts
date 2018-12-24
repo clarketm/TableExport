@@ -1,9 +1,9 @@
-// Type definitions for TableExport v5.0.5
+// Type definitions for TableExport v5.2.0
 // Project: https://tableexport.travismclarke.com
 // Definitions by: Travis Clarke <https://github.com/clarketm>
 
 /*!
- * TableExport.js v5.0.5 (https://www.travismclarke.com)
+ * TableExport.js v5.2.0 (https://www.travismclarke.com)
  *
  * Copyright (c) 2018 - Travis Clarke - https://www.travismclarke.com
  *
@@ -59,6 +59,11 @@ export declare class TableExport {
      * Filename fallback for exported files.
      */
     defaultFilename: string;
+
+    /**
+     * Sheetname fallback for exported files.
+     */
+    defaultSheetname: string;
 
     /**
      * Class applied to each export button element.
@@ -190,6 +195,7 @@ interface Defaults {
     ignoreCols?: number[];
     trimWhitespace?: boolean;
     RTL?: boolean;
+    sheetname?: string;
 }
 
 /**
