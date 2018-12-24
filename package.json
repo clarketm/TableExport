@@ -5,6 +5,12 @@
   "description": "The simple, easy-to-implement library to export HTML tables to xlsx, xls, csv, and txt files",
   "main": "dist/js/tableexport.js",
   "typings": "dist/tableexport.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE.txt",
+    "typings.json"
+  ],
   "style": [
     "dist/css/tableexport.css"
   ],
