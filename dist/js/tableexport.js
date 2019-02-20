@@ -143,6 +143,9 @@
                     return acc;
                 }, {});
 
+                // Avoid duplicating export buttons on repeated clicks 
+                self.remove();
+
             settings.formats.forEach(
                 function (key) {
                     if (!_isValidFormat(key)) {
