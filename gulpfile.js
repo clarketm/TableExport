@@ -14,6 +14,7 @@
  * - move typescript definition to `src`;
  * - do not write unminified files to `dist`;
  * - do not write minified files to `src`.
+ * A more accurate list of changes may be found in the commit history.
  */
 
 var gulp = require("gulp"),
@@ -32,7 +33,7 @@ gulp.task("js", ["clean"], function() {
     .pipe(gulp.dest("./dist/"));
 });
 
-gulp.task("bump-all", ["bump", "bump-js", "bump-typings", "bump-readme"]);
+gulp.task("bump-all", ["bump", "bump-js", "bump-readme"]);
 
 gulp.task("bump", function() {
   return gulp.src(["./bower.json", "./package.json"])
@@ -52,14 +53,6 @@ gulp.task("bump-js", function() {
     .on("end", function() {
       gulp.start("js");
     });
-});
-
-gulp.task("bump-typings", function() {
-  gulp.src(["src/browser-xlsx.d.ts"])
-    .pipe(replace(/(v\d+\.\d+\.)(\d+)/g, function(matches, match1, match2) {
-      return match1 + (Number(match2) + 1);
-    }))
-    .pipe(gulp.dest("src/"));
 });
 
 gulp.task("bump-readme", function() {

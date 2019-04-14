@@ -4,12 +4,10 @@
   "author": "fedeTibaldo <fedetibaldo@protonmail.com>",
   "description": "Bringing js-xlsx to the browser.",
   "main": "dist/browser-xlsx.min.js",
-  "typings": "src/browser-xlsx.d.ts",
   "files": [
     "dist",
     "README.md",
-    "LICENSE.txt",
-    "typings.json"
+    "LICENSE.txt"
   ],
   "keywords": [
     "browser",
@@ -34,10 +32,6 @@
   },
   "bugs": {
     "url": "https://github.com/fedeTibaldo/browser-xlsx/issues"
-  },
-  "peerDependencies": {
-    "bootstrap": ">= 3 < 4",
-    "jquery": ">= 1.1.2"
   },
   "dependencies": {
     "blobjs": "^1.1.1",

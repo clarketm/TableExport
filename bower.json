@@ -15,8 +15,6 @@
     "txt"
   ],
   "dependencies": {
-    "bootstrap": "^3.3.7",
-    "jquery": "^3.1.1",
     "file-saverjs": "^1.3.6",
     "blobjs": "^1.1.1",
     "js-xlsx": "^0.14.0"
@@ -28,8 +26,5 @@
     "bower_components",
     "test",
     "tests"
-  ],
-  "devDependencies": {
-    "parallax.js": "^1.4.2"
-  }
+  ]
 }
