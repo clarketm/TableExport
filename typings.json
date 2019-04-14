@@ -1,4 +1,4 @@
 {
   "name": "browser-xlsx",
-  "main": "dist/browser-xlsx.d.ts"
+  "main": "src/browser-xlsx.d.ts"
 }

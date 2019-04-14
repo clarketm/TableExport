@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "author": "fedeTibaldo <fedetibaldo@protonmail.com>",
   "description": "Bringing js-xlsx to the browser.",
-  "main": "dist/browser-xlsx.js",
+  "main": "dist/browser-xlsx.min.js",
   "keywords": [
     "browser",
     "file",

@@ -8,9 +8,12 @@
  * @summary Summary of changes
  * @description
  * Summary of changes:
- * - Rename entrypoint files to match the new module name.
- * - Flatten `src` directory by making the `/stable` branch the only one available.
- * - Remove `css` tasks and imports
+ * - rename entrypoint files to match the new module name;
+ * - flatten `src` directory by making the `/stable` branch the only one available;
+ * - remove `css` tasks and imports;
+ * - move typescript definition to `src`;
+ * - do not write unminified files to `dist`;
+ * - do not write minified files to `src`.
  */
 
 var gulp = require("gulp"),
@@ -22,13 +25,11 @@ var gulp = require("gulp"),
 
 gulp.task("js", ["clean"], function() {
   return gulp.src("./src/browser-xlsx.js")
-    .pipe(gulp.dest("./dist/"))
     .pipe(js({ output: { comments: /^!|@preserve|@license|@cc_on/i } }))
     .pipe(rename({
       suffix: ".min"
     }))
-    .pipe(gulp.dest("./dist/"))
-    .pipe(gulp.dest("./src/"));
+    .pipe(gulp.dest("./dist/"));
 });
 
 gulp.task("bump-all", ["bump", "bump-js", "bump-typings", "bump-readme"]);
@@ -54,11 +55,11 @@ gulp.task("bump-js", function() {
 });
 
 gulp.task("bump-typings", function() {
-  gulp.src(["dist/browser-xlsx.d.ts"])
+  gulp.src(["src/browser-xlsx.d.ts"])
     .pipe(replace(/(v\d+\.\d+\.)(\d+)/g, function(matches, match1, match2) {
       return match1 + (Number(match2) + 1);
     }))
-    .pipe(gulp.dest("dist/"));
+    .pipe(gulp.dest("src/"));
 });
 
 gulp.task("bump-readme", function() {
@@ -70,7 +71,7 @@ gulp.task("bump-readme", function() {
 });
 
 gulp.task("clean", function() {
-  return del(["dist/*.js"]);
+  return del(["dist/*"]);
 });
 
 gulp.task("test", ["build"]);
