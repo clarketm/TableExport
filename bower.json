@@ -1,22 +1,18 @@
 {
-  "name": "tableexport.js",
-  "version": "5.2.0",
-  "authors": [
-    "clarketm <travis.m.clarke@gmail.com>"
-  ],
-  "description": "The simple, easy-to-implement library to export HTML tables to xlsx, xls, csv, and txt files",
-  "main": "dist/js/tableexport.js",
+  "name": "browser-xlsx.js",
+  "version": "0.0.1",
+  "author": "fedeTibaldo <fedetibaldo@protonmail.com>",
+  "description": "Bringing js-xlsx to the browser.",
+  "main": "dist/browser-xlsx.js",
   "keywords": [
-    "table",
+    "browser",
+    "file",
     "export",
-    "tableexport",
     "Excel",
     "xlsx",
     "xls",
     "csv",
-    "txt",
-    "jquery-plugin",
-    "ecosystem:jquery"
+    "txt"
   ],
   "dependencies": {
     "bootstrap": "^3.3.7",
@@ -25,8 +21,7 @@
     "blobjs": "^1.1.1",
     "js-xlsx": "^0.14.0"
   },
-  "license": "Apache-2.0",
-  "homepage": "https://www.travismclarke.com/tableexport/",
+  "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",

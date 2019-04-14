@@ -1,44 +1,39 @@
 {
-  "name": "tableexport",
-  "version": "5.2.0",
-  "author": "Travis Clarke <travis.m.clarke@gmail.com> (https://www.travismclarke.com/)",
-  "description": "The simple, easy-to-implement library to export HTML tables to xlsx, xls, csv, and txt files",
-  "main": "dist/js/tableexport.js",
-  "typings": "dist/tableexport.d.ts",
+  "name": "browser-xlsx",
+  "version": "0.0.1",
+  "author": "fedeTibaldo <fedetibaldo@protonmail.com>",
+  "description": "Bringing js-xlsx to the browser.",
+  "main": "dist/browser-xlsx.js",
+  "typings": "dist/browser-xlsx.d.ts",
   "files": [
     "dist",
     "README.md",
     "LICENSE.txt",
     "typings.json"
   ],
-  "style": [
-    "dist/css/tableexport.css"
-  ],
   "keywords": [
-    "tableexport",
-    "table",
+    "browser",
+    "file",
     "export",
     "Excel",
     "xlsx",
     "xls",
     "csv",
-    "txt",
-    "jquery-plugin",
-    "ecosystem:jquery"
+    "txt"
   ],
   "scripts": {
     "build": "gulp build",
-    "prettier": "prettier --write './src/stable/**/*.{js,css,md}'",
+    "prettier": "prettier --write './src/**/*.{js,md}'",
     "test": "gulp test",
     "prep": "yarn prettier && yarn build",
     "prepublishOnly": "yarn prep && sh ./publish.sh"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/clarketm/TableExport"
+    "url": "https://github.com/fedeTibaldo/browser-xlsx"
   },
   "bugs": {
-    "url": "https://github.com/clarketm/TableExport/issues"
+    "url": "https://github.com/fedeTibaldo/browser-xlsx/issues"
   },
   "peerDependencies": {
     "bootstrap": ">= 3 < 4",
@@ -53,15 +48,13 @@
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-bump": "^3.1.1",
-    "gulp-clean-css": "^4.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^1.0.0",
     "gulp-uglify": "^3.0.1",
     "jasmine": "^3.3.0",
     "prettier": "^1.15.2"
   },
-  "license": "Apache-2.0",
-  "homepage": "https://tableexport.travismclarke.com/",
+  "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",

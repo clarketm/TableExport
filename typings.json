@@ -1,4 +1,4 @@
 {
-  "name": "tableexport",
-  "main": "dist/tableexport.d.ts"
+  "name": "browser-xlsx",
+  "main": "dist/browser-xlsx.d.ts"
 }
