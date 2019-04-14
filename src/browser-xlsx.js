@@ -194,8 +194,10 @@
           if (range.s.c > C) range.s.c = C;
           if (range.e.r < R) range.e.r = R;
           if (range.e.c < C) range.e.c = C;
-          var cell = data[R][C];
-          if (!cell || !cell.v) continue;
+          var cell = {
+            v: data[R][C]
+          };
+          if (!cell.v) continue;
           var cell_ref = XLSX.utils.encode_cell({ c: C, r: R });
 
           if (!cell.t) {
