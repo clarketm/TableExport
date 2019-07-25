@@ -180,6 +180,15 @@ var exportData = table.getExportData(); // useful for creating custom export but
 */
 ```
 
+#### [`export2file`](https://tableexport.v3.travismclarke.com/examples/exportButtons.html)
+
+```js
+/* convert export data to a file for download */
+var exportData = table.getExportData(); 
+var xlsxData = exportData.table.xlsx; // Replace with the kind of file you want from the exportData
+table.export2file(xlsxData.data, xlsxData.mimeType, xlsxData.filename, xlsxData.fileExtension, xlsxData.merges, xlsxData.RTL, xlsxData.sheetname)
+```
+
 #### [`getFileSize`](https://tableexport.v3.travismclarke.com/examples/exportButtons.html)
 
 ```js
