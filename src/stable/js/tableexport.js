@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v5.2.2 (https://www.travismclarke.com)
+ * TableExport.js v5.2.3 (https://www.travismclarke.com)
  *
  * Copyright (c) 2018 - Travis Clarke - https://www.travismclarke.com
  *
@@ -202,7 +202,7 @@
      * Version.
      * @memberof TableExport.prototype
      */
-    version: "5.2.2",
+    version: "5.2.3",
     /**
      * Default library options.
      * @memberof TableExport.prototype
@@ -609,31 +609,35 @@
      */
     downloadHandler: function(event) {
       event.target.disabled = true;
+      var text = event.target.innerHTML;
+      event.target.innerHTML = 'Exporting...';
 
-      var items = event.target.className.split(" ").filter(function(className) {
-        return className.startsWith("export-type-");
+      var items = event.target.className.split(" ").filter(function (className) {
+          return className.startsWith("export-type-");
       });
-      var key = event.target.getAttribute(this.storageKey);
 
-      var contextKey = "";
-      if (items.length !== 1) {
-        console.log("Unable to find the export type");
-        if (!Storage.getInstance().exists(key)) {
-          this.processAll();
-        }
+      if (!items.length) {
+          console.log("Unable to find the export type. Ensure that the buttons have class to identify the exportable type. For example export-type-xls or export-type-csv");
       } else {
-        contextKey = items[0].substring(12);
 
-        if (!Storage.getInstance().exists(key)) {
-          this.processByKey(event.target.closest("caption").parentNode, contextKey);
+        try {
+            var key = event.target.getAttribute(this.storageKey);
+            var contextKey = items[0].substring(12);
+
+            if (!event.target.getAttribute('is-exported') || !Storage.getInstance().exists(key)) {
+                this.processByKey(event.target.closest("caption").parentNode, contextKey);
+                event.target.setAttribute('is-exported', true);
+            }
+            var object = JSON.parse(Storage.getInstance().getItem(key));
+            this.export2file(object.data, object.mimeType, object.filename, object.fileExtension, object.merges, object.RTL, object.sheetname);
+            
+        } catch (err) {
+            event.target.removeAttribute('is-exported');
+            console.log('Something went wrong during the export ' + err.message);
         }
+        event.target.innerHTML = text;
+        event.target.disabled = false;
       }
-
-      var object = JSON.parse(Storage.getInstance().getItem(key));
-
-      this.export2file(object.data, object.mimeType, object.filename, object.fileExtension, object.merges, object.RTL, object.sheetname);
-
-      event.target.disabled = false;
     },
     /**
      * Excel Workbook constructor
