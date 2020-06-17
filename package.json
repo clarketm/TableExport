@@ -1,7 +1,7 @@
 {
-  "name": "tableexport",
-  "version": "5.2.3",
-  "author": "Travis Clarke <travis.m.clarke@gmail.com> (https://www.travismclarke.com/)",
+  "name": "crestapps-tableexport",
+  "version": "6.0.0",
+  "author": "Travis Clarke <travis.m.clarke@gmail.com>, Modified by Mike Alhayek <mike@crestapps.com>",
   "description": "The simple, easy-to-implement library to export HTML tables to xlsx, xls, csv, and txt files",
   "main": "dist/js/tableexport.js",
   "typings": "dist/tableexport.d.ts",
@@ -35,10 +35,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/clarketm/TableExport"
+    "url": "https://github.com/CrestApps/TableExport"
   },
   "bugs": {
-    "url": "https://github.com/clarketm/TableExport/issues"
+    "url": "https://github.com/CrestApps/TableExport/issues"
   },
   "peerDependencies": {
     "bootstrap": ">= 3 < 4",
