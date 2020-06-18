@@ -1,7 +1,7 @@
 {
   "name": "crestapps-tableexport",
-  "version": "6.0.0",
-  "author": "Travis Clarke <travis.m.clarke@gmail.com>, Modified by Mike Alhayek <mike@crestapps.com>",
+  "version": "6.0.2",
+  "author": "Mike Alhayek <mike@crestapps.com> (https://crestapps.com)",
   "description": "The simple, easy-to-implement library to export HTML tables to xlsx, xls, csv, and txt files",
   "main": "dist/js/tableexport.js",
   "typings": "dist/tableexport.d.ts",
@@ -28,10 +28,10 @@
   ],
   "scripts": {
     "build": "gulp build",
-    "prettier": "prettier --write './src/stable/**/*.{js,css,md}'",
+    "prettier": "prettier --write ./src/stable/**/*.{js,css,md}",
     "test": "gulp test",
     "prep": "yarn prettier && yarn build",
-    "prepublishOnly": "yarn prep && sh ./publish.sh"
+    "prepublishOnly": "yarn prep"
   },
   "repository": {
     "type": "git",
@@ -47,19 +47,20 @@
   "dependencies": {
     "blobjs": "^1.1.1",
     "file-saverjs": "^1.3.6",
-    "xlsx": "^0.14.0",
-    "yarn": "^1.21.1"
+    "xlsx": "^0.14.5",
+    "yarn": "^1.22.4",
+    "graceful-fs": "4.2.2"
   },
   "devDependencies": {
     "del": "^3.0.0",
     "gulp": "^3.9.1",
-    "gulp-bump": "^3.1.1",
-    "gulp-clean-css": "^4.0.0",
+    "gulp-bump": "^3.1.3",
+    "gulp-clean-css": "^4.3.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^1.0.0",
-    "gulp-uglify": "^3.0.1",
-    "jasmine": "^3.3.0",
-    "prettier": "^1.15.2"
+    "gulp-uglify": "^3.0.2",
+    "jasmine": "^3.5.0",
+    "prettier": "^1.19.1"
   },
   "license": "Apache-2.0",
   "homepage": "https://tableexport.travismclarke.com/",
