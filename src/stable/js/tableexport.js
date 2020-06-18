@@ -1,5 +1,5 @@
 /*!
- * TableExport.js v5.2.0 (https://www.travismclarke.com)
+ * TableExport.js v5.2.5 (https://www.travismclarke.com)
  *
  * Copyright (c) 2018 - Travis Clarke - https://www.travismclarke.com
  *
@@ -50,7 +50,11 @@
     var self = this;
 
     if (!selectors) return _handleError('"selectors" is required. \nUsage: TableExport(selectors, options)');
-    if (!self) return new TableExport(selectors, options);
+    if (!self) {
+      self = new TableExport(selectors, options);
+
+      return self;
+    }
 
     /**
      * TableExport configuration options (user-defined w/ default fallback)
@@ -61,6 +65,8 @@
      */
     self.selectors = _nodesArray(selectors);
 
+    self.contexts = [];
+
     var settings = self.settings;
     settings.ignoreRows = settings.ignoreRows instanceof Array ? settings.ignoreRows : [settings.ignoreRows];
     settings.ignoreCols = settings.ignoreCols instanceof Array ? settings.ignoreCols : [settings.ignoreCols];
@@ -69,20 +75,45 @@
     settings.formatValue = self.formatValue.bind(this, settings.trimWhitespace);
     settings.bootstrapSettings = _getBootstrapSettings(settings.bootstrap, self.bootstrapConfig, self.defaultButton);
 
+    if (!Array.isArray(settings.formats)) {
+      settings.formats = [settings.formats];
+    }
+
+    self.processAll = function() {
+      self.contexts.forEach(function(context) {
+        context.processAllData();
+      });
+    };
+
+    self.processByKey = function(dataElement, key) {
+      var uuid = _uuid(dataElement);
+
+      var context = self.contexts[uuid];
+      if (context) {
+        context.processDataByKey(key);
+      }
+    };
+
     var _exportData = {};
     self.getExportData = function() {
+      self.processAll();
+
       return _exportData;
     };
 
     self.selectors.forEach(function(el) {
       var context = {};
-
+      var theadRows = el.querySelectorAll("thead > tr");
       context.rows = _nodesArray(el.querySelectorAll("tbody > tr"));
-      context.rows = settings.headers ? _nodesArray(el.querySelectorAll("thead > tr")).concat(context.rows) : context.rows;
-      context.rows = settings.footers ? context.rows.concat(_nodesArray(el.querySelectorAll("tfoot > tr"))) : context.rows;
-      context.thAdj = settings.headers ? el.querySelectorAll("thead > tr").length : 0;
-      context.filename = settings.filename === "id" ? el.getAttribute("id") || self.defaultFilename : settings.filename || self.defaultFilename;
-      context.sheetname = settings.sheetname === "id" ? el.getAttribute("id") || self.defaultSheetname : settings.sheetname || self.defaultSheetname;
+      if (settings.headers) {
+        context.rows = _nodesArray(theadRows).concat(context.rows);
+      }
+      if (settings.footers) {
+        context.rows = _nodesArray(el.querySelectorAll("tfoot > tr")).concat(context.rows);
+      }
+      context.thAdj = settings.headers ? theadRows.length : 0;
+      context.filename = (settings.filename === "id" ? el.getAttribute("id") : settings.filename) || self.defaultFilename;
+      context.sheetname = (settings.sheetname === "id" ? el.getAttribute("id") : settings.sheetname) || self.defaultSheetname;
       context.uuid = _uuid(el);
 
       /**
@@ -105,33 +136,62 @@
       context.setExportData = (function() {
         return function(exporter) {
           var data = Storage.getInstance().getItem(exporter);
+
           var type = exporter.substring(exporter.indexOf("-") + 1);
+
           _exportData[context.uuid] = _exportData[context.uuid] || {};
           _exportData[context.uuid][type] = JSON.parse(data);
         };
       })();
 
-      context.rcMap = new RowColMap().build(context, settings);
+      context.rcMap = function() {
+        return new RowColMap().build(context, settings);
+      };
 
       var formatMap = _FORMAT_LIST.reduce(function(acc, cur) {
         acc[cur] = 0;
         return acc;
       }, {});
 
-      settings.formats.forEach(function(key) {
+      context.processDataByKey = function(key) {
         if (!_isValidFormat(key)) {
           return _handleError('"' + key + '" is not a valid format. \nFormats: ' + _FORMAT_LIST.join(", "));
-        } else if (!_hasDependencies(key)) {
+        }
+        if (!_hasDependencies(key)) {
           // TODO: provide a fallback option to XLS?
           return _handleError('"' + key + '" requires "js-xlsx".');
-        } else if (!formatMap[key]) {
-          context.setExportData(self.exporters.build.call(self, context, key));
+        }
+
+        if (!formatMap[key]) {
+          var exporter = self.exporters.build.call(self, context, key);
+          context.setExportData(exporter);
           formatMap[key]++;
         }
-      });
+      };
+
+      context.processAllData = function() {
+        return settings.formats.forEach(function(key) {
+          context.processDataByKey(key);
+        });
+      };
+
+      if (settings.exportButtons) {
+        settings.formats.forEach(function(key) {
+          var format = self.formatConfig[key];
+
+          var hashKey = _hashCode({
+            uuid: context.uuid,
+            type: key
+          });
+          context.checkCaption(self.createObjButton(hashKey, format.buttonContent, format.defaultClass, settings.bootstrapSettings));
+        });
+      }
+
+      self.contexts[context.uuid] = context;
     });
 
     var exportButton = document.querySelectorAll("button[" + self.storageKey + "]");
+
     _on(exportButton, "click", self.downloadHandler, self);
 
     return self;
@@ -142,7 +202,7 @@
      * Version.
      * @memberof TableExport.prototype
      */
-    version: "5.2.0",
+    version: "5.2.5",
     /**
      * Default library options.
      * @memberof TableExport.prototype
@@ -265,19 +325,19 @@
        * @memberof TableExport.prototype
        */
       xlsx: {
-        defaultClass: "xlsx",
+        defaultClass: "export-type-xlsx xlsx",
         buttonContent: "Export to xlsx",
         mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         fileExtension: ".xlsx"
       },
       xlsm: {
-        defaultClass: "xlsm",
+        defaultClass: "export-type-xlsm xlsm",
         buttonContent: "Export to xlsm",
         mimeType: "application/vnd.ms-excel.sheet.macroEnabled.main+xml",
         fileExtension: ".xlsm"
       },
       xlsb: {
-        defaultClass: "xlsb",
+        defaultClass: "export-type-xlsb xlsb",
         buttonContent: "Export to xlsb",
         mimeType: "application/vnd.ms-excel.sheet.binary.macroEnabled.main",
         fileExtension: ".xlsb"
@@ -287,7 +347,7 @@
        * @memberof TableExport.prototype
        */
       xls: {
-        defaultClass: "xls",
+        defaultClass: "export-type-xls xls",
         buttonContent: "Export to xls",
         separator: "\t",
         mimeType: "application/vnd.ms-excel",
@@ -299,7 +359,7 @@
        * @memberof TableExport.prototype
        */
       csv: {
-        defaultClass: "csv",
+        defaultClass: "export-type-csv csv",
         buttonContent: "Export to csv",
         separator: ",",
         mimeType: "text/csv",
@@ -311,7 +371,7 @@
        * @memberof TableExport.prototype
        */
       txt: {
-        defaultClass: "txt",
+        defaultClass: "export-type-txt txt",
         buttonContent: "Export to txt",
         separator: "  ",
         mimeType: "text/plain",
@@ -352,7 +412,7 @@
         var settings = self.settings;
         var format = self.formatConfig[key];
         var colDel = format.separator;
-        var rcMap = context.rcMap;
+        var rcMap = context.rcMap();
 
         var getReturn = function(val) {
           if (_isEnhanced(key)) {
@@ -402,23 +462,23 @@
           sheetname: settings.sheetname
         });
 
-        var hashKey = _hashCode({ uuid: context.uuid, type: key });
+        var hashKey = _hashCode({
+          uuid: context.uuid,
+          type: key
+        });
 
-        settings.exportButtons &&
-          context.checkCaption(self.createObjButton(hashKey, dataObject, format.buttonContent, format.defaultClass, settings.bootstrapSettings));
         return Storage.getInstance().setItem(hashKey, dataObject, true);
       }
     },
     /**
      * Creates file export buttons
      * @param hashKey {String}
-     * @param dataObject {String}
      * @param myContent {String}
      * @param myClass {String}
      * @param bootstrapSettings {Object}
      * @returns Element
      */
-    createObjButton: function(hashKey, dataObject, myContent, myClass, bootstrapSettings) {
+    createObjButton: function(hashKey, myContent, myClass, bootstrapSettings) {
       var exportButton = document.createElement("button");
       exportButton.setAttribute("type", "button");
       exportButton.setAttribute(this.storageKey, hashKey);
@@ -501,7 +561,16 @@
      */
     createSheet: function(data, merges) {
       var ws = {};
-      var range = { s: { c: 10000000, r: 10000000 }, e: { c: 0, r: 0 } };
+      var range = {
+        s: {
+          c: 10000000,
+          r: 10000000
+        },
+        e: {
+          c: 0,
+          r: 0
+        }
+      };
       var types = this.typeConfig;
       for (var R = 0; R !== data.length; ++R) {
         for (var C = 0; C !== data[R].length; ++C) {
@@ -511,7 +580,10 @@
           if (range.e.c < C) range.e.c = C;
           var cell = data[R][C];
           if (!cell || !cell.v) continue;
-          var cell_ref = XLSX.utils.encode_cell({ c: C, r: R });
+          var cell_ref = XLSX.utils.encode_cell({
+            c: C,
+            r: R
+          });
 
           if (!cell.t) {
             if (types.number.assert(cell.v)) cell.t = _TYPE.NUMBER;
@@ -536,16 +608,36 @@
      * @memberof TableExport.prototype
      */
     downloadHandler: function(event) {
-      var target = event.target;
-      var object = JSON.parse(Storage.getInstance().getItem(target.getAttribute(this.storageKey))),
-        data = object.data,
-        filename = object.filename,
-        mimeType = object.mimeType,
-        fileExtension = object.fileExtension,
-        merges = object.merges,
-        RTL = object.RTL,
-        sheetname = object.sheetname;
-      this.export2file(data, mimeType, filename, fileExtension, merges, RTL, sheetname);
+      event.target.disabled = true;
+      var text = event.target.innerHTML;
+      event.target.innerHTML = "Exporting...";
+
+      var items = event.target.className.split(" ").filter(function(className) {
+        return className.startsWith("export-type-");
+      });
+
+      if (!items.length) {
+        console.log(
+          "Unable to find the export type. Ensure that the buttons have class to identify the exportable type. For example export-type-xls or export-type-csv"
+        );
+      } else {
+        try {
+          var key = event.target.getAttribute(this.storageKey);
+          var contextKey = items[0].substring(12);
+
+          if (!event.target.getAttribute("is-exported") || !Storage.getInstance().exists(key)) {
+            this.processByKey(event.target.closest("caption").parentNode, contextKey);
+            event.target.setAttribute("is-exported", true);
+          }
+          var object = JSON.parse(Storage.getInstance().getItem(key));
+          this.export2file(object.data, object.mimeType, object.filename, object.fileExtension, object.merges, object.RTL, object.sheetname);
+        } catch (err) {
+          event.target.removeAttribute("is-exported");
+          console.log("Something went wrong during the export " + err.message);
+        }
+        event.target.innerHTML = text;
+        event.target.disabled = false;
+      }
     },
     /**
      * Excel Workbook constructor
@@ -553,7 +645,9 @@
      * @constructor
      */
     Workbook: function() {
-      this.Workbook = { Views: [] };
+      this.Workbook = {
+        Views: []
+      };
       this.SheetNames = [];
       this.Sheets = {};
     },
@@ -588,7 +682,13 @@
         this.downloadDataURI(dataURI, name, extension);
       } else {
         // TODO: error and fallback when `saveAs` not available
-        saveAs(new Blob([data], { type: mime + ";" + this.charset }), name + extension, true);
+        saveAs(
+          new Blob([data], {
+            type: mime + ";" + this.charset
+          }),
+          name + extension,
+          true
+        );
       }
     },
     downloadDataURI: function(dataURI, name, extension) {
@@ -618,7 +718,9 @@
         sheetname = sheetname || "";
         wb.SheetNames.push(sheetname);
         wb.Sheets[sheetname] = ws;
-        wb.Workbook.Views[0] = { RTL: RTL };
+        wb.Workbook.Views[0] = {
+          RTL: RTL
+        };
         var wopts = {
             bookType: bookType,
             bookSST: false,
@@ -677,12 +779,15 @@
       return this.namespace + key;
     };
     this.setItem = function(_key, value, overwrite) {
+      console.log("Starting the save to store");
       var key = this.getKey(_key);
       if (this.exists(_key) && !overwrite) {
         return;
       }
       if (typeof value !== "string") return _handleError('"value" must be a string.');
       this.store.setItem(key, value);
+      console.log("Ended the save to store");
+
       return _key;
     };
     this.getItem = function(_key) {
@@ -702,6 +807,7 @@
     if (!this._instance) {
       this._instance = new Storage();
     }
+
     return this._instance;
   };
 
@@ -715,20 +821,16 @@
     this.merges = [];
 
     this.isIgnore = function(ir, ic) {
-      var _ignore = RowColMap.prototype.TYPE.IGNORE;
-      return this.getRowColMapProp(ir, ic, _ignore);
+      return this.getRowColMapProp(ir, ic, RowColMap.prototype.TYPE.IGNORE);
     };
     this.isEmpty = function(ir, ic) {
-      var _empty = RowColMap.prototype.TYPE.EMPTY;
-      return this.getRowColMapProp(ir, ic, _empty);
+      return this.getRowColMapProp(ir, ic, RowColMap.prototype.TYPE.EMPTY);
     };
     this.isRowSpan = function(ir) {
-      var _rowspan = RowColMap.prototype.TYPE.ROWSPAN;
-      return this.getRowColMapProp(ir, undefined, _rowspan);
+      return this.getRowColMapProp(ir, undefined, RowColMap.prototype.TYPE.ROWSPAN);
     };
     this.isColSpan = function(ir) {
-      var _colspan = RowColMap.prototype.TYPE.COLSPAN;
-      return this.getRowColMapProp(ir, undefined, _colspan);
+      return this.getRowColMapProp(ir, undefined, RowColMap.prototype.TYPE.COLSPAN);
     };
     this.isSpan = function(ir) {
       return this.isRowSpan(ir) || this.isColSpan(ir);
@@ -737,33 +839,45 @@
       return this.merges.length > 0;
     };
     this.addMerge = function(ir, mergeObj) {
-      var _merge = RowColMap.prototype.TYPE.MERGE;
       this.merges.push(mergeObj);
-      this.setRowColMapProp(ir, undefined, _merge, this.merges);
+      this.setRowColMapProp(ir, undefined, RowColMap.prototype.TYPE.MERGE, this.merges);
     };
     this.getRowColMapProp = function(ir, ic, key) {
       if (this.rcMap[ir]) {
-        if (typeof key === "undefined") {
+        if (_undefined(key)) {
           return this.rcMap[ir][ic];
-        } else if (typeof ic === "undefined") {
+        }
+        if (_undefined(ic)) {
           return this.rcMap[ir][key];
-        } else if (this.rcMap[ir][ic]) {
+        }
+        if (this.rcMap[ir][ic]) {
           return this.rcMap[ir][ic][key];
         }
       }
       return undefined;
     };
+
     this.setRowColMapProp = function(ir, ic, key, value) {
       this.rcMap[ir] = this.rcMap[ir] || [];
-      if (typeof key === "undefined") {
-        return (this.rcMap[ir][ic] = value);
-      } else if (typeof ic === "undefined") {
-        return (this.rcMap[ir][key] = value);
-      } else {
-        this.rcMap[ir][ic] = this.rcMap[ir][ic] || [];
-        return (this.rcMap[ir][ic][key] = value);
+
+      if (_undefined(key) && _undefined(ic)) {
+        // bailout
+        return;
       }
+
+      if (_defined(ic) && _undefined(key)) {
+        return (this.rcMap[ir][ic] = value);
+      }
+
+      if (_undefined(ic) && _defined(key)) {
+        return (this.rcMap[ir][key] = value);
+      }
+
+      this.rcMap[ir][ic] = this.rcMap[ir][ic] || [];
+
+      return (this.rcMap[ir][ic][key] = value);
     };
+
     this.generateTotal = function(ir, ic) {
       var VALUE = RowColMap.prototype.TYPE.VALUE;
       var _total = 0;
@@ -781,9 +895,9 @@
 
         if (_isEnhanced(key)) {
           return new Array(total).concat(_return);
-        } else {
-          return new Array(total).concat(_return).join(colDel);
         }
+
+        return new Array(total).concat(_return).join(colDel);
       }
       return _return;
     };
@@ -817,10 +931,6 @@
 
       var OFFSET = self.OFFSET;
       var rowLength = (self.rowLength = context.rows.length);
-      // var colLength = self.colLength = Math.max.apply(null,
-      //     _nodesArray(context.rows).map(function (val) {
-      //         return val.querySelectorAll('th, td').length
-      //     }));
 
       var handleIgnore = function(ir, ic) {
         self.setRowColMapProp(ir, ic, self.TYPE.IGNORE, true);
@@ -839,7 +949,7 @@
           }
           colSpan && (handledByColSpan = handleColSpan(val, _row + ir, ic, _row > 0, rowSpan));
 
-          if (rowSpan <= 1) {
+          if (rowSpan < 2) {
             return false;
           }
           var cur = self.rcMap["c" + (ic - 1)] ? self.rcMap["c" + (ic - 1)][_row + ir] : 0;
@@ -883,7 +993,7 @@
         var countColSpan = self.getRowColMapProp(ir, undefined, self.TYPE.COLSPAN) || 0;
         var totalColSpan = self.getRowColMapProp(ir, undefined, self.TYPE.COLSPANTOTAL) || 0;
 
-        if (colSpan <= 1) {
+        if (colSpan < 2) {
           return false;
         }
 
@@ -893,37 +1003,45 @@
         if (isRowSpan) {
           self.setRowColMapProp(ir, ic - countColSpan, self.TYPE.VALUE, colSpan);
           return true;
-        } else {
-          irStart = ir;
-          irEnd = ir + (rowSpan || 1) - OFFSET;
-          icStart = ic + totalColSpan - countColSpan;
-          icEnd = ic + totalColSpan - countColSpan + (colSpan - OFFSET);
-          self.setRowColMapProp(ir, ic + OFFSET, self.TYPE.VALUE, colSpan - OFFSET);
-          handleMerge(irStart, icStart, irEnd, icEnd);
         }
+
+        irStart = ir;
+        irEnd = ir + (rowSpan || 1) - OFFSET;
+        icStart = ic + totalColSpan - countColSpan;
+        icEnd = ic + totalColSpan - countColSpan + (colSpan - OFFSET);
+        self.setRowColMapProp(ir, ic + OFFSET, self.TYPE.VALUE, colSpan - OFFSET);
+        handleMerge(irStart, icStart, irEnd, icEnd);
       };
 
       var handleMerge = function(irs, ics, ire, ice) {
         var merge = {
-          s: { r: irs, c: ics },
-          e: { r: ire, c: ice }
+          s: {
+            r: irs,
+            c: ics
+          },
+          e: {
+            r: ire,
+            c: ice
+          }
         };
         return self.addMerge(irs, merge);
       };
 
-      _nodesArray(context.rows).map(function(val, ir) {
-        if (!!~settings.ignoreRows.indexOf(ir - context.thAdj) || _matches(val, settings.ignoreCSS)) {
+      context.rows.map(function(val, ir) {
+        if (!!~settings.ignoreRows.indexOf(ir - context.thAdj) || val.matches(settings.ignoreCSS)) {
           handleIgnore(ir);
         }
-        if (_matches(val, settings.emptyCSS)) {
+
+        if (val.matches(settings.emptyCSS)) {
           handleEmpty(ir);
         }
+
         var cols = val.querySelectorAll("th, td");
-        return _nodesArray(cols).map(function(val, ic) {
-          if (!!~settings.ignoreCols.indexOf(ic) || _matches(val, settings.ignoreCSS)) {
+        var final = _nodesArray(cols).map(function(val, ic) {
+          if (!!~settings.ignoreCols.indexOf(ic) || val.matches(settings.ignoreCSS)) {
             handleIgnore(ir, ic);
           }
-          if (_matches(val, settings.emptyCSS)) {
+          if (val.matches(settings.emptyCSS)) {
             handleEmpty(ir, ic);
           }
           if (val.hasAttribute("rowspan")) {
@@ -932,6 +1050,8 @@
             handleColSpan(val, ir, ic);
           }
         });
+
+        return final;
       });
 
       return self;
@@ -974,9 +1094,9 @@
     value: function(key, rowDel) {
       if (_isEnhanced(key)) {
         return this.map(_toArray).filter(_defined);
-      } else {
-        return this.filter(_defined).join(rowDel);
       }
+
+      return this.filter(_defined).join(rowDel);
     }
   });
 
@@ -985,9 +1105,9 @@
     value: function(key, colDel) {
       if (_isEnhanced(key)) {
         return this.filter(_defined);
-      } else {
-        return this.filter(_defined).join(colDel);
       }
+
+      return this.filter(_defined).join(colDel);
     }
   });
 
@@ -1001,6 +1121,7 @@
         tableKey = el.id ? el.id : TableExport.prototype.defaultNamespace + ++uuid;
         el.setAttribute(TableExport.prototype.tableKey, tableKey);
       }
+
       return tableKey;
     };
   })();
@@ -1027,9 +1148,7 @@
     var prevFn = null;
 
     return function(el, event, fn, context) {
-      // , args
       var curFn = fn.bind(context);
-      // var curFn = fn.bind.apply(fn, [context].concat(args)); // OR [].slice.call(arguments[4]))
       for (var i = 0; i < el.length; ++i) {
         prevFn && el[i].removeEventListener(event, prevFn, false);
         el[i].addEventListener(event, curFn, false);
@@ -1045,27 +1164,15 @@
   }
 
   function _nodesArray(els) {
-    return typeof els.length === "undefined" ? [].concat(els) : [].slice.call(els);
-  }
-
-  function _hasClass(el, cls) {
-    return el.classList ? el.classList.contains(cls) : new RegExp("(^| )" + cls + "( |$)", "gi").test(el.cls);
-  }
-
-  function _matches(el, selectors) {
-    return (
-      selectors.filter(function(selector) {
-        return [].indexOf.call(document.querySelectorAll(selector), el) !== -1;
-      }).length > 0
-    );
-  }
-
-  function _numeric(val) {
-    return !isNaN(val);
+    return _undefined(els.length) ? [].concat(els) : [].slice.call(els);
   }
 
   function _defined(val) {
     return typeof val !== "undefined";
+  }
+
+  function _undefined(val) {
+    return typeof val === "undefined";
   }
 
   function _toArray(val) {
@@ -1097,16 +1204,18 @@
   }
 
   function _getBootstrapSettings(bootstrap, bootstrapConfig, defaultButton) {
-    var config = {};
+    var config = {
+      bootstrapClass: defaultButton + " ",
+      bootstrapTheme: "",
+      bootstrapSpacing: ""
+    };
+
     if (bootstrap) {
       config.bootstrapClass = bootstrapConfig[0] + " ";
       config.bootstrapTheme = bootstrapConfig[1] + " ";
       config.bootstrapSpacing = bootstrapConfig[2] + " ";
-    } else {
-      config.bootstrapClass = defaultButton + " ";
-      config.bootstrapTheme = "";
-      config.bootstrapSpacing = "";
     }
+
     return config;
   }
 
