@@ -47,7 +47,7 @@
   "dependencies": {
     "blobjs": "^1.1.1",
     "file-saverjs": "^1.3.6",
-    "xlsx": "^0.14.0"
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {
     "del": "^3.0.0",
